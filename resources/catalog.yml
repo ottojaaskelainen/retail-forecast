@@ -1,19 +1,30 @@
 resources:
   schemas:
-    retail_forecast_schema:
-      catalog_name: gdai_test_dev
-      name: retail_forecast
-      comment: "Retail demand forecasting POC"
+    landing_schema:
+      catalog_name: ${var.catalog}
+      name: landing
+      comment: "Raw ingestion layer — volumes for POS and promo data"
+    bronze_schema:
+      catalog_name: ${var.catalog}
+      name: bronze
+      comment: "Bronze layer — raw ingested tables from Auto Loader"
+    silver_schema:
+      catalog_name: ${var.catalog}
+      name: silver
+      comment: "Silver layer — cleaned and deduplicated tables"
+    gold_schema:
+      catalog_name: ${var.catalog}
+      name: gold
+      comment: "Gold layer — aggregated views and forecast results"
 
   volumes:
     raw_pos_data:
-      catalog_name: gdai_test_dev
-      schema_name: retail_forecast
+      catalog_name: ${var.catalog}
+      schema_name: landing
       name: raw_pos_data
       volume_type: MANAGED
-
     raw_promo_data:
-      catalog_name: gdai_test_dev
-      schema_name: retail_forecast
+      catalog_name: ${var.catalog}
+      schema_name: landing
       name: raw_promo_data
       volume_type: MANAGED

@@ -2,34 +2,26 @@ resources:
   pipelines:
     retail_forecast_pipeline:
       name: retail-forecast-pipeline
-      catalog: gdai_test_dev
-      schema: retail_forecast
+      catalog: ${var.catalog}
+      schema: gold
       channel: current
       serverless: true
+      configuration:
+        landing_schema: landing
+        bronze_schema: bronze
+        silver_schema: silver
+        gold_schema: gold
       libraries:
-        - file:
-            path: ../pipeline/bronze/bronze_stores.py
-        - file:
-            path: ../pipeline/bronze/bronze_products.py
-        - file:
-            path: ../pipeline/bronze/bronze_transactions.py
-        - file:
-            path: ../pipeline/bronze/bronze_promotions.py
-        - file:
-            path: ../pipeline/silver/silver_stores.py
-        - file:
-            path: ../pipeline/silver/silver_products.py
-        - file:
-            path: ../pipeline/silver/silver_transactions.py
-        - file:
-            path: ../pipeline/silver/silver_promotions.py
-        - file:
-            path: ../pipeline/gold/dim_store.py
-        - file:
-            path: ../pipeline/gold/dim_product.py
-        - file:
-            path: ../pipeline/gold/dim_date.py
-        - file:
-            path: ../pipeline/gold/fact_transactions.py
-        - file:
-            path: ../pipeline/gold/fact_promotions.py
+        - file: { path: ../pipeline/bronze/bronze_stores.py }
+        - file: { path: ../pipeline/bronze/bronze_products.py }
+        - file: { path: ../pipeline/bronze/bronze_transactions.py }
+        - file: { path: ../pipeline/bronze/bronze_promotions.py }
+        - file: { path: ../pipeline/silver/silver_stores.py }
+        - file: { path: ../pipeline/silver/silver_products.py }
+        - file: { path: ../pipeline/silver/silver_transactions.py }
+        - file: { path: ../pipeline/silver/silver_promotions.py }
+        - file: { path: ../pipeline/gold/dim_store.py }
+        - file: { path: ../pipeline/gold/dim_product.py }
+        - file: { path: ../pipeline/gold/dim_date.py }
+        - file: { path: ../pipeline/gold/fact_transactions.py }
+        - file: { path: ../pipeline/gold/fact_promotions.py }

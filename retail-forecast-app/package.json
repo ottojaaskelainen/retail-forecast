@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "node dist/server/server.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "ts-node --project tsconfig.server.json server/server.ts",
     "dev:client": "vite",
@@ -13,10 +14,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@databricks/appkit": "^1.0.0",
-    "@databricks/appkit-ui": "^1.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@databricks/appkit": "0.38.1",
+    "@databricks/appkit-ui": "0.38.1",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
     "react-router-dom": "^6.22.0"
   },
   "devDependencies": {

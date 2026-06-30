@@ -1,0 +1,104 @@
+{
+  "version": 2,
+  "config": {
+    "sample_questions": [
+      {
+        "id": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+        "question": ["How many SKU-store pairs are at stockout risk vs overstock risk by product category?"]
+      },
+      {
+        "id": "b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5",
+        "question": ["What is the total forecasted demand by region this week?"]
+      },
+      {
+        "id": "c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6",
+        "question": ["Compare average predicted demand vs average actual demand over the last 12 weeks by product category"]
+      },
+      {
+        "id": "d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1",
+        "question": ["Which 10 products have the highest forecasted demand this week?"]
+      },
+      {
+        "id": "e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+        "question": ["Show total revenue by product category over time"]
+      },
+      {
+        "id": "f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3",
+        "question": ["Which stores have the highest number of at-risk SKUs (stockout or overstock)?"]
+      },
+      {
+        "id": "a1a2a3a4a5a6a7a8a9a0b1b2b3b4b5b6",
+        "question": ["How does discount percentage affect quantity sold?"]
+      }
+    ]
+  },
+  "data_sources": {
+    "tables": [
+      {
+        "identifier": "gdai_test_dev.gold.dim_product",
+        "column_configs": [
+          { "column_name": "category" },
+          { "column_name": "product_name" },
+          { "column_name": "sku" }
+        ]
+      },
+      {
+        "identifier": "gdai_test_dev.gold.dim_store",
+        "column_configs": [
+          { "column_name": "region" },
+          { "column_name": "store_id" },
+          { "column_name": "store_name" }
+        ]
+      },
+      {
+        "identifier": "gdai_test_dev.gold.fact_promotions",
+        "column_configs": [
+          { "column_name": "channel" },
+          { "column_name": "discount_pct" },
+          { "column_name": "is_active" },
+          { "column_name": "is_future" },
+          { "column_name": "promo_end_date" },
+          { "column_name": "promo_id" },
+          { "column_name": "promo_start_date" },
+          { "column_name": "target_category" },
+          { "column_name": "target_region" },
+          { "column_name": "target_sku" },
+          { "column_name": "target_store_id" }
+        ]
+      },
+      {
+        "identifier": "gdai_test_dev.gold.fact_transactions",
+        "column_configs": [
+          { "column_name": "date_id" },
+          { "column_name": "is_promoted" },
+          { "column_name": "quantity_sold" },
+          { "column_name": "sku" },
+          { "column_name": "store_id" },
+          { "column_name": "total_revenue" },
+          { "column_name": "transaction_id" },
+          { "column_name": "unit_price_at_sale" }
+        ]
+      },
+      {
+        "identifier": "gdai_test_dev.gold.forecast_demand",
+        "column_configs": [
+          { "column_name": "avg_demand_last_12w" },
+          { "column_name": "is_overstock_risk" },
+          { "column_name": "is_stockout_risk" },
+          { "column_name": "predicted_demand" },
+          { "column_name": "sku" },
+          { "column_name": "store_id" },
+          { "column_name": "week" }
+        ]
+      }
+    ]
+  },
+  "instructions": {
+    "text_instructions": [
+      {
+        "id": "11111111111111111111111111111111",
+        "content": ["This is a retail demand forecasting system covering weekly demand forecasts, historical transactions, store/product dimensions, and promotions.\n\nDATA MODEL:\n- forecast_demand: central table. One row per SKU-store-week. 'week' is a Monday date. Join to dim_store on store_id and dim_product on sku.\n- dim_store: store_id, store_name, region.\n- dim_product: sku, product_name, category.\n- fact_transactions: historical sales. quantity_sold = units sold. total_revenue is in USD. is_promoted = 1 means sold under promotion. Join to dim_store on store_id and dim_product on sku.\n- fact_promotions: campaigns. discount_pct is decimal (0.20 = 20%). target_sku/target_category/target_store_id/target_region can each be null if the promotion is broader. is_active = true means currently running.\n\nKEY METRICS:\n- predicted_demand: ML model forecast of units sold for that SKU-store-week.\n- avg_demand_last_12w: rolling 12-week average of actual units sold — use as historical baseline.\n- is_stockout_risk = true: model predicts the store will run out of stock that week.\n- is_overstock_risk = true: model predicts excess unsold inventory that week.\n- A row with both false = healthy stock level.\n\nQUERY RULES:\n- For risk questions: COUNT(*) WHERE is_stockout_risk = true or is_overstock_risk = true. Always filter to the latest week unless a trend is requested: SELECT MAX(week) FROM gdai_test_dev.gold.forecast_demand.\n- For visualizations: bar charts for counts by region/category; line charts for trends over time (group by date_id or week); grouped bar charts to compare predicted vs actual demand by category. Always aggregate before charting."]
+      }
+    ]
+  }
+}
