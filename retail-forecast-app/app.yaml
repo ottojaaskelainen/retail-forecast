@@ -5,7 +5,7 @@ name: retail-forecast-app
 resources:
   - name: sql-warehouse
     sql_warehouse:
-      id: <WAREHOUSE_ID>
+      id: ${var.warehouse_id}
       permission: CAN_USE
   - name: genie
     genie_space:
