@@ -1,0 +1,15 @@
+resources:
+  apps:
+    retail_forecast_app:
+      name: retail-forecast
+      description: "Retail demand forecasting demo app"
+      source_code_path: ../retail-forecast-app
+      resources:
+        - name: genie
+          description: "Retail Demand Forecast Assistant Genie Space"
+          genie_space:
+            id: ${resources.genie_spaces.retail_forecast_genie.id}
+        - name: sql-warehouse
+          description: "SQL warehouse for analytics queries"
+          sql_warehouse:
+            id: ${var.warehouse_id}

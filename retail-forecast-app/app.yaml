@@ -7,9 +7,15 @@ resources:
     sql_warehouse:
       id: <WAREHOUSE_ID>
       permission: CAN_USE
+  - name: genie
+    genie_space:
+      id: <GENIE_SPACE_ID>
+      permission: CAN_USE
 
 env:
   - name: DATABRICKS_WAREHOUSE_ID
     valueFrom: sql-warehouse.id
+  - name: VITE_GENIE_SPACE_ID
+    valueFrom: genie.id
   - name: PORT
     value: "8000"
