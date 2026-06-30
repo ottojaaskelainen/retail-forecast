@@ -12,7 +12,7 @@ CATALOG = "gdai_test_dev"
 SCHEMA  = "retail_forecast"
 MIN_HISTORY_WEEKS = 12
 
-mlflow.set_experiment("retail-forecast-rf")
+mlflow.set_experiment("retail_forecast_demand")
 mlflow.sklearn.autolog()
 
 # --- Load data ---
@@ -116,9 +116,9 @@ pairs = valid_pairs.copy()
 score_rows = []
 for _, pair in pairs.iterrows():
     sku, store_id = pair["sku"], pair["store_id"]
-    # avg_weekly_actual: last 8 weeks of training data
+    # avg_demand_last_12w: last 12 weeks of training data
     pair_hist = weekly[(weekly["sku"] == sku) & (weekly["store_id"] == store_id)]
-    avg_actual = pair_hist.sort_values("week").tail(8)["total_quantity"].mean()
+    avg_actual = pair_hist.sort_values("week").tail(12)["total_quantity"].mean()
 
     for week in forecast_weeks:
         week_of_year = pd.Timestamp(week).isocalendar().week
@@ -133,7 +133,7 @@ for _, pair in pairs.iterrows():
             "is_promoted": is_promo,
             "discount_pct_feat": disc,
             "rolling_4wk_avg": rolling_avg,
-            "avg_weekly_actual": avg_actual,
+            "avg_demand_last_12w": avg_actual,
         })
 
 score_df = pd.DataFrame(score_rows)
@@ -141,18 +141,18 @@ X_score = score_df[FEATURES]
 score_df["predicted_demand"] = np.maximum(0, np.round(model.predict(X_score))).astype(int)
 
 score_df["stockout_risk_flag"]  = (
-    (score_df["predicted_demand"] > score_df["avg_weekly_actual"] * 1.3) &
-    (score_df["avg_weekly_actual"] > 0)
+    (score_df["predicted_demand"] > score_df["avg_demand_last_12w"] * 1.3) &
+    (score_df["avg_demand_last_12w"] > 0)
 )
 score_df["overstock_risk_flag"] = (
-    (score_df["predicted_demand"] < score_df["avg_weekly_actual"] * 0.7) &
-    (score_df["avg_weekly_actual"] > 0)
+    (score_df["predicted_demand"] < score_df["avg_demand_last_12w"] * 0.7) &
+    (score_df["avg_demand_last_12w"] > 0)
 )
 score_df["model_version"] = "rf_v1"
 
 output = score_df[[
     "sku", "store_id", "week", "predicted_demand",
-    "avg_weekly_actual", "stockout_risk_flag", "overstock_risk_flag", "model_version"
+    "avg_demand_last_12w", "stockout_risk_flag", "overstock_risk_flag", "model_version"
 ]]
 
 spark.createDataFrame(output).write.mode("overwrite").saveAsTable(
