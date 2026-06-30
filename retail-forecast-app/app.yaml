@@ -1,0 +1,4 @@
+command: ["node", "dist/server/server.js"]
+env:
+  - name: PORT
+    value: "8000"
