@@ -1,14 +1,19 @@
 # Databricks notebook source
 
+%pip install faker
+
+# COMMAND ----------
+
 import random
 import pandas as pd
 from datetime import date, timedelta
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, StringType, DateType, DoubleType
 
-CATALOG    = "gdai_test_dev"
-SCHEMA     = "retail_forecast"
-POS_VOLUME = f"/Volumes/{CATALOG}/{SCHEMA}/raw_pos_data"
+dbutils.widgets.text("catalog", "gdai_test_dev")
+CATALOG     = dbutils.widgets.get("catalog")
+LANDING     = "landing"
+POS_VOLUME  = f"/Volumes/{CATALOG}/{LANDING}/raw_pos_data"
 
 # --- Reference data (must match generate_promo_data.py exactly) ---
 STORES = [str(i) for i in range(1001, 1021)]
@@ -187,7 +192,6 @@ promo_daily = (
         F.when(~F.col("store_id_or_region").startswith("store_"), F.col("store_id_or_region")),
     )
     .drop("sku_or_category", "store_id_or_region")
-    .cache()  # ~4,500 rows — keep in memory for the broadcast join
 )
 print(f"Promotion daily rows (for demand generation): {promo_daily.count()}")
 

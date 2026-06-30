@@ -1,7 +1,9 @@
 from pyspark import pipelines as dp
 from pyspark.sql import functions as F
 
-@dp.materialized_view(comment="Date dimension — 2024-01-01 through 2026-12-31")
+_GOLD = spark.conf.get("gold_schema")
+
+@dp.materialized_view(name=f"{_GOLD}.dim_date", comment="Date dimension — 2024-01-01 through 2026-12-31")
 def dim_date():
     dates = spark.sql("""
         SELECT explode(sequence(date('2024-01-01'), date('2026-12-31'), interval 1 day)) AS date_id

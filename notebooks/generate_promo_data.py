@@ -1,13 +1,18 @@
 # Databricks notebook source
 
+%pip install faker
+
+# COMMAND ----------
+
 import random
 import csv
 import io
 from datetime import date, timedelta
 
-CATALOG = "gdai_test_dev"
-SCHEMA  = "retail_forecast"
-PROMO_VOLUME = f"/Volumes/{CATALOG}/{SCHEMA}/raw_promo_data"
+dbutils.widgets.text("catalog", "gdai_test_dev")
+CATALOG      = dbutils.widgets.get("catalog")
+LANDING      = "landing"
+PROMO_VOLUME = f"/Volumes/{CATALOG}/{LANDING}/raw_promo_data"
 
 # --- Reference data (must match generate_pos_data.py exactly) ---
 STORES = [str(i) for i in range(1001, 1021)]
