@@ -90,14 +90,14 @@ export function RiskDashboardPage() {
             </tr>
           </thead>
           <tbody>
-            {filtered.map((r, i) => {
+            {filtered.map((r) => {
               const rowBg = r.stockout_risk_flag
                 ? 'bg-red-50'
                 : r.overstock_risk_flag
                 ? 'bg-amber-50'
                 : '';
               return (
-                <tr key={i} className={`border-t ${rowBg}`}>
+                <tr key={`${r.store_name}-${r.sku}`} className={`border-t ${rowBg}`}>
                   <td className="px-3 py-1.5">{r.store_name}</td>
                   <td className="px-3 py-1.5">{r.region}</td>
                   <td className="px-3 py-1.5 font-mono">{r.sku}</td>
