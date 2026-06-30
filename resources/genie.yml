@@ -1,12 +1,6 @@
 resources:
   genie_spaces:
     retail_forecast_genie:
-      title: "Retail Demand Forecast Assistant"
       description: "Natural language Q&A over retail forecast, promotions, and transaction history"
       warehouse_id: ${var.warehouse_id}
-      table_identifiers:
-        - gdai_test_dev.retail_forecast.forecast_demand
-        - gdai_test_dev.retail_forecast.fact_transactions
-        - gdai_test_dev.retail_forecast.fact_promotions
-        - gdai_test_dev.retail_forecast.dim_store
-        - gdai_test_dev.retail_forecast.dim_product
+      serialized_space: '{"version":2,"data_sources":{"tables":[{"identifier":"gdai_test_dev.retail_forecast.forecast_demand"},{"identifier":"gdai_test_dev.retail_forecast.fact_transactions"},{"identifier":"gdai_test_dev.retail_forecast.fact_promotions"},{"identifier":"gdai_test_dev.retail_forecast.dim_store"},{"identifier":"gdai_test_dev.retail_forecast.dim_product"}]}}'

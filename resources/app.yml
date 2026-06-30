@@ -8,8 +8,11 @@ resources:
         - name: genie
           description: "Retail Demand Forecast Assistant Genie Space"
           genie_space:
-            id: ${resources.genie_spaces.retail_forecast_genie.id}
+            name: Retail Demand Data Assistant
+            space_id: ${resources.genie_spaces.retail_forecast_genie.id}
+            permission: CAN_RUN
         - name: sql-warehouse
           description: "SQL warehouse for analytics queries"
           sql_warehouse:
             id: ${var.warehouse_id}
+            permission: CAN_USE

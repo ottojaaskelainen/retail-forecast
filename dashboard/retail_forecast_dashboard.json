@@ -5,12 +5,9 @@
       "displayName": "Risk Summary",
       "queryLines": [
         "SELECT\n",
-        "  is_stockout_risk,\n",
-        "  is_overstock_risk,\n",
-        "  COUNT(*) AS pair_count,\n",
-        "  SUM(predicted_demand) AS total_predicted\n",
-        "FROM forecast_demand\n",
-        "GROUP BY is_stockout_risk, is_overstock_risk"
+        "  COUNT(CASE WHEN is_stockout_risk THEN 1 END) AS stockout_count,\n",
+        "  COUNT(CASE WHEN is_overstock_risk THEN 1 END) AS overstock_count\n",
+        "FROM forecast_demand\n"
       ]
     },
     {
@@ -67,13 +64,17 @@
       "name": "ds_promo_lift",
       "displayName": "Promotion Lift",
       "queryLines": [
-        "SELECT\n",
-        "  dp.category,\n",
-        "  AVG(CASE WHEN ft.is_promoted = 1 THEN ft.quantity_sold ELSE NULL END) AS avg_qty_promoted,\n",
-        "  AVG(CASE WHEN ft.is_promoted = 0 THEN ft.quantity_sold ELSE NULL END) AS avg_qty_baseline\n",
+        "SELECT dp.category, 'Promoted' AS promo_type, AVG(ft.quantity_sold) AS avg_qty\n",
         "FROM fact_transactions ft\n",
         "JOIN dim_product dp ON ft.sku = dp.sku\n",
-        "GROUP BY dp.category"
+        "WHERE ft.is_promoted = 1\n",
+        "GROUP BY dp.category\n",
+        "UNION ALL\n",
+        "SELECT dp.category, 'Baseline' AS promo_type, AVG(ft.quantity_sold) AS avg_qty\n",
+        "FROM fact_transactions ft\n",
+        "JOIN dim_product dp ON ft.sku = dp.sku\n",
+        "WHERE ft.is_promoted = 0\n",
+        "GROUP BY dp.category\n"
       ]
     },
     {
@@ -122,176 +123,350 @@
           "widget": {
             "name": "title_risk",
             "title": "Demand Risk Overview",
-            "textbox_spec": "## Demand Risk Overview\nML-predicted demand for the next 8 weeks. Stockout risk = predicted > 1.3× historical average. Overstock risk = predicted < 0.7× average.",
+            "textbox_spec": "## Demand Risk Overview\nML-predicted demand for the next 8 weeks. Stockout risk = predicted > 1.3\u00d7 historical average. Overstock risk = predicted < 0.7\u00d7 average.",
             "queries": []
           },
-          "position": {"x": 0, "y": 0, "width": 6, "height": 2}
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 2
+          }
         },
         {
           "widget": {
             "name": "kpi_stockout",
             "title": "Stockout Risk Pairs",
-            "queries": [{"name": "main", "datasetName": "ds_risk_summary"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_summary"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "counter",
               "encodings": {
                 "value": {
-                  "fieldName": "pair_count",
+                  "fieldName": "stockout_count",
                   "displayName": "Pairs at Stockout Risk",
-                  "aggregation": "SUM",
-                  "filters": [
-                    {"fieldName": "is_stockout_risk", "op": "EQUAL", "values": [true]}
-                  ]
+                  "aggregation": "SUM"
                 }
               }
             }
           },
-          "position": {"x": 0, "y": 2, "width": 2, "height": 3}
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
         },
         {
           "widget": {
             "name": "kpi_overstock",
             "title": "Overstock Risk Pairs",
-            "queries": [{"name": "main", "datasetName": "ds_risk_summary"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_summary"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "counter",
               "encodings": {
                 "value": {
-                  "fieldName": "pair_count",
+                  "fieldName": "overstock_count",
                   "displayName": "Pairs at Overstock Risk",
-                  "aggregation": "SUM",
-                  "filters": [
-                    {"fieldName": "is_overstock_risk", "op": "EQUAL", "values": [true]}
-                  ]
+                  "aggregation": "SUM"
                 }
               }
             }
           },
-          "position": {"x": 2, "y": 2, "width": 2, "height": 3}
+          "position": {
+            "x": 2,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
         },
         {
           "widget": {
             "name": "kpi_total_risk",
             "title": "Total At-Risk Pairs",
-            "queries": [{"name": "main", "datasetName": "ds_risk_detail"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_detail"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "counter",
               "encodings": {
                 "value": {
-                  "fieldName": "pair_count",
+                  "fieldName": "store_id",
                   "displayName": "At-Risk Pairs",
                   "aggregation": "COUNT"
                 }
               }
             }
           },
-          "position": {"x": 4, "y": 2, "width": 2, "height": 3}
+          "position": {
+            "x": 4,
+            "y": 2,
+            "width": 2,
+            "height": 3
+          }
         },
         {
           "widget": {
             "name": "bar_risk_by_category",
             "title": "At-Risk Pairs by Category",
-            "queries": [{"name": "main", "datasetName": "ds_risk_detail"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_detail"
+              }
+            ],
             "spec": {
               "version": 3,
               "widgetType": "bar",
               "encodings": {
-                "x": {"fieldName": "category", "displayName": "Category", "scale": {"type": "categorical"}},
-                "y": {"fieldName": "store_id", "displayName": "Pair Count", "aggregation": "COUNT"},
-                "color": {"fieldName": "risk_type", "displayName": "Risk Type", "scale": {"type": "categorical"}}
+                "x": {
+                  "fieldName": "category",
+                  "displayName": "Category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "store_id",
+                  "displayName": "Pair Count",
+                  "aggregation": "COUNT"
+                },
+                "color": {
+                  "fieldName": "risk_type",
+                  "displayName": "Risk Type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
               }
             }
           },
-          "position": {"x": 0, "y": 5, "width": 3, "height": 6}
+          "position": {
+            "x": 0,
+            "y": 5,
+            "width": 3,
+            "height": 6
+          }
         },
         {
           "widget": {
             "name": "bar_risk_by_region",
             "title": "At-Risk Pairs by Region",
-            "queries": [{"name": "main", "datasetName": "ds_risk_detail"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_detail"
+              }
+            ],
             "spec": {
               "version": 3,
               "widgetType": "bar",
               "encodings": {
-                "x": {"fieldName": "region", "displayName": "Region", "scale": {"type": "categorical"}},
-                "y": {"fieldName": "store_id", "displayName": "Pair Count", "aggregation": "COUNT"},
-                "color": {"fieldName": "risk_type", "displayName": "Risk Type", "scale": {"type": "categorical"}}
+                "x": {
+                  "fieldName": "region",
+                  "displayName": "Region",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "store_id",
+                  "displayName": "Pair Count",
+                  "aggregation": "COUNT"
+                },
+                "color": {
+                  "fieldName": "risk_type",
+                  "displayName": "Risk Type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
               }
             }
           },
-          "position": {"x": 3, "y": 5, "width": 3, "height": 6}
+          "position": {
+            "x": 3,
+            "y": 5,
+            "width": 3,
+            "height": 6
+          }
         },
         {
           "widget": {
             "name": "table_risk_detail",
             "title": "At-Risk Store / SKU Pairs",
-            "queries": [{"name": "main", "datasetName": "ds_risk_detail"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_detail"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "table",
               "encodings": {
                 "columns": [
-                  {"fieldName": "store_id",           "displayName": "Store"},
-                  {"fieldName": "region",             "displayName": "Region"},
-                  {"fieldName": "sku",                "displayName": "SKU"},
-                  {"fieldName": "category",           "displayName": "Category"},
-                  {"fieldName": "predicted_demand",   "displayName": "Predicted Demand", "type": {"number": {"format": {"precision": 1}}}},
-                  {"fieldName": "avg_demand_last_12w","displayName": "12w Avg",          "type": {"number": {"format": {"precision": 1}}}},
-                  {"fieldName": "risk_type",          "displayName": "Risk Type"},
-                  {"fieldName": "week",               "displayName": "Forecast Week"}
+                  {
+                    "fieldName": "store_id",
+                    "displayName": "Store"
+                  },
+                  {
+                    "fieldName": "region",
+                    "displayName": "Region"
+                  },
+                  {
+                    "fieldName": "sku",
+                    "displayName": "SKU"
+                  },
+                  {
+                    "fieldName": "category",
+                    "displayName": "Category"
+                  },
+                  {
+                    "fieldName": "predicted_demand",
+                    "displayName": "Predicted Demand",
+                    "type": {
+                      "number": {
+                        "format": {
+                          "precision": 1
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "avg_demand_last_12w",
+                    "displayName": "12w Avg",
+                    "type": {
+                      "number": {
+                        "format": {
+                          "precision": 1
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "fieldName": "risk_type",
+                    "displayName": "Risk Type"
+                  },
+                  {
+                    "fieldName": "week",
+                    "displayName": "Forecast Week"
+                  }
                 ]
               }
             }
           },
-          "position": {"x": 0, "y": 11, "width": 6, "height": 8}
+          "position": {
+            "x": 0,
+            "y": 11,
+            "width": 6,
+            "height": 8
+          }
         },
         {
           "widget": {
             "name": "filter_region",
             "title": "Region",
-            "queries": [{"name": "main", "datasetName": "ds_risk_detail"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_detail"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "filter-multi-select",
               "encodings": {
-                "fields": [{"fieldName": "region", "displayName": "Region"}]
+                "fields": [
+                  {
+                    "fieldName": "region",
+                    "displayName": "Region"
+                  }
+                ]
               }
             }
           },
-          "position": {"x": 0, "y": 19, "width": 2, "height": 3}
+          "position": {
+            "x": 0,
+            "y": 19,
+            "width": 2,
+            "height": 3
+          }
         },
         {
           "widget": {
             "name": "filter_category",
             "title": "Category",
-            "queries": [{"name": "main", "datasetName": "ds_risk_detail"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_detail"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "filter-multi-select",
               "encodings": {
-                "fields": [{"fieldName": "category", "displayName": "Category"}]
+                "fields": [
+                  {
+                    "fieldName": "category",
+                    "displayName": "Category"
+                  }
+                ]
               }
             }
           },
-          "position": {"x": 2, "y": 19, "width": 2, "height": 3}
+          "position": {
+            "x": 2,
+            "y": 19,
+            "width": 2,
+            "height": 3
+          }
         },
         {
           "widget": {
             "name": "filter_risk_type",
             "title": "Risk Type",
-            "queries": [{"name": "main", "datasetName": "ds_risk_detail"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_risk_detail"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "filter-multi-select",
               "encodings": {
-                "fields": [{"fieldName": "risk_type", "displayName": "Risk Type"}]
+                "fields": [
+                  {
+                    "fieldName": "risk_type",
+                    "displayName": "Risk Type"
+                  }
+                ]
               }
             }
           },
-          "position": {"x": 4, "y": 19, "width": 2, "height": 3}
+          "position": {
+            "x": 4,
+            "y": 19,
+            "width": 2,
+            "height": 3
+          }
         }
       ]
     },
@@ -307,40 +482,91 @@
             "textbox_spec": "## Historical Sales\nWeekly revenue trends and category breakdown across all 20 stores.",
             "queries": []
           },
-          "position": {"x": 0, "y": 0, "width": 6, "height": 2}
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 2
+          }
         },
         {
           "widget": {
             "name": "line_weekly_revenue",
             "title": "Weekly Revenue by Region",
-            "queries": [{"name": "main", "datasetName": "ds_weekly_revenue"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_weekly_revenue"
+              }
+            ],
             "spec": {
               "version": 3,
               "widgetType": "line",
               "encodings": {
-                "x": {"fieldName": "week_start", "displayName": "Week", "scale": {"type": "temporal"}},
-                "y": {"fieldName": "weekly_revenue", "displayName": "Revenue ($)", "aggregation": "SUM"},
-                "color": {"fieldName": "region", "displayName": "Region", "scale": {"type": "categorical"}}
+                "x": {
+                  "fieldName": "week_start",
+                  "displayName": "Week",
+                  "scale": {
+                    "type": "temporal"
+                  }
+                },
+                "y": {
+                  "fieldName": "weekly_revenue",
+                  "displayName": "Revenue ($)",
+                  "aggregation": "SUM"
+                },
+                "color": {
+                  "fieldName": "region",
+                  "displayName": "Region",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
               }
             }
           },
-          "position": {"x": 0, "y": 2, "width": 4, "height": 8}
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 4,
+            "height": 8
+          }
         },
         {
           "widget": {
             "name": "bar_category_revenue",
             "title": "Total Revenue by Category",
-            "queries": [{"name": "main", "datasetName": "ds_category_revenue"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_category_revenue"
+              }
+            ],
             "spec": {
               "version": 3,
               "widgetType": "bar",
               "encodings": {
-                "x": {"fieldName": "category",      "displayName": "Category", "scale": {"type": "categorical"}},
-                "y": {"fieldName": "total_revenue",  "displayName": "Revenue ($)", "aggregation": "SUM"}
+                "x": {
+                  "fieldName": "category",
+                  "displayName": "Category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "total_revenue",
+                  "displayName": "Revenue ($)",
+                  "aggregation": "SUM"
+                }
               }
             }
           },
-          "position": {"x": 4, "y": 2, "width": 2, "height": 8}
+          "position": {
+            "x": 4,
+            "y": 2,
+            "width": 2,
+            "height": 8
+          }
         }
       ]
     },
@@ -356,83 +582,192 @@
             "textbox_spec": "## Promotions\nPromotional lift vs baseline demand, plus active and upcoming promotion schedules.",
             "queries": []
           },
-          "position": {"x": 0, "y": 0, "width": 6, "height": 2}
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 2
+          }
         },
         {
           "widget": {
             "name": "bar_promo_lift",
             "title": "Avg Quantity Sold -- Promoted vs Baseline",
-            "queries": [{"name": "main", "datasetName": "ds_promo_lift"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_promo_lift"
+              }
+            ],
             "spec": {
               "version": 3,
               "widgetType": "bar",
               "encodings": {
-                "x": {"fieldName": "category", "displayName": "Category", "scale": {"type": "categorical"}},
-                "y": [
-                  {"fieldName": "avg_qty_promoted", "displayName": "Promoted",  "aggregation": "AVG"},
-                  {"fieldName": "avg_qty_baseline", "displayName": "Baseline",  "aggregation": "AVG"}
-                ]
+                "x": {
+                  "fieldName": "category",
+                  "displayName": "Category",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                },
+                "y": {
+                  "fieldName": "avg_qty",
+                  "displayName": "Avg Quantity Sold",
+                  "aggregation": "AVG"
+                },
+                "color": {
+                  "fieldName": "promo_type",
+                  "displayName": "Type",
+                  "scale": {
+                    "type": "categorical"
+                  }
+                }
               }
             }
           },
-          "position": {"x": 0, "y": 2, "width": 6, "height": 7}
+          "position": {
+            "x": 0,
+            "y": 2,
+            "width": 6,
+            "height": 7
+          }
         },
         {
           "widget": {
             "name": "table_active_promos",
             "title": "Active Promotions",
-            "queries": [{"name": "main", "datasetName": "ds_active_promos"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_active_promos"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "table",
               "encodings": {
                 "columns": [
-                  {"fieldName": "promo_id",           "displayName": "Promo ID"},
-                  {"fieldName": "sku_or_category",    "displayName": "Target"},
-                  {"fieldName": "store_id_or_region", "displayName": "Scope"},
-                  {"fieldName": "discount_pct",       "displayName": "Discount"},
-                  {"fieldName": "channel",            "displayName": "Channel"},
-                  {"fieldName": "promo_start_date",   "displayName": "Start"},
-                  {"fieldName": "promo_end_date",     "displayName": "End"}
+                  {
+                    "fieldName": "promo_id",
+                    "displayName": "Promo ID"
+                  },
+                  {
+                    "fieldName": "sku_or_category",
+                    "displayName": "Target"
+                  },
+                  {
+                    "fieldName": "store_id_or_region",
+                    "displayName": "Scope"
+                  },
+                  {
+                    "fieldName": "discount_pct",
+                    "displayName": "Discount"
+                  },
+                  {
+                    "fieldName": "channel",
+                    "displayName": "Channel"
+                  },
+                  {
+                    "fieldName": "promo_start_date",
+                    "displayName": "Start"
+                  },
+                  {
+                    "fieldName": "promo_end_date",
+                    "displayName": "End"
+                  }
                 ]
               }
             }
           },
-          "position": {"x": 0, "y": 9, "width": 3, "height": 8}
+          "position": {
+            "x": 0,
+            "y": 9,
+            "width": 3,
+            "height": 8
+          }
         },
         {
           "widget": {
             "name": "table_upcoming_promos",
             "title": "Upcoming Promotions",
-            "queries": [{"name": "main", "datasetName": "ds_upcoming_promos"}],
+            "queries": [
+              {
+                "name": "main",
+                "datasetName": "ds_upcoming_promos"
+              }
+            ],
             "spec": {
               "version": 2,
               "widgetType": "table",
               "encodings": {
                 "columns": [
-                  {"fieldName": "promo_id",           "displayName": "Promo ID"},
-                  {"fieldName": "sku_or_category",    "displayName": "Target"},
-                  {"fieldName": "store_id_or_region", "displayName": "Scope"},
-                  {"fieldName": "discount_pct",       "displayName": "Discount"},
-                  {"fieldName": "channel",            "displayName": "Channel"},
-                  {"fieldName": "promo_start_date",   "displayName": "Start"},
-                  {"fieldName": "promo_end_date",     "displayName": "End"}
+                  {
+                    "fieldName": "promo_id",
+                    "displayName": "Promo ID"
+                  },
+                  {
+                    "fieldName": "sku_or_category",
+                    "displayName": "Target"
+                  },
+                  {
+                    "fieldName": "store_id_or_region",
+                    "displayName": "Scope"
+                  },
+                  {
+                    "fieldName": "discount_pct",
+                    "displayName": "Discount"
+                  },
+                  {
+                    "fieldName": "channel",
+                    "displayName": "Channel"
+                  },
+                  {
+                    "fieldName": "promo_start_date",
+                    "displayName": "Start"
+                  },
+                  {
+                    "fieldName": "promo_end_date",
+                    "displayName": "End"
+                  }
                 ]
               }
             }
           },
-          "position": {"x": 3, "y": 9, "width": 3, "height": 8}
+          "position": {
+            "x": 3,
+            "y": 9,
+            "width": 3,
+            "height": 8
+          }
         }
       ]
     }
   ],
   "uiSettings": {
     "theme": {
-      "canvasBackgroundColor": {"light": "#F7F8FA", "dark": "#1A1F24"},
-      "widgetBackgroundColor": {"light": "#FFFFFF", "dark": "#11171C"},
-      "fontColor":             {"light": "#11171C", "dark": "#E8ECF0"},
-      "selectionColor":        {"light": "#2272B4", "dark": "#8ACAFF"},
-      "visualizationColors":   ["#1D6FA4", "#F5A623", "#D0021B", "#7ED321", "#4A4A4A"],
+      "canvasBackgroundColor": {
+        "light": "#F7F8FA",
+        "dark": "#1A1F24"
+      },
+      "widgetBackgroundColor": {
+        "light": "#FFFFFF",
+        "dark": "#11171C"
+      },
+      "fontColor": {
+        "light": "#11171C",
+        "dark": "#E8ECF0"
+      },
+      "selectionColor": {
+        "light": "#2272B4",
+        "dark": "#8ACAFF"
+      },
+      "visualizationColors": [
+        "#1D6FA4",
+        "#F5A623",
+        "#D0021B",
+        "#7ED321",
+        "#4A4A4A"
+      ],
       "widgetHeaderAlignment": "LEFT"
     },
     "genieSpace": {

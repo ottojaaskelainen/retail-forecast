@@ -11,7 +11,7 @@ include:
 variables:
   warehouse_id:
     description: SQL warehouse used for dashboard and app queries
-    default: "<WH_ID>"
+    default: "b519c6909e98cb0c"
 
 targets:
   dev:
