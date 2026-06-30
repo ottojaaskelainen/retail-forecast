@@ -1,5 +1,9 @@
 # Databricks notebook source
 
+%pip install "mlflow<2.14" scikit-learn
+
+# COMMAND ----------
+
 import mlflow
 import mlflow.sklearn
 import numpy as np
@@ -8,17 +12,19 @@ from datetime import date, timedelta
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error
 
-CATALOG = "gdai_test_dev"
-SCHEMA  = "retail_forecast"
+dbutils.widgets.text("catalog", "gdai_test_dev")
+CATALOG      = dbutils.widgets.get("catalog")
+GOLD_SCHEMA  = "gold"
 MIN_HISTORY_WEEKS = 12
 
-mlflow.set_experiment("retail_forecast_demand")
+_current_user = spark.sql("SELECT current_user()").first()[0]
+mlflow.set_experiment(f"/Users/{_current_user}/retail_forecast_demand")
 mlflow.sklearn.autolog()
 
 # --- Load data ---
-fact_txn = spark.read.table(f"{CATALOG}.{SCHEMA}.fact_transactions").toPandas()
-fact_promo = spark.read.table(f"{CATALOG}.{SCHEMA}.fact_promotions").toPandas()
-dim_store = spark.read.table(f"{CATALOG}.{SCHEMA}.dim_store").toPandas()
+fact_txn = spark.read.table(f"{CATALOG}.{GOLD_SCHEMA}.fact_transactions").toPandas()
+fact_promo = spark.read.table(f"{CATALOG}.{GOLD_SCHEMA}.fact_promotions").toPandas()
+dim_store = spark.read.table(f"{CATALOG}.{GOLD_SCHEMA}.dim_store").toPandas()
 
 fact_txn["transaction_date"] = pd.to_datetime(fact_txn["date_id"])
 fact_txn["week"] = fact_txn["transaction_date"].dt.to_period("W-MON").apply(
@@ -43,7 +49,7 @@ weekly = weekly.merge(valid_pairs, on=["sku", "store_id"])
 store_region = dict(zip(dim_store["store_id"], dim_store["region"]))
 
 sku_to_cat = {}
-for _, row in spark.read.table(f"{CATALOG}.{SCHEMA}.dim_product").toPandas().iterrows():
+for _, row in spark.read.table(f"{CATALOG}.{GOLD_SCHEMA}.dim_product").toPandas().iterrows():
     sku_to_cat[row["sku"]] = row["category"]
 
 fact_promo["promo_start_date"] = pd.to_datetime(fact_promo["promo_start_date"]).dt.date
@@ -156,6 +162,6 @@ output = score_df[[
 ]]
 
 spark.createDataFrame(output).write.mode("overwrite").saveAsTable(
-    f"{CATALOG}.{SCHEMA}.forecast_demand"
+    f"{CATALOG}.{GOLD_SCHEMA}.forecast_demand"
 )
 print(f"Wrote {len(output):,} rows to forecast_demand")
