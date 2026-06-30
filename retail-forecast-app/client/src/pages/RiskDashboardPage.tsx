@@ -27,18 +27,18 @@ type RiskRow = {
 
 export function RiskDashboardPage() {
   const { data, loading, error } = useAnalyticsQuery<RiskRow>('risk_dashboard', {});
-  const [storeFilter, setStoreFilter]       = useState<string>('all');
-  const [categoryFilter, setCategoryFilter] = useState<string>('all');
+  const [selectedRegion, setSelectedRegion]    = useState<string>('all');
+  const [categoryFilter, setCategoryFilter]    = useState<string>('all');
 
-  const stores     = useMemo(() => ['all', ...Array.from(new Set((data ?? []).map(r => r.store_name))).sort()], [data]);
+  const regions    = useMemo(() => ['all', ...Array.from(new Set((data ?? []).map(r => r.region))).sort()], [data]);
   const categories = useMemo(() => ['all', ...Array.from(new Set((data ?? []).map(r => r.category))).sort()], [data]);
 
   const filtered = useMemo(() =>
     (data ?? []).filter(r =>
-      (storeFilter     === 'all' || r.store_name === storeFilter) &&
-      (categoryFilter  === 'all' || r.category   === categoryFilter)
+      (selectedRegion  === 'all' || r.region    === selectedRegion) &&
+      (categoryFilter  === 'all' || r.category  === categoryFilter)
     ),
-    [data, storeFilter, categoryFilter]
+    [data, selectedRegion, categoryFilter]
   );
 
   const stockoutCount  = filtered.filter(r => r.stockout_risk_flag).length;
@@ -65,10 +65,10 @@ export function RiskDashboardPage() {
 
       {/* Filters */}
       <div className="flex gap-4">
-        <Select value={storeFilter} onValueChange={setStoreFilter}>
-          <SelectTrigger className="w-48"><SelectValue placeholder="All stores" /></SelectTrigger>
+        <Select value={selectedRegion} onValueChange={setSelectedRegion}>
+          <SelectTrigger className="w-48"><SelectValue placeholder="All regions" /></SelectTrigger>
           <SelectContent>
-            {stores.map(s => <SelectItem key={s} value={s}>{s === 'all' ? 'All stores' : s}</SelectItem>)}
+            {regions.map(r => <SelectItem key={r} value={r}>{r === 'all' ? 'All regions' : r}</SelectItem>)}
           </SelectContent>
         </Select>
         <Select value={categoryFilter} onValueChange={setCategoryFilter}>

@@ -1,4 +1,15 @@
 command: ["node", "dist/server/server.js"]
+
+name: retail-forecast-app
+
+resources:
+  - name: sql-warehouse
+    sql_warehouse:
+      id: <WAREHOUSE_ID>
+      permission: CAN_USE
+
 env:
+  - name: DATABRICKS_WAREHOUSE_ID
+    valueFrom: sql-warehouse.id
   - name: PORT
     value: "8000"
