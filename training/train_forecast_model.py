@@ -140,11 +140,11 @@ score_df = pd.DataFrame(score_rows)
 X_score = score_df[FEATURES]
 score_df["predicted_demand"] = np.maximum(0, np.round(model.predict(X_score))).astype(int)
 
-score_df["stockout_risk_flag"]  = (
+score_df["is_stockout_risk"]  = (
     (score_df["predicted_demand"] > score_df["avg_demand_last_12w"] * 1.3) &
     (score_df["avg_demand_last_12w"] > 0)
 )
-score_df["overstock_risk_flag"] = (
+score_df["is_overstock_risk"] = (
     (score_df["predicted_demand"] < score_df["avg_demand_last_12w"] * 0.7) &
     (score_df["avg_demand_last_12w"] > 0)
 )
@@ -152,7 +152,7 @@ score_df["model_version"] = "rf_v1"
 
 output = score_df[[
     "sku", "store_id", "week", "predicted_demand",
-    "avg_demand_last_12w", "stockout_risk_flag", "overstock_risk_flag", "model_version"
+    "avg_demand_last_12w", "is_stockout_risk", "is_overstock_risk", "model_version"
 ]]
 
 spark.createDataFrame(output).write.mode("overwrite").saveAsTable(

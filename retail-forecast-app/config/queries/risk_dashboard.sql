@@ -5,9 +5,9 @@ SELECT
     dp.product_name,
     dp.category,
     fd.predicted_demand,
-    ROUND(fd.avg_weekly_actual, 1) AS avg_weekly_actual,
-    fd.stockout_risk_flag,
-    fd.overstock_risk_flag
+    ROUND(fd.avg_demand_last_12w, 1) AS avg_demand_last_12w,
+    fd.is_stockout_risk,
+    fd.is_overstock_risk
 FROM gdai_test_dev.retail_forecast.forecast_demand fd
 JOIN gdai_test_dev.retail_forecast.dim_store ds
     ON fd.store_id = ds.store_id
@@ -16,5 +16,5 @@ JOIN gdai_test_dev.retail_forecast.dim_product dp
 WHERE fd.week = (
     SELECT MIN(week) FROM gdai_test_dev.retail_forecast.forecast_demand
 )
-ORDER BY fd.stockout_risk_flag DESC, fd.overstock_risk_flag DESC, ds.store_name
+ORDER BY fd.is_stockout_risk DESC, fd.is_overstock_risk DESC, ds.store_name
 LIMIT 500

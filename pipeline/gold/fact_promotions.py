@@ -12,8 +12,8 @@ def fact_promotions():
         )
         .withColumn("is_future", F.col("promo_start_date") > F.current_date())
         .select(
-            "promo_id", "target_sku", "target_category",
-            "target_store_id", "target_region", "discount_pct", "channel",
+            "promo_id", "sku_or_category", "store_id_or_region",
+            "discount_pct", "channel",
             "promo_start_date", "promo_end_date", "is_active", "is_future",
         )
     )

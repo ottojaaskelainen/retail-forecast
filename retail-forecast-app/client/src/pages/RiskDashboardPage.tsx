@@ -20,9 +20,9 @@ type RiskRow = {
   product_name: string;
   category: string;
   predicted_demand: number;
-  avg_weekly_actual: number;
-  stockout_risk_flag: boolean;
-  overstock_risk_flag: boolean;
+  avg_demand_last_12w: number;
+  is_stockout_risk: boolean;
+  is_overstock_risk: boolean;
 };
 
 export function RiskDashboardPage() {
@@ -41,8 +41,8 @@ export function RiskDashboardPage() {
     [data, selectedRegion, categoryFilter]
   );
 
-  const stockoutCount  = filtered.filter(r => r.stockout_risk_flag).length;
-  const overstockCount = filtered.filter(r => r.overstock_risk_flag).length;
+  const stockoutCount  = filtered.filter(r => r.is_stockout_risk).length;
+  const overstockCount = filtered.filter(r => r.is_overstock_risk).length;
 
   if (loading) return <div className="p-8"><Skeleton className="h-64 w-full" /></div>;
   if (error)   return <div className="p-8 text-destructive">Error: {error}</div>;
@@ -91,9 +91,9 @@ export function RiskDashboardPage() {
           </thead>
           <tbody>
             {filtered.map((r) => {
-              const rowBg = r.stockout_risk_flag
+              const rowBg = r.is_stockout_risk
                 ? 'bg-red-50'
-                : r.overstock_risk_flag
+                : r.is_overstock_risk
                 ? 'bg-amber-50'
                 : '';
               return (
@@ -104,11 +104,11 @@ export function RiskDashboardPage() {
                   <td className="px-3 py-1.5">{r.product_name}</td>
                   <td className="px-3 py-1.5">{r.category}</td>
                   <td className="px-3 py-1.5 text-right">{r.predicted_demand}</td>
-                  <td className="px-3 py-1.5 text-right">{r.avg_weekly_actual.toFixed(1)}</td>
+                  <td className="px-3 py-1.5 text-right">{r.avg_demand_last_12w.toFixed(1)}</td>
                   <td className="px-3 py-1.5">
-                    {r.stockout_risk_flag  && <span className="text-red-600 font-medium">Stockout</span>}
-                    {r.overstock_risk_flag && <span className="text-amber-600 font-medium">Overstock</span>}
-                    {!r.stockout_risk_flag && !r.overstock_risk_flag && <span className="text-muted-foreground">—</span>}
+                    {r.is_stockout_risk  && <span className="text-red-600 font-medium">Stockout</span>}
+                    {r.is_overstock_risk && <span className="text-amber-600 font-medium">Overstock</span>}
+                    {!r.is_stockout_risk && !r.is_overstock_risk && <span className="text-muted-foreground">—</span>}
                   </td>
                 </tr>
               );

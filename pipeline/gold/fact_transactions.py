@@ -3,10 +3,17 @@ from pyspark.sql import functions as F
 
 @dp.materialized_view(comment="Transaction fact — ~2.2M rows, revenue computed")
 def fact_transactions():
+    silver = spark.read.table("silver_transactions")
+    dim_product = spark.read.table("dim_product").alias("dp")
     return (
-        spark.read.table("silver_transactions")
-        .withColumn("date_id", F.col("transaction_date"))
-        .withColumn("revenue", F.round(F.col("quantity_sold") * F.col("unit_price_at_sale"), 2))
-        .select("transaction_id", "sku", "store_id", "date_id",
-                "quantity_sold", "unit_price_at_sale", "revenue")
+        silver.alias("ft")
+        .join(dim_product, F.col("ft.sku") == F.col("dp.sku"), "left")
+        .withColumn("date_id", F.col("ft.transaction_date"))
+        .withColumn("total_revenue", F.round(F.col("ft.quantity_sold") * F.col("ft.unit_price_at_sale"), 2))
+        .withColumn(
+            "is_promoted",
+            F.when(F.col("ft.unit_price_at_sale") < F.col("dp.unit_price"), F.lit(1)).otherwise(F.lit(0))
+        )
+        .select("ft.transaction_id", "ft.sku", "ft.store_id", "date_id",
+                "ft.quantity_sold", "ft.unit_price_at_sale", "total_revenue", "is_promoted")
     )
