@@ -1,0 +1,19 @@
+resources:
+  schemas:
+    retail_forecast_schema:
+      catalog_name: gdai_test_dev
+      name: retail_forecast
+      comment: "Retail demand forecasting POC"
+
+  volumes:
+    raw_pos_data:
+      catalog_name: gdai_test_dev
+      schema_name: retail_forecast
+      name: raw_pos_data
+      volume_type: MANAGED
+
+    raw_promo_data:
+      catalog_name: gdai_test_dev
+      schema_name: retail_forecast
+      name: raw_promo_data
+      volume_type: MANAGED

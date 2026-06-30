@@ -1,0 +1,14 @@
+bundle:
+  name: retail-forecast-poc
+  engine: direct
+
+workspace:
+  host: https://adb-7405608574488109.9.azuredatabricks.net
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
