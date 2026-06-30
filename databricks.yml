@@ -8,6 +8,11 @@ workspace:
 include:
   - resources/*.yml
 
+variables:
+  warehouse_id:
+    description: SQL warehouse used for dashboard and app queries
+    default: "<WH_ID>"
+
 targets:
   dev:
     mode: development

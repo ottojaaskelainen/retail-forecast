@@ -1,0 +1,7 @@
+resources:
+  dashboards:
+    retail_forecast_dashboard:
+      display_name: "Retail Demand Forecast"
+      warehouse_id: ${var.warehouse_id}
+      serialized_dashboard: ../dashboard/retail_forecast_dashboard.json
+      parent_path: /Workspace/Users/${workspace.current_user.userName}/retail-forecast
