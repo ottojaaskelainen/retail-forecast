@@ -1,9 +1,0 @@
-import { createApp, analytics, genie, server } from '@databricks/appkit';
-
-createApp({
-  plugins: [
-    analytics(),
-    genie({ spaceId: process.env.VITE_GENIE_SPACE_ID ?? '' }),
-    server(),
-  ],
-}).catch(console.error);

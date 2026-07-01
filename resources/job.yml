@@ -28,6 +28,15 @@ resources:
             - task_key: generate_pos_data
             - task_key: generate_promo_data
 
+        - task_key: apply_uc_tags
+          notebook_task:
+            notebook_path: ${workspace.file_path}/notebooks/apply_uc_tags
+            base_parameters:
+              catalog: ${var.catalog}
+          environment_key: default
+          depends_on:
+            - task_key: run_pipeline
+
         - task_key: train_model
           notebook_task:
             notebook_path: ${workspace.file_path}/training/train_forecast_model
