@@ -1,0 +1,13 @@
+resources:
+  postgres_synced_tables:
+    forecast_action_list_sync:
+      synced_table_id: retail_forecast_lb.public.forecast_action_list
+      source_table_full_name: retail_forecast.gold.forecast_action_list
+      primary_key_columns: ["sku", "store_id", "week"]
+      scheduling_policy: SNAPSHOT
+      branch: projects/retail-forecast-lb/branches/production
+      postgres_database: databricks_postgres
+      create_database_objects_if_missing: true
+      new_pipeline_spec:
+        storage_catalog: retail_forecast
+        storage_schema: gold

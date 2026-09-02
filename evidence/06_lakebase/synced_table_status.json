@@ -1,0 +1,20 @@
+{
+  "name": "synced_tables/retail_forecast_lb.public.forecast_action_list",
+  "status": {
+    "detailed_state": "SYNCED_TABLE_ONLINE_NO_PENDING_UPDATE",
+    "last_sync": {
+      "delta_table_sync_info": {
+        "delta_commit_time": "2026-09-02T10:47:58Z",
+        "delta_commit_version": 0
+      },
+      "sync_end_time": "2026-09-02T11:11:44.443676Z",
+      "sync_start_time": "2026-09-02T11:11:32.439734Z"
+    },
+    "message": "Online Table creation succeeded using Delta Live Tables: https://adb-7405605253712899.19.azuredatabricks.net#joblist/pipelines/1dd69dca-c258-4072-ad41-17343baef8f6/updates/f4f36e9e-bca8-4cbd-819d-5f102d1870f0.",
+    "pipeline_id": "1dd69dca-c258-4072-ad41-17343baef8f6",
+    "project": "projects/retail-forecast-lb",
+    "unity_catalog_provisioning_state": "ACTIVE"
+  },
+  "synced_table_id": "retail_forecast_lb.public.forecast_action_list",
+  "uid": "3b9139ec-6714-4359-9cd9-a14d38b0c021"
+}

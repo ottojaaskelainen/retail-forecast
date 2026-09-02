@@ -1,0 +1,19 @@
+  sku   |         store_name         | region | predicted_demand | risk_type 
+--------+----------------------------+--------+------------------+-----------
+ AP-001 | Harrell LLC                | South  |               65 | Stockout
+ AP-001 | Humphrey Inc               | East   |               88 | Stockout
+ AP-001 | Humphrey Inc               | East   |               89 | Stockout
+ AP-001 | Humphrey Inc               | East   |               86 | Stockout
+ AP-001 | Humphrey Inc               | East   |               79 | Stockout
+ AP-001 | Harris, Collins and Carney | East   |               78 | Stockout
+ AP-001 | Harris, Collins and Carney | East   |               80 | Stockout
+ AP-001 | Harris, Collins and Carney | East   |               79 | Stockout
+ AP-001 | Harris, Collins and Carney | East   |               73 | Stockout
+ AP-001 | Perez Inc                  | East   |               66 | Stockout
+(10 rows)
+
+ count 
+-------
+  3182
+(1 row)
+

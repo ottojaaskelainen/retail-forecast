@@ -1,0 +1,5 @@
+Uploading bundle files to /Workspace/Users/otto.jaaskelainen@databricks.com/.bundle/retail-forecast-poc/dev/files...
+Updated pipelines.retail_forecast_pipeline
+Created postgres_synced_tables.forecast_action_list_sync
+Files: 2 uploaded, 0 deleted
+Resources: 1 created, 1 changed, 0 deleted, 12 unchanged
