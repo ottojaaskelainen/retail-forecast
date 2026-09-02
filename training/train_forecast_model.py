@@ -1,8 +1,5 @@
 # Databricks notebook source
 
-# MAGIC %pip install "mlflow>=2.22.0" "databricks-feature-engineering>=0.16.0" scikit-learn
-dbutils.library.restartPython()
-
 # COMMAND ----------
 
 import json

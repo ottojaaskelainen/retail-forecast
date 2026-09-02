@@ -1,0 +1,8 @@
+JOB STATE: INTERNAL_ERROR FAILED Task apply_uc_tags failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.
+Run URL: https://adb-7405605253712899.19.azuredatabricks.net/?o=7405605253712899#job/1001256054106337/run/1088495823888028
+  TASK apply_uc_tags (attempt 0): TERMINATED FAILED  run_id=607393571915618
+  TASK run_pipeline (attempt 0): TERMINATED SUCCESS  run_id=1014751090634538
+  TASK generate_promo_data (attempt 0): TERMINATED SUCCESS  run_id=912893462705668
+  TASK generate_pos_data (attempt 0): TERMINATED SUCCESS  run_id=13108048982082
+  TASK train_model (attempt 0): TERMINATED FAILED  run_id=331855253699905
+  TASK train_model (attempt 1): TERMINATED FAILED  run_id=386160257680318

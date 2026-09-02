@@ -1,0 +1,12 @@
+Status: SUCCEEDED
+Columns: ['transaction_id', 'sku', 'store_id', 'date_id', 'quantity_sold', 'unit_price_at_sale', 'total_revenue', 'is_promoted']
+{'transaction_id': '0', 'sku': 'GR-013', 'store_id': '1001', 'date_id': '2024-07-01', 'quantity_sold': '3', 'unit_price_at_sale': '21.31', 'total_revenue': '63.93', 'is_promoted': '0'}
+{'transaction_id': '10', 'sku': 'HM-007', 'store_id': '1002', 'date_id': '2024-10-04', 'quantity_sold': '1', 'unit_price_at_sale': '9.4', 'total_revenue': '9.4', 'is_promoted': '0'}
+{'transaction_id': '1000', 'sku': 'HM-008', 'store_id': '1002', 'date_id': '2024-11-14', 'quantity_sold': '4', 'unit_price_at_sale': '106.47', 'total_revenue': '425.88', 'is_promoted': '0'}
+{'transaction_id': '10000', 'sku': 'AP-003', 'store_id': '1001', 'date_id': '2025-03-21', 'quantity_sold': '4', 'unit_price_at_sale': '39.74', 'total_revenue': '158.96', 'is_promoted': '0'}
+{'transaction_id': '100002', 'sku': 'OD-013', 'store_id': '1008', 'date_id': '2025-06-21', 'quantity_sold': '5', 'unit_price_at_sale': '112.4', 'total_revenue': '562.0', 'is_promoted': '0'}
+{'transaction_id': '100003', 'sku': 'AP-015', 'store_id': '1009', 'date_id': '2025-07-01', 'quantity_sold': '3', 'unit_price_at_sale': '86.93', 'total_revenue': '260.79', 'is_promoted': '0'}
+{'transaction_id': '100007', 'sku': 'GR-012', 'store_id': '1009', 'date_id': '2025-08-03', 'quantity_sold': '4', 'unit_price_at_sale': '14.14', 'total_revenue': '56.56', 'is_promoted': '0'}
+{'transaction_id': '100008', 'sku': 'HM-019', 'store_id': '1009', 'date_id': '2025-08-12', 'quantity_sold': '4', 'unit_price_at_sale': '85.89', 'total_revenue': '343.56', 'is_promoted': '0'}
+{'transaction_id': '10001', 'sku': 'HM-010', 'store_id': '1001', 'date_id': '2025-03-31', 'quantity_sold': '5', 'unit_price_at_sale': '176.38', 'total_revenue': '881.9', 'is_promoted': '0'}
+{'transaction_id': '100011', 'sku': 'EL-018', 'store_id': '1008', 'date_id': '2025-09-07', 'quantity_sold': '5', 'unit_price_at_sale': '289.02', 'total_revenue': '1445.1', 'is_promoted': '0'}

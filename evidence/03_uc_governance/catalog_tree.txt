@@ -1,0 +1,37 @@
+{
+  "browse_only": false,
+  "catalog_type": "MANAGED_CATALOG",
+  "comment": "Retail forecast POC catalog — one catalog per environment",
+  "created_at": 1788338137633,
+  "created_by": "otto.jaaskelainen@databricks.com",
+  "effective_predictive_optimization_flag": {
+    "inherited_from_name": "otto-demo-metastore",
+    "inherited_from_type": "METASTORE",
+    "value": "ENABLE"
+  },
+  "enable_predictive_optimization": "INHERIT",
+  "full_name": "retail_forecast",
+  "isolation_mode": "OPEN",
+  "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
+  "name": "retail_forecast",
+  "owner": "otto.jaaskelainen@databricks.com",
+  "securable_type": "CATALOG",
+  "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/__unitystorage/catalogs/d21362a4-88ca-4015-b355-9c95b2ba0faf",
+  "storage_root": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast",
+  "updated_at": 1788338137633,
+  "updated_by": "otto.jaaskelainen@databricks.com"
+}
+Full Name                           Owner                             Comment
+retail_forecast.bronze              otto.jaaskelainen@databricks.com  Bronze layer — raw ingested tables from Auto Loader
+retail_forecast.default             otto.jaaskelainen@databricks.com  Default schema (auto-created)
+retail_forecast.feature             otto.jaaskelainen@databricks.com  Feature Store — UC feature tables for demand forecasting
+retail_forecast.gold                otto.jaaskelainen@databricks.com  Gold layer — aggregated views and forecast results
+retail_forecast.information_schema  System user                       Information schema (auto-created)
+retail_forecast.landing             otto.jaaskelainen@databricks.com  Raw ingestion layer — volumes for POS and promo data
+retail_forecast.silver              otto.jaaskelainen@databricks.com  Silver layer — cleaned and deduplicated tables
+Full Name                               Table Type
+retail_forecast.gold.dim_date           MATERIALIZED_VIEW
+retail_forecast.gold.dim_product        MATERIALIZED_VIEW
+retail_forecast.gold.dim_store          MATERIALIZED_VIEW
+retail_forecast.gold.fact_promotions    MATERIALIZED_VIEW
+retail_forecast.gold.fact_transactions  MATERIALIZED_VIEW

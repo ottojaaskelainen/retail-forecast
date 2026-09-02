@@ -1,0 +1,6 @@
+Bronze table row counts (queried 2026-09-02):
+
+bronze_transactions : 2,180,704
+bronze_promotions   : 150
+bronze_stores       : 20
+bronze_products     : 100

@@ -1,0 +1,7 @@
+Status: SUCCEEDED
+catalog_name	schema_name	table_name	tag_name	tag_value
+Status: SUCCEEDED
+catalog_name	schema_name	table_name	column_name	tag_name	tag_value
+(no rows - tags not applied due to apply_uc_tags failure)
+
+NOTE: apply_uc_tags task FAILED — no tags were applied. See apply_uc_tags_error.txt for details.
