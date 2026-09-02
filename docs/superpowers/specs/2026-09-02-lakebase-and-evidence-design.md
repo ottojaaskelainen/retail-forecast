@@ -78,6 +78,13 @@ A third improvement is folded in at the user's request:
    as an extension only.
 4. **All execution driven via CLI on the `otto-sandbox` profile**; captured
    text outputs committed under `/evidence/`.
+5. **Lakebase + SQL warehouse are declarative bundle resources** (verified
+   against CLI v1.14.1 `bundle schema`), not post-deploy CLI steps — the whole
+   journey deploys from one bundle. Use the **Autoscaling** resource family:
+   `postgres_projects`, `postgres_catalogs`, `postgres_synced_tables`, and
+   `sql_warehouses`. **Use `postgres_synced_tables` (Beta, branch-based), NOT
+   the legacy `synced_database_tables`** (`database_instance_name`-based, tied
+   to the retired Provisioned tier — deploys against Autoscaling fail).
 
 ## 5. Architecture / data flow
 
@@ -146,32 +153,49 @@ correctness detail Feature Store buys us over the inline version.
 
 ### 6.2 Lakebase (new operational-serving layer)
 
-1. **Lakebase database instance** provisioned via DABs/CLI in the workspace
-   (managed Postgres).
-2. **Synced table (read path):** a Lakebase synced table from an action-list
-   source (gold `forecast_demand` joined to `dim_store`/`dim_product`,
-   filtered to current-week at-risk rows — the logic in
-   `config/queries/action_list.sql`). This is the low-latency operational
-   serving surface.
-3. **Native `action_status` table (write path):** Postgres-native table the app
-   writes to:
-   `action_id (PK), sku, store_id, week, status, note, updated_by, updated_at`.
-   `status ∈ {open, acknowledged, reorder_placed, resolved}`.
-4. **App Action List page:** reads synced action list `LEFT JOIN action_status`
-   (to show operational state per action), and POSTs status updates back to
-   Postgres. Other app pages (risk dashboard, forecast explorer, Genie) stay on
-   the SQL warehouse / Genie unchanged.
+**All Lakebase infra is declarative in the bundle** (Autoscaling family):
 
-Exact AppKit ↔ Lakebase connectivity (plugin vs. Postgres client, app resource
-binding, auth) to be confirmed against `databricks-lakebase` +
-`databricks-apps` skills during planning; the design is connectivity-agnostic.
+1. **`postgres_projects`** — Lakebase project (auto-creates `production` branch +
+   `primary` read-write endpoint, scale-to-zero, 1 CU).
+2. **`postgres_catalogs`** — register the Lakebase Postgres database as a UC
+   catalog (one-time; required before synced tables).
+3. **`postgres_synced_tables`** (phase-2 include) — synced table (read path) from
+   an **action-list gold source**. Because synced tables are read-only in
+   Postgres and best fed pre-curated data, add a gold table/MV
+   `gold.forecast_action_list` (forecast_demand joined to `dim_store`/
+   `dim_product`, current-week at-risk rows — the `action_list.sql` logic
+   materialized) and sync *that*. `scheduling_policy: SNAPSHOT` for the POC
+   (no CDF dependency; simplest, re-runs on redeploy/refresh). PK:
+   `sku, store_id, week`. `new_pipeline_spec.storage_catalog` = the regular UC
+   catalog `retail_forecast` (NOT the Lakebase catalog).
+4. **Native `action_status` table (write path)** — NOT synced; a Postgres-native
+   table the app's Service Principal creates on startup and writes to:
+   `action_id (PK), sku, store_id, week, status, note, updated_by, updated_at`.
+   `status ∈ {open, acknowledged, reorder_placed, resolved}`. Lives in an
+   app-owned schema so the SP owns it (avoids `42501`).
+
+**App connectivity — AppKit built-in `lakebase` plugin** (`@databricks/appkit`,
+resource key `postgres`, permission `CAN_CONNECT_AND_CREATE`): does SQL
+execution against Lakebase Autoscaling, so it serves both the synced-table reads
+and the `action_status` writes — no custom Postgres client. Wire-up:
+- Enable `lakebase` in `appkit.plugins.json` + `lakebase()` in `server.ts`.
+- Attach the `postgres` resource (project/branch/database full paths) to the app
+  — declaratively in `resources/app.yml`.
+- **App Action List page:** reads synced action list `LEFT JOIN action_status`,
+  and POSTs status updates that write to `action_status`. Other app pages (risk
+  dashboard, forecast explorer, Genie) stay on the SQL warehouse / Genie
+  unchanged.
+
+**Deploy first, then run locally** (SP must own the app schema — the #1 Lakebase
+permission pitfall).
 
 ### 6.3 Catalog / config reconciliation
 
 - `databricks.yml`: set `workspace.host` to the new workspace; set
-  `var.catalog` default to `retail_forecast`; set `var.warehouse_id` to a
-  warehouse that exists in the new workspace (create one via the bundle or
-  reuse an existing serverless SQL warehouse — confirm during planning).
+  `var.catalog` default to `retail_forecast`.
+- **SQL warehouse via bundle:** add a serverless `sql_warehouses` resource and
+  reference its id (`${resources.sql_warehouses.<key>.id}`) from the app/Genie/
+  dashboard instead of the hardcoded old-workspace `var.warehouse_id`.
 - Parametrize app SQL queries and the training notebook to use `var.catalog` /
   the `catalog` widget instead of hardcoded `gdai_test_dev`.
 - `resources/catalog.yml`: add `feature` schema alongside landing/bronze/
@@ -191,7 +215,7 @@ Deploy in order via `otto-sandbox`, capturing text output into a committed
 | 3 | Run SDP pipeline (bronze→silver→gold) | pipeline run status, table counts, sample rows |
 | 4 | UC governance (`apply_uc_tags`) | catalog tree, applied tags, a lineage query + a grants query result |
 | 5 | Feature Store + train + score | feature-table counts + sample, MLflow run MAE, registered `@prod` version, `fe.score_batch` output, `forecast_demand` counts + sample |
-| 6 | Lakebase provision + sync + write-back demo | instance status, synced-table state, `SELECT` from Postgres, an `INSERT` into `action_status` + read-back |
+| 6 | Lakebase (bundle deploy of project/catalog/synced table) + write-back demo | project + endpoint status, `get-synced-table` state, `SELECT` from Postgres synced table, `CREATE`+`INSERT`+`SELECT` on `action_status` via `databricks psql` |
 | 7 | Genie NL query | a question → generated SQL → result rows (Genie API/CLI) |
 | 8 | Dashboard + App deploy | deploy status, app URL, key app API responses (curl'd JSON) |
 
@@ -217,11 +241,22 @@ layer + app write-back, and evidence harvesting.
 
 ## 10. Risks / open items
 
-- **AppKit ↔ Lakebase connectivity mechanics** — confirm the supported pattern
-  (AppKit Lakebase/Postgres access + app resource binding) during planning.
-- **SQL warehouse in the new workspace** — confirm whether to create one via the
-  bundle or reuse an existing serverless warehouse.
-- **Synced table refresh mode** (snapshot vs. continuous) — pick based on
-  Lakebase sync capabilities and demo needs.
+Resolved during planning:
+- **AppKit ↔ Lakebase** → built-in `lakebase` plugin (resource key `postgres`);
+  serves reads + writes. No custom client.
+- **SQL warehouse** → created declaratively via bundle `sql_warehouses`.
+- **Synced table = declarative** via `postgres_synced_tables` (Beta), SNAPSHOT
+  mode; legacy `synced_database_tables` avoided.
+
+Remaining risks:
+- **`postgres_synced_tables` / `postgres_projects` are Beta** bundle resources —
+  if a field/deploy misbehaves, fall back to the `databricks postgres
+  create-project` / `create-synced-table` CLI (same field names) and reference
+  the resulting IDs from the app.
+- **Deploy ordering:** the synced table's `source_table_full_name`
+  (`gold.forecast_action_list`) must exist at deploy time → synced table + app
+  are phase-2 includes, enabled only after the pipeline run produces gold.
 - **Serverless availability / entitlements** in the new workspace for the
-  pipeline and jobs — verify early (step 0/1).
+  pipeline, jobs, and Lakebase — verify early (step 0/1).
+- **App SP schema ownership** for `action_status` — deploy the app before any
+  local run so the SP owns its schema (avoids `permission denied … 42501`).
