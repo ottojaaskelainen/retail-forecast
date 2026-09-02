@@ -10,7 +10,7 @@ from datetime import date, timedelta
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, StringType, DateType, DoubleType
 
-dbutils.widgets.text("catalog", "gdai_test_dev")
+dbutils.widgets.text("catalog", "retail_forecast")
 CATALOG     = dbutils.widgets.get("catalog")
 LANDING     = "landing"
 POS_VOLUME  = f"/Volumes/{CATALOG}/{LANDING}/raw_pos_data"

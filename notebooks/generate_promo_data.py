@@ -9,7 +9,7 @@ import csv
 import io
 from datetime import date, timedelta
 
-dbutils.widgets.text("catalog", "gdai_test_dev")
+dbutils.widgets.text("catalog", "retail_forecast")
 CATALOG      = dbutils.widgets.get("catalog")
 LANDING      = "landing"
 PROMO_VOLUME = f"/Volumes/{CATALOG}/{LANDING}/raw_promo_data"
