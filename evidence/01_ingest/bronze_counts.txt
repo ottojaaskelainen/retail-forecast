@@ -1,5 +1,5 @@
 STATUS: SUCCEEDED
-bronze_products                         : 500
+bronze_products                         : 600
 bronze_promotions                       : 150
-bronze_stores                           : 100
-bronze_transactions                     : 10,903,520
+bronze_stores                           : 120
+bronze_transactions                     : 13,271,903

@@ -1,0 +1,18 @@
+Score-only run: 1025049244750100
+Job: retail-forecast-job (1001256054106337)
+Command: databricks jobs run-now --json '{"job_id": 1001256054106337, "only": ["score_forecast"]}'
+Date: 2026-09-02
+
+Result: TERMINATED / SUCCESS
+
+Task states:
+  apply_uc_tags:    SKIPPED / DISABLED
+  build_features:   SKIPPED / DISABLED
+  generate_pos_data: SKIPPED / DISABLED
+  generate_promo_data: SKIPPED / DISABLED
+  run_pipeline:     SKIPPED / DISABLED
+  score_forecast:   TERMINATED / SUCCESS
+  train_model:      SKIPPED / DISABLED
+
+Proof: Only score_forecast ran. build_features and train_model were SKIPPED (DISABLED)
+confirming the 3-task split allows scoring without retraining.

@@ -1,0 +1,15 @@
+Distinct forecast weeks from gold.forecast_demand (sorted)
+Captured: 2026-09-02
+Source: score_forecast task notebook.exit output (job run 213875453507526)
+
+2026-09-07
+2026-09-14
+2026-09-21
+2026-09-28
+2026-10-05
+2026-10-12
+2026-10-19
+2026-10-26
+
+Assertion: ALL 8 forecast weeks are AFTER 2026-09-02 (today). PASSED.
+Data end date: 2026-08-31 (from build_features task output)

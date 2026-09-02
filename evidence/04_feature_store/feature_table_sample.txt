@@ -1,12 +1,5 @@
 Status: SUCCEEDED
 Columns: ['sku', 'store_id', 'week', 'week_of_year', 'is_promoted', 'discount_pct_feat', 'rolling_4wk_avg', 'avg_demand_last_12w']
-{'sku': 'AP-004', 'store_id': '1007', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '29.0', 'avg_demand_last_12w': '28.666666666666668'}
-{'sku': 'AP-009', 'store_id': '1013', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '24.75', 'avg_demand_last_12w': '33.916666666666664'}
-{'sku': 'AP-012', 'store_id': '1006', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '31.25', 'avg_demand_last_12w': '34.583333333333336'}
-{'sku': 'AP-017', 'store_id': '1002', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '37.5', 'avg_demand_last_12w': '30.333333333333332'}
-{'sku': 'AP-018', 'store_id': '1007', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '35.75', 'avg_demand_last_12w': '30.166666666666668'}
-{'sku': 'AP-019', 'store_id': '1009', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '27.75', 'avg_demand_last_12w': '29.5'}
-{'sku': 'EL-003', 'store_id': '1002', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '27.0', 'avg_demand_last_12w': '26.333333333333332'}
-{'sku': 'EL-007', 'store_id': '1002', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '29.75', 'avg_demand_last_12w': '33.166666666666664'}
-{'sku': 'EL-008', 'store_id': '1005', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '42.25', 'avg_demand_last_12w': '68.5'}
-{'sku': 'EL-012', 'store_id': '1001', 'week': '2026-06-29', 'week_of_year': '27', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '25.5', 'avg_demand_last_12w': '26.583333333333332'}
+{'sku': 'OD-012', 'store_id': '1014', 'week': '2025-02-03', 'week_of_year': '6', 'is_promoted': '1', 'discount_pct_feat': '0.2', 'rolling_4wk_avg': '25.25', 'avg_demand_last_12w': '63.666666666666664'}
+{'sku': 'GR-005', 'store_id': '1002', 'week': '2025-10-27', 'week_of_year': '44', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '25.25', 'avg_demand_last_12w': '30.166666666666668'}
+{'sku': 'GR-019', 'store_id': '1006', 'week': '2024-12-02', 'week_of_year': '49', 'is_promoted': '0', 'discount_pct_feat': '0.0', 'rolling_4wk_avg': '27.5', 'avg_demand_last_12w': '31.0'}

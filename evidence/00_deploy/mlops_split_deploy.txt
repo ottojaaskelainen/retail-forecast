@@ -1,0 +1,5 @@
+Uploading bundle files to /Workspace/Users/otto.jaaskelainen@databricks.com/.bundle/retail-forecast-poc/dev/files...
+Updated jobs.retail_forecast_job
+Updated pipelines.retail_forecast_pipeline
+Files: 9 uploaded, 1 deleted
+Resources: 0 created, 2 changed, 0 deleted, 15 unchanged

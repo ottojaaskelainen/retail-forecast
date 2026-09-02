@@ -1,11 +1,6 @@
 Columns: ['transaction_id', 'sku', 'store_id', 'date_id', 'quantity_sold', 'unit_price_at_sale', 'total_revenue', 'is_promoted']
-{'transaction_id': '60129822213', 'sku': 'EL-003', 'store_id': '1018', 'date_id': '2025-06-16', 'quantity_sold': '3', 'unit_price_at_sale': '253.43', 'total_revenue': '760.29', 'is_promoted': '0'}
-{'transaction_id': '60129823057', 'sku': 'HM-009', 'store_id': '1018', 'date_id': '2025-08-04', 'quantity_sold': '7', 'unit_price_at_sale': '73.21', 'total_revenue': '512.47', 'is_promoted': '1'}
-{'transaction_id': '17180027619', 'sku': 'HM-016', 'store_id': '1011', 'date_id': '2025-03-20', 'quantity_sold': '2', 'unit_price_at_sale': '59.53', 'total_revenue': '119.06', 'is_promoted': '0'}
-{'transaction_id': '25769924583', 'sku': 'GR-014', 'store_id': '1010', 'date_id': '2025-11-08', 'quantity_sold': '2', 'unit_price_at_sale': '22.1', 'total_revenue': '44.2', 'is_promoted': '0'}
-{'transaction_id': '17179987169', 'sku': 'OD-010', 'store_id': '1008', 'date_id': '2025-12-25', 'quantity_sold': '2', 'unit_price_at_sale': '31.57', 'total_revenue': '63.14', 'is_promoted': '0'}
-{'transaction_id': '42949804392', 'sku': 'AP-002', 'store_id': '1010', 'date_id': '2025-05-16', 'quantity_sold': '5', 'unit_price_at_sale': '108.87', 'total_revenue': '544.35', 'is_promoted': '0'}
-{'transaction_id': '42949742069', 'sku': 'EL-013', 'store_id': '1006', 'date_id': '2026-06-06', 'quantity_sold': '2', 'unit_price_at_sale': '396.25', 'total_revenue': '792.5', 'is_promoted': '0'}
-{'transaction_id': '42949768651', 'sku': 'AP-013', 'store_id': '1008', 'date_id': '2026-02-09', 'quantity_sold': '5', 'unit_price_at_sale': '133.56', 'total_revenue': '667.8', 'is_promoted': '0'}
-{'transaction_id': '25769841410', 'sku': 'OD-001', 'store_id': '1003', 'date_id': '2025-05-28', 'quantity_sold': '3', 'unit_price_at_sale': '87.78', 'total_revenue': '263.34', 'is_promoted': '0'}
-{'transaction_id': '60129635770', 'sku': 'OD-017', 'store_id': '1006', 'date_id': '2025-09-12', 'quantity_sold': '5', 'unit_price_at_sale': '105.1', 'total_revenue': '525.5', 'is_promoted': '0'}
+{'transaction_id': '17180155165', 'sku': 'OD-009', 'store_id': '1020', 'date_id': '2026-02-26', 'quantity_sold': '1', 'unit_price_at_sale': '', 'total_revenue': '', 'is_promoted': '0'}
+{'transaction_id': '51539896818', 'sku': 'AP-003', 'store_id': '1019', 'date_id': '2025-10-03', 'quantity_sold': '2', 'unit_price_at_sale': '', 'total_revenue': '', 'is_promoted': '0'}
+{'transaction_id': '25770089603', 'sku': 'EL-004', 'store_id': '1019', 'date_id': '2025-06-20', 'quantity_sold': '3', 'unit_price_at_sale': '', 'total_revenue': '', 'is_promoted': '0'}
+{'transaction_id': '25770088157', 'sku': 'AP-011', 'store_id': '1019', 'date_id': '2026-04-05', 'quantity_sold': '3', 'unit_price_at_sale': '', 'total_revenue': '', 'is_promoted': '0'}
+{'transaction_id': '17180160309', 'sku': 'GR-018', 'store_id': '1018', 'date_id': '2025-05-18', 'quantity_sold': '5', 'unit_price_at_sale': '', 'total_revenue': '', 'is_promoted': '0'}
