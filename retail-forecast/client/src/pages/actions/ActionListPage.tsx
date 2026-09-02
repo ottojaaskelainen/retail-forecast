@@ -176,6 +176,14 @@ export function ActionListPage() {
     () => ['all', ...Array.from(new Set(rows.map((r) => r.category))).sort()],
     [rows],
   );
+  const riskTypes = useMemo(
+    () => ['all', ...Array.from(new Set(rows.map((r) => r.risk_type))).sort()],
+    [rows],
+  );
+  const statuses = useMemo(
+    () => ['all', ...Array.from(new Set(rows.map((r) => r.status))).sort()],
+    [rows],
+  );
 
   const filtered = useMemo(
     () =>
@@ -327,10 +335,11 @@ export function ActionListPage() {
             <SelectValue placeholder="All risk types" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All risk types</SelectItem>
-            <SelectItem value="Stockout">Stockout</SelectItem>
-            <SelectItem value="Overstock">Overstock</SelectItem>
-            <SelectItem value="Both">Both</SelectItem>
+            {riskTypes.map((t) => (
+              <SelectItem key={t} value={t}>
+                {t === 'all' ? 'All risk types' : t}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
@@ -339,11 +348,21 @@ export function ActionListPage() {
             <SelectValue placeholder="All statuses" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All statuses</SelectItem>
-            <SelectItem value="open">Open</SelectItem>
-            <SelectItem value="acknowledged">Acknowledged</SelectItem>
-            <SelectItem value="reorder_placed">Reorder Placed</SelectItem>
-            <SelectItem value="resolved">Resolved</SelectItem>
+            {statuses.map((s) => (
+              <SelectItem key={s} value={s}>
+                {s === 'all'
+                  ? 'All statuses'
+                  : s === 'open'
+                    ? 'Open'
+                    : s === 'acknowledged'
+                      ? 'Acknowledged'
+                      : s === 'reorder_placed'
+                        ? 'Reorder Placed'
+                        : s === 'resolved'
+                          ? 'Resolved'
+                          : s}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
@@ -384,7 +403,7 @@ export function ActionListPage() {
                 const isUpdating = updating === rowKey;
                 return (
                   <tr
-                    key={`${r.store_name}-${r.sku}`}
+                    key={rowKey}
                     className={`border-t transition-colors ${
                       isUpdating ? 'opacity-50' : 'hover:bg-muted/30'
                     }`}

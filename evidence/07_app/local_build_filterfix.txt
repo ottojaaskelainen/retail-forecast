@@ -1,0 +1,117 @@
+
+> retail-forecast@1.0.0 test:smoke
+> playwright install chromium && playwright test tests/smoke.spec.ts
+
+(node:21264) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[1A[2K[2m[WebServer] [22m(node:21408) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+[2m[WebServer] [22m(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K[2m[WebServer] [22m[appkit:resource-registry] 
+[2m[WebServer] [22m===========================================================================
+[2m[WebServer] [22m| MISSING REQUIRED RESOURCES (dev mode — would fail in production)        |
+[2m[WebServer] [22m|                                                                         |
+[2m[WebServer] [22m|   genie_space:Genie Space  (plugin: genie)                              |
+[2m[WebServer] [22m|     Set: DATABRICKS_GENIE_SPACE_ID,                                     |
+[2m[WebServer] [22m|   postgres:Postgres  (plugin: lakebase)                                 |
+[2m[WebServer] [22m|     Set: , , , PGHOST, PGDATABASE, LAKEBASE_ENDPOINT, PGPORT, PGSSLMODE |
+[2m[WebServer] [22m|                                                                         |
+[2m[WebServer] [22m| Add these to your .env file or environment to suppress this warning.    |
+[2m[WebServer] [22m===========================================================================
+
+[1A[2K[2m[WebServer] [22m[lakebase] migration skipped (Lakebase not reachable): 
+
+
+Running 3 tests using 3 workers
+
+[1A[2K[2m[WebServer] [22mBrowserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+[2m[WebServer] [22m  npx update-browserslist-db@latest
+[2m[WebServer] [22m  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+[1A[2K(node:21685) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K(node:21684) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K(node:21686) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K[1/3] [chromium] › tests/smoke.spec.ts:53:3 › smoke test - genie page loads
+[1A[2K[2/3] [chromium] › tests/smoke.spec.ts:53:3 › smoke test - analytics page loads
+[1A[2K[3/3] [chromium] › tests/smoke.spec.ts:36:1 › smoke test - app loads and displays risk dashboard
+[1A[2K[chromium] › tests/smoke.spec.ts:53:3 › smoke test - genie page loads
+Screenshot saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---genie-page-loads-app-screenshot.png
+
+[1A[2KConsole logs saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---genie-page-loads-console-logs.txt
+
+[1A[2K[chromium] › tests/smoke.spec.ts:53:3 › smoke test - analytics page loads
+Screenshot saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---analytics-page-loads-app-screenshot.png
+
+[1A[2KConsole logs saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---analytics-page-loads-console-logs.txt
+
+[1A[2KFailed requests detected: [
+  [32m'Failed request: http://localhost:8000/api/analytics/query/risk_dashboard - net::ERR_ABORTED'[39m
+]
+
+[1A[2K[chromium] › tests/smoke.spec.ts:36:1 › smoke test - app loads and displays risk dashboard
+Screenshot saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---app-loads-and-displays-risk-dashboard-app-screenshot.png
+
+[1A[2KConsole logs saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---app-loads-and-displays-risk-dashboard-console-logs.txt
+
+[1A[2KFailed requests detected: [
+  [32m'Failed request: http://localhost:8000/api/analytics/query/risk_dashboard - net::ERR_ABORTED'[39m
+]
+
+[1A[2K  1) [chromium] › tests/smoke.spec.ts:53:3 › smoke test - analytics page loads ─────────────────────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByText('Demand Risk Dashboard')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 15000ms[22m
+    [2m  - waiting for getByText('Demand Risk Dashboard')[22m
+
+
+      64 |
+      65 |     for (const text of plugin.expectedTexts) {
+    > 66 |       await expect(page.getByText(text)).toBeVisible();
+         |                                          ^
+      67 |     }
+      68 |   });
+      69 | }
+        at /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/tests/smoke.spec.ts:66:42
+
+
+[1A[2K  2) [chromium] › tests/smoke.spec.ts:36:1 › smoke test - app loads and displays risk dashboard ────
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('heading', { name: 'Demand Risk Dashboard' })
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 15000ms[22m
+    [2m  - waiting for getByRole('heading', { name: 'Demand Risk Dashboard' })[22m
+
+
+      52 |
+      53 |   await expect(page.getByRole('heading', { name: 'Retail Forecast' })).toBeVisible();
+    > 54 |   await expect(page.getByRole('heading', { name: 'Demand Risk Dashboard' })).toBeVisible();
+         |                                                                              ^
+      55 |
+      56 |   for (const [, plugin] of enabledPages) {
+      57 |     await expect(page.getByRole('link', { name: plugin.navLabel })).toBeVisible();
+        at /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/tests/smoke.spec.ts:54:78
+
+
+[1A[2K  2 failed
+    [chromium] › tests/smoke.spec.ts:36:1 › smoke test - app loads and displays risk dashboard ─────
+    [chromium] › tests/smoke.spec.ts:53:3 › smoke test - analytics page loads ──────────────────────
+  1 passed (23.4s)

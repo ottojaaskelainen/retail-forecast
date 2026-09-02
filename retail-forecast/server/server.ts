@@ -71,6 +71,7 @@ createApp({
             FROM public.forecast_action_list f
             LEFT JOIN app.action_status s
               ON s.sku = f.sku AND s.store_id = f.store_id AND s.week = f.week
+            WHERE f.week = (SELECT MIN(week) FROM public.forecast_action_list)
             ORDER BY (f.risk_type = 'Stockout') DESC, ABS(f.demand_delta) DESC
             LIMIT 500
           `);
