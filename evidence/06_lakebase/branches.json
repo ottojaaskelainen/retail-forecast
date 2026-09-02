@@ -1,0 +1,18 @@
+[
+  {
+    "branch_id": "production",
+    "create_time": "2026-09-02T08:31:05Z",
+    "name": "projects/retail-forecast-lb/branches/production",
+    "parent": "projects/retail-forecast-lb",
+    "status": {
+      "branch_id": "production",
+      "current_state": "READY",
+      "default": true,
+      "is_protected": false,
+      "logical_size_bytes": 0,
+      "state_change_time": "2026-09-02T08:31:09Z"
+    },
+    "uid": "br-royal-grass-eane3kki",
+    "update_time": "2026-09-02T08:31:12Z"
+  }
+]

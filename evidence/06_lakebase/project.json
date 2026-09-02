@@ -1,0 +1,44 @@
+[
+  {
+    "create_time": "2026-09-02T08:31:05Z",
+    "name": "projects/retail-forecast-lb",
+    "project_id": "retail-forecast-lb",
+    "status": {
+      "compute_last_active_time": "2026-09-02T08:35:42Z",
+      "default_endpoint_settings": {
+        "autoscaling_limit_max_cu": 1,
+        "autoscaling_limit_min_cu": 1,
+        "suspend_timeout_duration": "86400s"
+      },
+      "display_name": "Retail Forecast Lakebase",
+      "enable_pg_native_login": false,
+      "history_retention_duration": "604800s",
+      "owner": "otto.jaaskelainen@databricks.com",
+      "pg_version": 17,
+      "project_id": "retail-forecast-lb"
+    },
+    "uid": "e3f5e56a-36a1-44a9-9351-2b50b5949bbb",
+    "update_time": "2026-09-02T08:35:45Z"
+  },
+  {
+    "create_time": "2026-08-28T10:17:49Z",
+    "name": "projects/northpeak",
+    "project_id": "northpeak",
+    "status": {
+      "compute_last_active_time": "2026-09-02T07:27:44Z",
+      "default_endpoint_settings": {
+        "autoscaling_limit_max_cu": 1,
+        "autoscaling_limit_min_cu": 1,
+        "suspend_timeout_duration": "86400s"
+      },
+      "display_name": "NorthPeak Retail",
+      "enable_pg_native_login": false,
+      "history_retention_duration": "604800s",
+      "owner": "otto.jaaskelainen@databricks.com",
+      "pg_version": 17,
+      "project_id": "northpeak"
+    },
+    "uid": "caafa1be-8621-4b83-9441-ba0eab6210d1",
+    "update_time": "2026-09-02T07:27:45Z"
+  }
+]

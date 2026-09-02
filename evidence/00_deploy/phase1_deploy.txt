@@ -1,0 +1,14 @@
+Uploading bundle files to /Workspace/Users/otto.jaaskelainen@databricks.com/.bundle/retail-forecast-poc/dev/files...
+Created catalogs.main_catalog
+Created jobs.retail_forecast_job
+Created pipelines.retail_forecast_pipeline
+Created postgres_catalogs.retail_forecast_lbcat
+Created schemas.bronze_schema
+Created schemas.feature_schema
+Created schemas.gold_schema
+Created schemas.landing_schema
+Created schemas.silver_schema
+Created volumes.raw_pos_data
+Created volumes.raw_promo_data
+Files: 3 uploaded, 0 deleted
+Resources: 11 created, 0 changed, 0 deleted, 2 unchanged

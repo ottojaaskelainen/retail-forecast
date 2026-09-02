@@ -1,0 +1,23 @@
+{
+  "browse_only": false,
+  "catalog_type": "MANAGED_CATALOG",
+  "comment": "Retail forecast POC catalog — one catalog per environment",
+  "created_at": 1788338137633,
+  "created_by": "otto.jaaskelainen@databricks.com",
+  "effective_predictive_optimization_flag": {
+    "inherited_from_name": "otto-demo-metastore",
+    "inherited_from_type": "METASTORE",
+    "value": "ENABLE"
+  },
+  "enable_predictive_optimization": "INHERIT",
+  "full_name": "retail_forecast",
+  "isolation_mode": "OPEN",
+  "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
+  "name": "retail_forecast",
+  "owner": "otto.jaaskelainen@databricks.com",
+  "securable_type": "CATALOG",
+  "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/__unitystorage/catalogs/d21362a4-88ca-4015-b355-9c95b2ba0faf",
+  "storage_root": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast",
+  "updated_at": 1788338137633,
+  "updated_by": "otto.jaaskelainen@databricks.com"
+}

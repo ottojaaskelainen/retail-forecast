@@ -1,0 +1,54 @@
+Name: retail-forecast-poc
+Target: dev
+Workspace:
+  Host: https://adb-7405605253712899.19.azuredatabricks.net
+  User: otto.jaaskelainen@databricks.com
+  Path: /Workspace/Users/otto.jaaskelainen@databricks.com/.bundle/retail-forecast-poc/dev
+Resources:
+  Catalogs:
+    main_catalog:
+      Name: retail_forecast
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/retail_forecast
+  Jobs:
+    retail_forecast_job:
+      Name: retail-forecast-job
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/jobs/1001256054106337
+  Pipelines:
+    retail_forecast_pipeline:
+      Name: retail-forecast-pipeline
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/pipelines/2e561175-0b0d-480e-984e-5386a8c57bb9
+  Postgres catalogs:
+    retail_forecast_lbcat:
+      Name: retail_forecast_lb
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/retail_forecast_lb
+  Postgres projects:
+    retail_forecast_lb:
+      Name: Retail Forecast Lakebase
+      URL:  (not deployed)
+  SQL Warehouses:
+    retail_forecast_wh:
+      Name: retail-forecast-wh
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/sql/warehouses/e009f21de9ea5f04
+  Schemas:
+    bronze_schema:
+      Name: bronze
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/retail_forecast/bronze
+    feature_schema:
+      Name: feature
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/retail_forecast/feature
+    gold_schema:
+      Name: gold
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/retail_forecast/gold
+    landing_schema:
+      Name: landing
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/retail_forecast/landing
+    silver_schema:
+      Name: silver
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/retail_forecast/silver
+  Volumes:
+    raw_pos_data:
+      Name: raw_pos_data
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/volumes/retail_forecast/landing/raw_pos_data
+    raw_promo_data:
+      Name: raw_promo_data
+      URL:  https://adb-7405605253712899.19.azuredatabricks.net/explore/data/volumes/retail_forecast/landing/raw_promo_data

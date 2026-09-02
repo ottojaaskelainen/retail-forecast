@@ -1,0 +1,30 @@
+[
+  {
+    "create_time": "2026-09-02T08:31:05Z",
+    "endpoint_id": "primary",
+    "name": "projects/retail-forecast-lb/branches/production/endpoints/primary",
+    "parent": "projects/retail-forecast-lb/branches/production",
+    "status": {
+      "autoscaling_limit_max_cu": 1,
+      "autoscaling_limit_min_cu": 1,
+      "current_state": "ACTIVE",
+      "disabled": false,
+      "endpoint_id": "primary",
+      "endpoint_type": "ENDPOINT_TYPE_READ_WRITE",
+      "group": {
+        "enable_readable_secondaries": false,
+        "max": 1,
+        "min": 1
+      },
+      "hosts": {
+        "host": "ep-crimson-pond-eaavbjnn.database.northeurope.azuredatabricks.net",
+        "read_write_pooled_host": "ep-crimson-pond-eaavbjnn-pooler.database.northeurope.azuredatabricks.net"
+      },
+      "last_active_time": "2026-09-02T08:35:42Z",
+      "settings": {},
+      "suspend_timeout_duration": "86400s"
+    },
+    "uid": "ep-crimson-pond-eaavbjnn",
+    "update_time": "2026-09-02T08:35:45Z"
+  }
+]

@@ -7,6 +7,6 @@ resources:
   postgres_catalogs:
     retail_forecast_lbcat:
       catalog_id: retail_forecast_lb
-      branch: ${resources.postgres_projects.retail_forecast_lb.default_branch}
+      branch: projects/retail-forecast-lb/branches/production
       postgres_database: databricks_postgres
       create_database_if_missing: true

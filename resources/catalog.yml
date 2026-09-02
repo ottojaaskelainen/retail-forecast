@@ -3,6 +3,7 @@ resources:
     main_catalog:
       name: ${var.catalog}
       comment: "Retail forecast POC catalog — one catalog per environment"
+      storage_root: abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast
 
   schemas:
     landing_schema:
