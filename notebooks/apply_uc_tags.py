@@ -11,7 +11,7 @@
 
 # COMMAND ----------
 
-catalog = dbutils.widgets.get("catalog") if "catalog" in [w.name for w in dbutils.widgets.getAll()] else "retail_forecast"
+catalog = dbutils.widgets.get("catalog") if "catalog" in dbutils.widgets.getAll() else "retail_forecast"
 
 # COMMAND ----------
 # MAGIC %md

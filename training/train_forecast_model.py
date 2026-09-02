@@ -273,10 +273,9 @@ scored = (
                 F.greatest(F.lit(0), F.round("predicted_demand_raw")).cast("int"))
 )
 
-# Join avg_demand_last_12w from feature table for risk flags
-feat = spark.table(FEATURE_TABLE).select("sku", "store_id", "week", "avg_demand_last_12w")
+# avg_demand_last_12w is already present on scored via FeatureLookup (no extra join needed)
 out = (
-    scored.join(feat, ["sku", "store_id", "week"])
+    scored
     .withColumn("is_stockout_risk",
                 (F.col("predicted_demand") > F.col("avg_demand_last_12w") * 1.3) &
                 (F.col("avg_demand_last_12w") > 0))
