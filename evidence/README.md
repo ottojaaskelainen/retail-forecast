@@ -11,7 +11,8 @@ Retail merchandising teams lose margin two ways: stockouts (demand exceeds suppl
 | Workspace | `adb-7405605253712899.19` (Azure) |
 | UC Catalog | `retail_forecast` |
 | Lakebase project | `retail-forecast-lb` |
-| Profile | `DEFAULT` (service-principal OAuth) |
+| CLI/deploy profile | `otto-sandbox` |
+| App runtime auth | Databricks Apps service principal (auto-provisioned) |
 | App URL | `https://retail-forecast-7405605253712899.19.azure.databricksapps.com` |
 | App Service Principal | client-id `944a2a4f-2bb9-465b-b587-4cbdac9c6106` |
 | Evidence captured | 2026-09-02 |
