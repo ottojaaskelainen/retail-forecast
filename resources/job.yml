@@ -31,6 +31,33 @@ resources:
             - task_key: generate_pos_data
             - task_key: generate_promo_data
 
+        - task_key: build_features
+          notebook_task:
+            notebook_path: ${workspace.file_path}/training/build_features
+            base_parameters:
+              catalog: ${var.catalog}
+          environment_key: default
+          depends_on:
+            - task_key: run_pipeline
+
+        - task_key: train_model
+          notebook_task:
+            notebook_path: ${workspace.file_path}/training/train_model
+            base_parameters:
+              catalog: ${var.catalog}
+          environment_key: default
+          depends_on:
+            - task_key: build_features
+
+        - task_key: score_forecast
+          notebook_task:
+            notebook_path: ${workspace.file_path}/training/score_forecast
+            base_parameters:
+              catalog: ${var.catalog}
+          environment_key: default
+          depends_on:
+            - task_key: train_model
+
         - task_key: apply_uc_tags
           notebook_task:
             notebook_path: ${workspace.file_path}/notebooks/apply_uc_tags
@@ -38,13 +65,4 @@ resources:
               catalog: ${var.catalog}
           environment_key: default
           depends_on:
-            - task_key: train_model
-
-        - task_key: train_model
-          notebook_task:
-            notebook_path: ${workspace.file_path}/training/train_forecast_model
-            base_parameters:
-              catalog: ${var.catalog}
-          environment_key: default
-          depends_on:
-            - task_key: run_pipeline
+            - task_key: score_forecast
