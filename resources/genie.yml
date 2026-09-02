@@ -3,5 +3,5 @@ resources:
     retail_forecast_genie:
       title: Retail Demand Forecast Assistant
       description: Natural language Q&A over retail forecast, promotions, and transaction history
-      warehouse_id: ${var.warehouse_id}
+      warehouse_id: ${resources.sql_warehouses.retail_forecast_wh.id}
       file_path: ../src/retail_forecast.geniespace.json

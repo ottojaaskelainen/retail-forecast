@@ -1,0 +1,12 @@
+resources:
+  postgres_projects:
+    retail_forecast_lb:
+      project_id: retail-forecast-lb
+      display_name: "Retail Forecast Lakebase"
+      pg_version: 17
+  postgres_catalogs:
+    retail_forecast_lbcat:
+      catalog_id: retail_forecast_lb
+      branch: ${resources.postgres_projects.retail_forecast_lb.default_branch}
+      postgres_database: databricks_postgres
+      create_database_if_missing: true

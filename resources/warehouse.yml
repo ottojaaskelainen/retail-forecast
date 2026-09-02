@@ -1,0 +1,9 @@
+resources:
+  sql_warehouses:
+    retail_forecast_wh:
+      name: retail-forecast-wh
+      cluster_size: "2X-Small"
+      enable_serverless_compute: true
+      warehouse_type: PRO
+      auto_stop_mins: 10
+      max_num_clusters: 1

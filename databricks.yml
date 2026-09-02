@@ -3,24 +3,25 @@ bundle:
   engine: direct
 
 workspace:
-  host: https://adb-7405608574488109.9.azuredatabricks.net
+  host: https://adb-7405605253712899.19.azuredatabricks.net
 
 include:
+  # Phase 1 — no dependency on gold data
   - resources/catalog.yml
+  - resources/warehouse.yml
   - resources/pipeline.yml
   - resources/job.yml
-  # Uncomment after pipeline has run and gold tables exist:
-  - resources/genie.yml
-  - resources/dashboard.yml
-  - resources/app.yml
+  - resources/lakebase.yml
+  # Phase 2 — enable AFTER the job run has produced gold tables + forecast_action_list:
+  ##- resources/synced_table.yml
+  ##- resources/genie.yml
+  ##- resources/dashboard.yml
+  ##- resources/app.yml
 
 variables:
-  warehouse_id:
-    description: SQL warehouse used for dashboard and app queries
-    default: "b519c6909e98cb0c"
   catalog:
     description: Unity Catalog catalog name — one catalog per environment
-    default: "gdai_test_dev"
+    default: "retail_forecast"
 
 targets:
   dev:

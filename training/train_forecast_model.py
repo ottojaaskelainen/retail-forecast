@@ -16,7 +16,7 @@ from sklearn.metrics import mean_absolute_error
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
 
-dbutils.widgets.text("catalog", "gdai_test_dev")
+dbutils.widgets.text("catalog", "retail_forecast")
 CATALOG           = dbutils.widgets.get("catalog")
 GOLD_SCHEMA       = "gold"
 MODEL_NAME        = f"{CATALOG}.{GOLD_SCHEMA}.retail_forecast_rf"
