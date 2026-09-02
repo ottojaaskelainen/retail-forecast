@@ -1,0 +1,12 @@
+STATUS: SUCCEEDED
+Columns: ['sku', 'store_id', 'week', 'predicted_demand', 'avg_demand_last_12w', 'is_stockout_risk', 'is_overstock_risk', 'model_version']
+{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-07-06T00:00:00.000Z', 'predicted_demand': '32', 'avg_demand_last_12w': '37.416666666666664', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-07-13T00:00:00.000Z', 'predicted_demand': '32', 'avg_demand_last_12w': '37.416666666666664', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-07-20T00:00:00.000Z', 'predicted_demand': '31', 'avg_demand_last_12w': '37.416666666666664', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-07-27T00:00:00.000Z', 'predicted_demand': '32', 'avg_demand_last_12w': '37.416666666666664', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-08-03T00:00:00.000Z', 'predicted_demand': '32', 'avg_demand_last_12w': '37.416666666666664', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-08-10T00:00:00.000Z', 'predicted_demand': '31', 'avg_demand_last_12w': '37.416666666666664', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-08-17T00:00:00.000Z', 'predicted_demand': '31', 'avg_demand_last_12w': '37.416666666666664', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-08-24T00:00:00.000Z', 'predicted_demand': '31', 'avg_demand_last_12w': '37.416666666666664', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1002', 'week': '2026-07-06T00:00:00.000Z', 'predicted_demand': '31', 'avg_demand_last_12w': '29.916666666666668', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}
+{'sku': 'AP-001', 'store_id': '1002', 'week': '2026-07-13T00:00:00.000Z', 'predicted_demand': '31', 'avg_demand_last_12w': '29.916666666666668', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v8'}

@@ -19,18 +19,18 @@ catalog = dbutils.widgets.get("catalog") if "catalog" in dbutils.widgets.getAll(
 
 # COMMAND ----------
 
-spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_transactions SET TAGS ('layer' = 'bronze', 'domain' = 'retail', 'source_system' = 'pos_system', 'data_product' = 'retail_forecast')")
+spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_transactions SET TAGS ('layer' = 'bronze', 'domain' = 'retail', 'ingest_source' = 'pos_system', 'data_product' = 'retail_forecast')")
 spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_transactions ALTER COLUMN transaction_id SET TAGS ('semantic_type' = 'identifier')")
-spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_transactions ALTER COLUMN quantity_sold SET TAGS ('semantic_type' = 'measure', 'classification' = 'operational')")
-spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_transactions ALTER COLUMN unit_price_at_sale SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_transactions ALTER COLUMN quantity_sold SET TAGS ('semantic_type' = 'measure', 'data_category' = 'operational')")
+spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_transactions ALTER COLUMN unit_price_at_sale SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
 
-spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_products SET TAGS ('layer' = 'bronze', 'domain' = 'retail', 'source_system' = 'product_catalog', 'data_product' = 'retail_forecast')")
-spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_products ALTER COLUMN unit_cost SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
-spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_products ALTER COLUMN unit_price SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_products SET TAGS ('layer' = 'bronze', 'domain' = 'retail', 'ingest_source' = 'product_catalog', 'data_product' = 'retail_forecast')")
+spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_products ALTER COLUMN unit_cost SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_products ALTER COLUMN unit_price SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
 
-spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_stores SET TAGS ('layer' = 'bronze', 'domain' = 'retail', 'source_system' = 'store_master', 'data_product' = 'retail_forecast')")
+spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_stores SET TAGS ('layer' = 'bronze', 'domain' = 'retail', 'ingest_source' = 'store_master', 'data_product' = 'retail_forecast')")
 
-spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_promotions SET TAGS ('layer' = 'bronze', 'domain' = 'retail', 'source_system' = 'promo_system', 'data_product' = 'retail_forecast')")
+spark.sql(f"ALTER TABLE {catalog}.bronze.bronze_promotions SET TAGS ('layer' = 'bronze', 'domain' = 'retail', 'ingest_source' = 'promo_system', 'data_product' = 'retail_forecast')")
 
 print("Bronze tags applied.")
 
@@ -42,17 +42,17 @@ print("Bronze tags applied.")
 
 spark.sql(f"ALTER TABLE {catalog}.silver.silver_transactions SET TAGS ('layer' = 'silver', 'domain' = 'retail', 'data_quality' = 'validated', 'data_product' = 'retail_forecast')")
 spark.sql(f"ALTER TABLE {catalog}.silver.silver_transactions ALTER COLUMN transaction_id SET TAGS ('semantic_type' = 'identifier')")
-spark.sql(f"ALTER TABLE {catalog}.silver.silver_transactions ALTER COLUMN quantity_sold SET TAGS ('semantic_type' = 'measure', 'classification' = 'operational')")
-spark.sql(f"ALTER TABLE {catalog}.silver.silver_transactions ALTER COLUMN unit_price_at_sale SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.silver.silver_transactions ALTER COLUMN quantity_sold SET TAGS ('semantic_type' = 'measure', 'data_category' = 'operational')")
+spark.sql(f"ALTER TABLE {catalog}.silver.silver_transactions ALTER COLUMN unit_price_at_sale SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
 
 spark.sql(f"ALTER TABLE {catalog}.silver.silver_products SET TAGS ('layer' = 'silver', 'domain' = 'retail', 'data_quality' = 'validated', 'data_product' = 'retail_forecast')")
-spark.sql(f"ALTER TABLE {catalog}.silver.silver_products ALTER COLUMN unit_cost SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
-spark.sql(f"ALTER TABLE {catalog}.silver.silver_products ALTER COLUMN unit_price SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.silver.silver_products ALTER COLUMN unit_cost SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.silver.silver_products ALTER COLUMN unit_price SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
 
 spark.sql(f"ALTER TABLE {catalog}.silver.silver_stores SET TAGS ('layer' = 'silver', 'domain' = 'retail', 'data_quality' = 'validated', 'data_product' = 'retail_forecast')")
 
 spark.sql(f"ALTER TABLE {catalog}.silver.silver_promotions SET TAGS ('layer' = 'silver', 'domain' = 'retail', 'data_quality' = 'validated', 'data_product' = 'retail_forecast')")
-spark.sql(f"ALTER TABLE {catalog}.silver.silver_promotions ALTER COLUMN discount_pct SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.silver.silver_promotions ALTER COLUMN discount_pct SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
 
 print("Silver tags applied.")
 
@@ -69,12 +69,12 @@ spark.sql(f"ALTER TABLE {catalog}.gold.dim_store SET TAGS ('layer' = 'gold', 'do
 spark.sql(f"ALTER TABLE {catalog}.gold.dim_date SET TAGS ('layer' = 'gold', 'domain' = 'retail', 'table_type' = 'dimension', 'consumption' = 'dashboard,genie', 'data_product' = 'retail_forecast')")
 
 spark.sql(f"ALTER TABLE {catalog}.gold.fact_transactions SET TAGS ('layer' = 'gold', 'domain' = 'retail', 'table_type' = 'fact', 'consumption' = 'dashboard,genie', 'data_product' = 'retail_forecast')")
-spark.sql(f"ALTER TABLE {catalog}.gold.fact_transactions ALTER COLUMN total_revenue SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
-spark.sql(f"ALTER TABLE {catalog}.gold.fact_transactions ALTER COLUMN unit_price_at_sale SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.gold.fact_transactions ALTER COLUMN total_revenue SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.gold.fact_transactions ALTER COLUMN unit_price_at_sale SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
 spark.sql(f"ALTER TABLE {catalog}.gold.fact_transactions ALTER COLUMN transaction_id SET TAGS ('semantic_type' = 'identifier')")
 
 spark.sql(f"ALTER TABLE {catalog}.gold.fact_promotions SET TAGS ('layer' = 'gold', 'domain' = 'retail', 'table_type' = 'fact', 'consumption' = 'dashboard,genie', 'data_product' = 'retail_forecast')")
-spark.sql(f"ALTER TABLE {catalog}.gold.fact_promotions ALTER COLUMN discount_pct SET TAGS ('semantic_type' = 'measure', 'classification' = 'financial')")
+spark.sql(f"ALTER TABLE {catalog}.gold.fact_promotions ALTER COLUMN discount_pct SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
 
 spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand SET TAGS ('layer' = 'gold', 'domain' = 'retail', 'table_type' = 'ml_output', 'consumption' = 'dashboard,genie,app', 'data_product' = 'retail_forecast')")
 spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN predicted_demand SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_rf')")

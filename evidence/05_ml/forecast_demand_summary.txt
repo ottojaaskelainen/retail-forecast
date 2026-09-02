@@ -1,0 +1,2 @@
+STATUS: SUCCEEDED
+{'total': '16000', 'stockout_risk': '2556', 'overstock_risk': '626'}

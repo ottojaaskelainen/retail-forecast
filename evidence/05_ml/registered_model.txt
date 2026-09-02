@@ -8,127 +8,74 @@
   "owner": "otto.jaaskelainen@databricks.com",
   "schema_name": "gold",
   "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473",
-  "updated_at": 1788344735329,
+  "updated_at": 1788346004070,
   "updated_by": "otto.jaaskelainen@databricks.com"
 }
-[
-  {
-    "catalog_name": "retail_forecast",
-    "created_at": 1788344723987,
-    "created_by": "otto.jaaskelainen@databricks.com",
-    "id": "4ec90caf-aa2d-43ec-a36f-e8f8e46f0ada",
-    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
-    "model_name": "retail_forecast_rf",
-    "run_id": "525c5ff4b4aa4b71949f305f2f062485",
-    "run_workspace_id": 7405605253712899,
-    "schema_name": "gold",
-    "source": "models:/m-790ce05f8cc24d8abd90e6c924b76ff9",
-    "status": "READY",
-    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/4ec90caf-aa2d-43ec-a36f-e8f8e46f0ada",
-    "updated_at": 1788344733859,
-    "updated_by": "otto.jaaskelainen@databricks.com",
-    "version": 7
+v8: status=READY run_id=b3af58888b8540e7b84ab2739c790041
+v7: status=READY run_id=525c5ff4b4aa4b71949f305f2f062485
+v6: status=READY run_id=4c14dbe0c9a7495da23d30ca174c1e66
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    d=json.load(sys.stdin)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+Latest version: 8
+Status: READY
+Run ID: b3af58888b8540e7b84ab2739c790041
+Created: 1788345999174
+Aliases: []
+Traceback (most recent call last):
+  File "<string>", line 3, in <module>
+    d=json.load(sys.stdin)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+{
+  "catalog_name": "retail_forecast",
+  "created_at": 1788345999174,
+  "created_by": "otto.jaaskelainen@databricks.com",
+  "id": "876b2aa4-b1d8-4025-85f1-432678a96e7e",
+  "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
+  "model_name": "retail_forecast_rf",
+  "model_version_dependencies": {
+    "dependencies": [
+      {
+        "table": {
+          "table_full_name": "retail_forecast.feature.weekly_demand_features"
+        }
+      }
+    ]
   },
-  {
-    "catalog_name": "retail_forecast",
-    "created_at": 1788344236226,
-    "created_by": "otto.jaaskelainen@databricks.com",
-    "id": "abfe4f50-2cfa-4284-abeb-9991a9daa8b0",
-    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
-    "model_name": "retail_forecast_rf",
-    "run_id": "4c14dbe0c9a7495da23d30ca174c1e66",
-    "run_workspace_id": 7405605253712899,
-    "schema_name": "gold",
-    "source": "models:/m-6b1a6cd49bd5445182c4a9b9a6a5f0c3",
-    "status": "READY",
-    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/abfe4f50-2cfa-4284-abeb-9991a9daa8b0",
-    "updated_at": 1788344243948,
-    "updated_by": "otto.jaaskelainen@databricks.com",
-    "version": 6
-  },
-  {
-    "catalog_name": "retail_forecast",
-    "created_at": 1788343176962,
-    "created_by": "otto.jaaskelainen@databricks.com",
-    "id": "fd2f13af-9d05-4789-8bea-dd79d90eb01b",
-    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
-    "model_name": "retail_forecast_rf",
-    "run_id": "a8705bc0083d46b4a91033a7026f2ff6",
-    "run_workspace_id": 7405605253712899,
-    "schema_name": "gold",
-    "source": "models:/m-5405b02b66d14297a0f21fb3f988ab8f",
-    "status": "READY",
-    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/fd2f13af-9d05-4789-8bea-dd79d90eb01b",
-    "updated_at": 1788343180262,
-    "updated_by": "otto.jaaskelainen@databricks.com",
-    "version": 5
-  },
-  {
-    "catalog_name": "retail_forecast",
-    "created_at": 1788342899081,
-    "created_by": "otto.jaaskelainen@databricks.com",
-    "id": "fba8f2db-7d65-4d80-a470-d2884028241a",
-    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
-    "model_name": "retail_forecast_rf",
-    "run_id": "4b64cd139f8a457e98e9d9324c0aef32",
-    "run_workspace_id": 7405605253712899,
-    "schema_name": "gold",
-    "source": "models:/m-5ae2364ed7104366a9a96b899c856de0",
-    "status": "READY",
-    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/fba8f2db-7d65-4d80-a470-d2884028241a",
-    "updated_at": 1788342902908,
-    "updated_by": "otto.jaaskelainen@databricks.com",
-    "version": 4
-  },
-  {
-    "catalog_name": "retail_forecast",
-    "created_at": 1788342138530,
-    "created_by": "otto.jaaskelainen@databricks.com",
-    "id": "55687e88-b071-4087-b026-541b87540812",
-    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
-    "model_name": "retail_forecast_rf",
-    "run_id": "a1edbcf653e64ca291026df4c7d27bfa",
-    "run_workspace_id": 7405605253712899,
-    "schema_name": "gold",
-    "source": "models:/m-688476dc4cb24376822b14e6d5720f8e",
-    "status": "READY",
-    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/55687e88-b071-4087-b026-541b87540812",
-    "updated_at": 1788342142609,
-    "updated_by": "otto.jaaskelainen@databricks.com",
-    "version": 3
-  },
-  {
-    "catalog_name": "retail_forecast",
-    "created_at": 1788341911819,
-    "created_by": "otto.jaaskelainen@databricks.com",
-    "id": "77e742e0-8000-466c-b7ce-1cb4092b48ae",
-    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
-    "model_name": "retail_forecast_rf",
-    "run_id": "3ba1d46163d64f37b76414ffc50cf0db",
-    "run_workspace_id": 7405605253712899,
-    "schema_name": "gold",
-    "source": "models:/m-bc8804a690fb4121bc3d386b2f287668",
-    "status": "READY",
-    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/77e742e0-8000-466c-b7ce-1cb4092b48ae",
-    "updated_at": 1788341915800,
-    "updated_by": "otto.jaaskelainen@databricks.com",
-    "version": 2
-  },
-  {
-    "catalog_name": "retail_forecast",
-    "created_at": 1788340260468,
-    "created_by": "otto.jaaskelainen@databricks.com",
-    "id": "cde79f32-226d-4ffb-98a9-d0be90e7e4cb",
-    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
-    "model_name": "retail_forecast_rf",
-    "run_id": "2dd1d32c8883429ebd9361f50e6450d1",
-    "run_workspace_id": 7405605253712899,
-    "schema_name": "gold",
-    "source": "models:/m-1a06e22dc4654adab10d3fa2fb18a0f9",
-    "status": "READY",
-    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/cde79f32-226d-4ffb-98a9-d0be90e7e4cb",
-    "updated_at": 1788340265556,
-    "updated_by": "otto.jaaskelainen@databricks.com",
-    "version": 1
-  }
-]
+  "run_id": "b3af58888b8540e7b84ab2739c790041",
+  "run_workspace_id": 7405605253712899,
+  "schema_name": "gold",
+  "source": "models:/m-529e7727e2084220b9cb335894550bd2",
+  "status": "READY",
+  "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/876b2aa4-b1d8-4025-85f1-432678a96e7e",
+  "updated_at": 1788346002838,
+  "updated_by": "otto.jaaskelainen@databricks.com",
+  "version": 8
+}

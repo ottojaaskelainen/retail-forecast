@@ -1,0 +1,6 @@
+{
+    "mae_holdout": 12.199009969627335,
+    "model_version": 8,
+    "forecast_rows": 16000,
+    "action_rows": 3182
+}

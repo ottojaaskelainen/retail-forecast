@@ -231,7 +231,7 @@ X_train, y_train = train_pd[FEATURES], train_pd[TARGET]
 # --- Train, compute holdout MAE, and register with fe.log_model ---
 mlflow.set_experiment(f"/Users/{_current_user}/retail_forecast_demand")
 with mlflow.start_run() as run:
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model = RandomForestRegressor(n_estimators=50, max_depth=12, random_state=42)
     model.fit(X_train, y_train)
 
     test_set = fe.create_training_set(

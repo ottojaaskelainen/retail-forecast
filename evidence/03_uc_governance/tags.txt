@@ -1,7 +1,60 @@
-Status: SUCCEEDED
+STATUS: SUCCEEDED
 catalog_name	schema_name	table_name	tag_name	tag_value
-Status: SUCCEEDED
-catalog_name	schema_name	table_name	column_name	tag_name	tag_value
-(no rows - tags not applied due to apply_uc_tags failure)
-
-NOTE: apply_uc_tags task FAILED — no tags were applied. See apply_uc_tags_error.txt for details.
+retail_forecast	bronze	bronze_products	data_product	retail_forecast
+retail_forecast	bronze	bronze_products	domain	retail
+retail_forecast	bronze	bronze_products	ingest_source	product_catalog
+retail_forecast	bronze	bronze_products	layer	bronze
+retail_forecast	bronze	bronze_promotions	data_product	retail_forecast
+retail_forecast	bronze	bronze_promotions	domain	retail
+retail_forecast	bronze	bronze_promotions	ingest_source	promo_system
+retail_forecast	bronze	bronze_promotions	layer	bronze
+retail_forecast	bronze	bronze_stores	data_product	retail_forecast
+retail_forecast	bronze	bronze_stores	domain	retail
+retail_forecast	bronze	bronze_stores	ingest_source	store_master
+retail_forecast	bronze	bronze_stores	layer	bronze
+retail_forecast	bronze	bronze_transactions	data_product	retail_forecast
+retail_forecast	bronze	bronze_transactions	domain	retail
+retail_forecast	bronze	bronze_transactions	ingest_source	pos_system
+retail_forecast	bronze	bronze_transactions	layer	bronze
+retail_forecast	gold	dim_date	consumption	dashboard,genie
+retail_forecast	gold	dim_date	data_product	retail_forecast
+retail_forecast	gold	dim_date	domain	retail
+retail_forecast	gold	dim_date	layer	gold
+retail_forecast	gold	dim_date	table_type	dimension
+retail_forecast	gold	dim_product	consumption	dashboard,genie
+retail_forecast	gold	dim_product	data_product	retail_forecast
+retail_forecast	gold	dim_product	domain	retail
+retail_forecast	gold	dim_product	layer	gold
+retail_forecast	gold	dim_product	table_type	dimension
+retail_forecast	gold	dim_store	consumption	dashboard,genie
+retail_forecast	gold	dim_store	data_product	retail_forecast
+retail_forecast	gold	dim_store	domain	retail
+retail_forecast	gold	dim_store	layer	gold
+retail_forecast	gold	dim_store	table_type	dimension
+retail_forecast	gold	fact_promotions	consumption	dashboard,genie
+retail_forecast	gold	fact_promotions	data_product	retail_forecast
+retail_forecast	gold	fact_promotions	domain	retail
+retail_forecast	gold	fact_promotions	layer	gold
+retail_forecast	gold	fact_promotions	table_type	fact
+retail_forecast	gold	fact_transactions	consumption	dashboard,genie
+retail_forecast	gold	fact_transactions	data_product	retail_forecast
+retail_forecast	gold	fact_transactions	domain	retail
+retail_forecast	gold	fact_transactions	layer	gold
+retail_forecast	gold	fact_transactions	table_type	fact
+retail_forecast	silver	silver_products	data_product	retail_forecast
+retail_forecast	silver	silver_products	data_quality	validated
+retail_forecast	silver	silver_products	domain	retail
+retail_forecast	silver	silver_products	layer	silver
+retail_forecast	silver	silver_promotions	data_product	retail_forecast
+retail_forecast	silver	silver_promotions	data_quality	validated
+retail_forecast	silver	silver_promotions	domain	retail
+retail_forecast	silver	silver_promotions	layer	silver
+retail_forecast	silver	silver_stores	data_product	retail_forecast
+retail_forecast	silver	silver_stores	data_quality	validated
+retail_forecast	silver	silver_stores	domain	retail
+retail_forecast	silver	silver_stores	layer	silver
+retail_forecast	silver	silver_transactions	data_product	retail_forecast
+retail_forecast	silver	silver_transactions	data_quality	validated
+retail_forecast	silver	silver_transactions	domain	retail
+retail_forecast	silver	silver_transactions	layer	silver
+(57 rows)

@@ -1,12 +1,10 @@
-Silver and Gold table row counts (queried 2026-09-02):
-
-silver.silver_transactions : 2,180,704
-silver.silver_promotions   : 150
-silver.silver_stores       : 20
-silver.silver_products     : 100
-
-gold.dim_date              : 1,096
-gold.dim_product           : 100
-gold.dim_store             : 20
-gold.fact_promotions       : 150
-gold.fact_transactions     : 2,180,704
+STATUS: SUCCEEDED
+gold.dim_date                           : 1,096
+gold.dim_product                        : 100
+gold.dim_store                          : 20
+gold.fact_promotions                    : 150
+gold.fact_transactions                  : 2,190,266
+silver.silver_products                  : 100
+silver.silver_promotions                : 150
+silver.silver_stores                    : 20
+silver.silver_transactions              : 2,190,266

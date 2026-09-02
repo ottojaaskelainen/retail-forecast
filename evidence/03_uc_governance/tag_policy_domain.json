@@ -1,0 +1,12 @@
+{
+  "create_time": "2026-05-12T13:24:59.448Z",
+  "description": "Business / Discover domain — organizes assets in Catalog Explorer",
+  "id": "b3860fb1-5577-4e71-a0e6-cdc1d89288fe",
+  "tag_key": "domain",
+  "update_time": "2026-09-02T10:05:48.330Z",
+  "values": [
+    {
+      "name": "retail"
+    }
+  ]
+}
