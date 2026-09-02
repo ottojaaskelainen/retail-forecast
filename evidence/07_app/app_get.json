@@ -1,0 +1,82 @@
+{
+  "active_deployment": {
+    "create_time": "2026-09-02T12:24:39Z",
+    "creator": "otto.jaaskelainen@databricks.com",
+    "deployment_artifacts": {
+      "source_code_path": "/Workspace/Users/944a2a4f-2bb9-465b-b587-4cbdac9c6106/src/01f1a6c9449f1de8b76d59320d6f7489"
+    },
+    "deployment_id": "01f1a6c9449f1de8b76d59320d6f7489",
+    "mode": "SNAPSHOT",
+    "source_code_path": "/Workspace/Users/otto.jaaskelainen@databricks.com/.bundle/retail-forecast-poc/dev/files/retail-forecast",
+    "status": {
+      "message": "App started successfully",
+      "state": "SUCCEEDED"
+    },
+    "update_time": "2026-09-02T12:25:43Z"
+  },
+  "app_status": {
+    "message": "App has status: App is running",
+    "state": "RUNNING"
+  },
+  "compute_size": "MEDIUM",
+  "compute_status": {
+    "message": "App compute is running.",
+    "state": "ACTIVE"
+  },
+  "create_time": "2026-09-02T12:22:08Z",
+  "creator": "otto.jaaskelainen@databricks.com",
+  "default_source_code_path": "/Workspace/Users/otto.jaaskelainen@databricks.com/.bundle/retail-forecast-poc/dev/files/retail-forecast",
+  "description": "Retail demand forecasting demo app",
+  "effective_budget_policy_id": "02d70827-52c9-35e3-abc6-d3922dfa9f9f",
+  "effective_usage_policy_id": "02d70827-52c9-35e3-abc6-d3922dfa9f9f",
+  "effective_user_api_scopes": [
+    "dashboards.genie",
+    "genie",
+    "iam.access-control:read",
+    "iam.current-user:read",
+    "postgres",
+    "sql"
+  ],
+  "id": "944a2a4f-2bb9-465b-b587-4cbdac9c6106",
+  "name": "retail-forecast",
+  "oauth2_app_client_id": "ebbfbf8f-6f9b-4975-b95b-6e6ca6f2ff68",
+  "oauth2_app_integration_id": "ebbfbf8f-6f9b-4975-b95b-6e6ca6f2ff68",
+  "resources": [
+    {
+      "name": "sql-warehouse",
+      "sql_warehouse": {
+        "id": "e009f21de9ea5f04",
+        "permission": "CAN_USE"
+      }
+    },
+    {
+      "genie_space": {
+        "name": "Retail Demand Forecast Assistant",
+        "permission": "CAN_RUN",
+        "space_id": "01f1a6c8e89a1afeba1d4a5a85be89e2"
+      },
+      "name": "genie-space"
+    },
+    {
+      "name": "postgres",
+      "postgres": {
+        "branch": "projects/retail-forecast-lb/branches/production",
+        "database": "projects/retail-forecast-lb/branches/production/databases/databricks-postgres",
+        "permission": "CAN_CONNECT_AND_CREATE"
+      }
+    }
+  ],
+  "service_principal_client_id": "944a2a4f-2bb9-465b-b587-4cbdac9c6106",
+  "service_principal_id": 146460119787691,
+  "service_principal_name": "app-1vjbr9 retail-forecast",
+  "thumbnail_url": "",
+  "update_time": "2026-09-02T12:24:39Z",
+  "updater": "otto.jaaskelainen@databricks.com",
+  "url": "https://retail-forecast-7405605253712899.19.azure.databricksapps.com",
+  "user_api_scopes": [
+    "genie",
+    "dashboards.genie",
+    "sql",
+    "postgres"
+  ]
+}

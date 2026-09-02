@@ -1,0 +1,41 @@
+{
+  "row_count": 3182,
+  "first_3_rows": [
+    {
+      "week": "2026-07-06T00:00:00.000Z",
+      "store_name": "Adkins Inc",
+      "region": "West",
+      "sku": "EL-001",
+      "product_name": "Electronics Product 1",
+      "category": "Electronics",
+      "predicted_demand": "73",
+      "avg_demand_last_12w": "36.3",
+      "is_stockout_risk": "true",
+      "is_overstock_risk": "false"
+    },
+    {
+      "week": "2026-07-06T00:00:00.000Z",
+      "store_name": "Adkins Inc",
+      "region": "West",
+      "sku": "EL-002",
+      "product_name": "Electronics Product 2",
+      "category": "Electronics",
+      "predicted_demand": "74",
+      "avg_demand_last_12w": "37.6",
+      "is_stockout_risk": "true",
+      "is_overstock_risk": "false"
+    },
+    {
+      "week": "2026-07-06T00:00:00.000Z",
+      "store_name": "Adkins Inc",
+      "region": "West",
+      "sku": "EL-003",
+      "product_name": "Electronics Product 3",
+      "category": "Electronics",
+      "predicted_demand": "75",
+      "avg_demand_last_12w": "38.3",
+      "is_stockout_risk": "true",
+      "is_overstock_risk": "false"
+    }
+  ]
+}

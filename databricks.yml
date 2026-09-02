@@ -14,9 +14,9 @@ include:
   - resources/lakebase.yml
   # Phase 2 — enable AFTER the job run has produced gold tables + forecast_action_list:
   - resources/synced_table.yml
-  ##- resources/genie.yml
-  ##- resources/dashboard.yml
-  ##- resources/app.yml
+  - resources/genie.yml
+  - resources/dashboard.yml
+  - resources/app.yml
 
 variables:
   catalog:

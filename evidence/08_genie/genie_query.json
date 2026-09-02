@@ -1,0 +1,36 @@
+{
+  "question": "Show me the top 5 stores by total number of stockout-risk SKUs across all forecast weeks",
+  "conversation_id": "01f1a6c9f3af1138af9bc4151c2bbb09",
+  "message_id": "01f1a6ca12cd165390c88369943df309",
+  "status": "COMPLETED",
+  "generated_sql": "WITH stockout_counts AS (SELECT s.store_id, s.store_name, COUNT(f.sku) AS stockout_risk_skus FROM retail_forecast.gold.forecast_demand f JOIN retail_forecast.gold.dim_store s ON f.store_id = s.store_id WHERE f.is_stockout_risk = true AND f.store_id IS NOT NULL GROUP BY s.store_id, s.store_name) SELECT store_id, store_name, stockout_risk_skus FROM (SELECT *, RANK() OVER (ORDER BY stockout_risk_skus DESC) AS rank FROM stockout_counts) WHERE rank <= 5",
+  "row_count": 5,
+  "result_rows": [
+    {
+      "store_id": "1010",
+      "store_name": "Harris, Collins and Carney",
+      "stockout_risk_skus": 324
+    },
+    {
+      "store_id": "1009",
+      "store_name": "Humphrey Inc",
+      "stockout_risk_skus": 282
+    },
+    {
+      "store_id": "1011",
+      "store_name": "Perez Inc",
+      "stockout_risk_skus": 235
+    },
+    {
+      "store_id": "1005",
+      "store_name": "Watts, Robinson and Nguyen",
+      "stockout_risk_skus": 203
+    },
+    {
+      "store_id": "1012",
+      "store_name": "Jordan, Henderson and Owens",
+      "stockout_risk_skus": 202
+    }
+  ],
+  "genie_answer": "The top 5 stores by total number of stockout-risk SKUs across all forecast weeks are: Harris, Collins and Carney (324 SKUs), Humphrey Inc (282 SKUs), Perez Inc (235 SKUs), Watts, Robinson and Nguyen (203 SKUs), Jordan, Henderson and Owens (202 SKUs). Harris, Collins and Carney has the highest number of stockout-risk SKUs, with a notable lead over the other stores."
+}

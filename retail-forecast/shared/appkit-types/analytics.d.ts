@@ -5,30 +5,6 @@ import type { SQLTypeMarker, SQLStringMarker, SQLNumberMarker, SQLBooleanMarker,
 
 declare module "@databricks/appkit-ui/react" {
   interface QueryRegistry {
-    action_list: {
-        name: "action_list";
-        parameters: Record<string, never>;
-        result: Array<{
-          /** @sqlType STRING */
-          store_name: string;
-          /** @sqlType STRING */
-          region: string;
-          /** @sqlType STRING */
-          sku: string;
-          /** @sqlType STRING */
-          product_name: string;
-          /** @sqlType STRING */
-          category: string;
-          /** @sqlType INT */
-          predicted_demand: number;
-          /** @sqlType DOUBLE */
-          avg_demand_last_12w: number;
-          /** @sqlType STRING */
-          risk_type: string;
-          /** @sqlType DOUBLE */
-          demand_delta: number;
-        }>;
-      };
     forecast_explorer: {
         name: "forecast_explorer";
         parameters: {
