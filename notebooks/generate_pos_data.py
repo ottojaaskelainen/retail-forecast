@@ -37,7 +37,8 @@ UNIT_PRICES = {
 }
 
 DATA_START = date(2024, 7, 1)
-DATA_END   = date(2026, 6, 29)
+today      = date.today()
+DATA_END   = today - timedelta(days=today.weekday())  # most recent Monday on/before today
 TODAY      = DATA_END
 
 # Copy build_promotion_schedule verbatim from generate_promo_data.py
@@ -207,7 +208,7 @@ sku_spark = spark.createDataFrame(
 # Step 3: Store × date cross join → 20 × 729 = 14,580 rows
 #         Each row gets a random txn_count (100–200)
 dates_spark = spark.sql(
-    "SELECT explode(sequence(date('2024-07-01'), date('2026-06-29'), interval 1 day)) AS txn_date"
+    f"SELECT explode(sequence(date('{DATA_START}'), date('{DATA_END}'), interval 1 day)) AS txn_date"
 )
 store_dates = (
     stores_spark.crossJoin(dates_spark)

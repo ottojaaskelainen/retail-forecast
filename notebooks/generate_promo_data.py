@@ -31,7 +31,8 @@ REGIONS = ["North", "South", "East", "West", "Central"]
 CHANNELS = ["in_store", "online", "both"]
 
 DATA_START = date(2024, 7, 1)
-DATA_END   = date(2026, 6, 29)
+today      = date.today()
+DATA_END   = today - timedelta(days=today.weekday())  # most recent Monday on/before today
 TODAY      = DATA_END  # treat last data date as "today" for historical/future split
 
 
