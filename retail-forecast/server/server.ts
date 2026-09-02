@@ -5,7 +5,20 @@ createApp({
     analytics(),
     genie(),
     server(),
-    lakebase(),
+    // Provide fallback pool config so the plugin initialises without
+    // throwing when PGHOST/PGDATABASE/LAKEBASE_ENDPOINT are absent
+    // (local smoke tests, CI without a live Lakebase).  Actual
+    // query failures are caught in onPluginsReady and in the route
+    // handlers below.
+    lakebase({
+      pool: {
+        host: process.env.PGHOST ?? 'localhost',
+        database: process.env.PGDATABASE ?? 'databricks_postgres',
+        endpoint:
+          process.env.LAKEBASE_ENDPOINT ??
+          'projects/dummy/branches/dummy/endpoints/dummy',
+      },
+    }),
   ],
   async onPluginsReady(appkit) {
     // Startup migration — SP owns the `app` schema and the write-back table.

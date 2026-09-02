@@ -1,0 +1,134 @@
+
+> retail-forecast@1.0.0 typecheck
+> tsc -b tsconfig.server.json && tsc -b tsconfig.client.json
+
+
+> retail-forecast@1.0.0 prebuild
+> npm run sync && (npm run typegen || true)
+
+
+> retail-forecast@1.0.0 sync
+> appkit plugin sync --write --silent
+
+
+> retail-forecast@1.0.0 typegen
+> appkit generate-types
+
+
+  Typegen Queries (4)
+  ──────────────────────────────────────────────────
+  cache HIT    action_list              
+  cache HIT    forecast_explorer        
+  cache HIT    forecast_explorer_options
+  cache HIT    risk_dashboard           
+  ──────────────────────────────────────────────────
+  0 new, 4 from cache. 0.00s
+
+Generated query types: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/shared/appkit-types/analytics.d.ts
+Generated serving types: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/shared/appkit-types/serving.d.ts
+
+> retail-forecast@1.0.0 build
+> npm run build:server && npm run build:client
+
+
+> retail-forecast@1.0.0 build:server
+> tsc -b tsconfig.server.json && tsdown -c tsdown.server.config.ts
+
+[34mℹ[39m tsdown [2mv0.20.3[22m powered by rolldown [2mv1.0.0-rc.3[22m
+[34mℹ[39m config file: [4m/Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/tsdown.server.config.ts[24m 
+[34mℹ[39m entry: [34mserver/server.ts[39m
+[34mℹ[39m tsconfig: [34mtsconfig.server.json[39m
+[34mℹ[39m Build start
+[34mℹ[39m Cleaning 1 files
+[34mℹ[39m [2mdist/[22m[1mserver.js[22m  [2m3.36 kB[22m [2m│ gzip: 1.32 kB[22m
+[34mℹ[39m 1 files, total: 3.36 kB
+[32m✔[39m Build complete in [32m28ms[39m
+
+> retail-forecast@1.0.0 build:client
+> tsc -b tsconfig.client.json && vite build --config client/vite.config.ts
+
+rolldown-vite v7.1.14 building for production...
+(node:78263) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[2Ktransforming...Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✓[39m 5795 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mclient/dist/[22m[32mindex.html                    [39m[1m[2m    0.84 kB[22m[22m[2m │ gzip:   0.39 kB[22m
+[2mclient/dist/[22m[2massets/[22m[35mindex-aLkBS9BN.css     [39m[1m[2m  127.36 kB[22m[22m[2m │ gzip:  21.00 kB[22m
+[2mclient/dist/[22m[2massets/[22m[36mArrow.dom-CdgHRphk.js  [39m[1m[2m  210.82 kB[22m[22m[2m │ gzip:  48.96 kB[22m
+[2mclient/dist/[22m[2massets/[22m[36mindex-D9Et37_g.js      [39m[1m[33m2,133.16 kB[39m[22m[2m │ gzip: 676.56 kB[22m
+[plugin builtin:reporter] [1m[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 887ms
+
+> retail-forecast@1.0.0 test:smoke
+> playwright install chromium && playwright test tests/smoke.spec.ts
+
+(node:78289) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[1A[2K[2m[WebServer] [22m(node:78430) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+[2m[WebServer] [22m(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K[2m[WebServer] [22m[appkit:resource-registry] 
+[2m[WebServer] [22m===========================================================================
+[2m[WebServer] [22m| MISSING REQUIRED RESOURCES (dev mode — would fail in production)        |
+[2m[WebServer] [22m|                                                                         |
+[2m[WebServer] [22m|   genie_space:Genie Space  (plugin: genie)                              |
+[2m[WebServer] [22m|     Set: DATABRICKS_GENIE_SPACE_ID,                                     |
+[2m[WebServer] [22m|   postgres:Postgres  (plugin: lakebase)                                 |
+[2m[WebServer] [22m|     Set: , , , PGHOST, PGDATABASE, LAKEBASE_ENDPOINT, PGPORT, PGSSLMODE |
+[2m[WebServer] [22m|                                                                         |
+[2m[WebServer] [22m| Add these to your .env file or environment to suppress this warning.    |
+[2m[WebServer] [22m===========================================================================
+
+[1A[2K[2m[WebServer] [22m[lakebase] migration skipped (Lakebase not reachable): 
+
+
+Running 3 tests using 3 workers
+
+[1A[2K[2m[WebServer] [22mBrowserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+[2m[WebServer] [22m  npx update-browserslist-db@latest
+[2m[WebServer] [22m  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+[1A[2K(node:78705) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K(node:78706) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K(node:78707) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K[1/3] [chromium] › tests/smoke.spec.ts:36:1 › smoke test - app loads and displays risk dashboard
+[1A[2K[2/3] [chromium] › tests/smoke.spec.ts:53:3 › smoke test - genie page loads
+[1A[2K[3/3] [chromium] › tests/smoke.spec.ts:53:3 › smoke test - analytics page loads
+[1A[2K[chromium] › tests/smoke.spec.ts:53:3 › smoke test - genie page loads
+Screenshot saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---genie-page-loads-app-screenshot.png
+
+[1A[2KConsole logs saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---genie-page-loads-console-logs.txt
+
+[1A[2K[chromium] › tests/smoke.spec.ts:36:1 › smoke test - app loads and displays risk dashboard
+Screenshot saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---app-loads-and-displays-risk-dashboard-app-screenshot.png
+
+[1A[2KConsole logs saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---app-loads-and-displays-risk-dashboard-console-logs.txt
+
+[1A[2KFailed requests detected: [
+  [32m'Failed request: http://localhost:8000/api/analytics/query/risk_dashboard - net::ERR_ABORTED'[39m
+]
+
+[1A[2K[chromium] › tests/smoke.spec.ts:53:3 › smoke test - analytics page loads
+Screenshot saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---analytics-page-loads-app-screenshot.png
+
+[1A[2KConsole logs saved to: /Users/otto.jaaskelainen/Documents/Repos/databricks-dev/retail-forecast-poc/retail-forecast/.smoke-test/smoke-test---analytics-page-loads-console-logs.txt
+
+[1A[2KFailed requests detected: [
+  [32m'Failed request: http://localhost:8000/api/analytics/query/risk_dashboard - net::ERR_ABORTED'[39m
+]
+
+[1A[2K  3 passed (13.0s)

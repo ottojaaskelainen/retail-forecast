@@ -5,6 +5,63 @@ import type { SQLTypeMarker, SQLStringMarker, SQLNumberMarker, SQLBooleanMarker,
 
 declare module "@databricks/appkit-ui/react" {
   interface QueryRegistry {
+    action_list: {
+        name: "action_list";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType STRING */
+          store_name: string;
+          /** @sqlType STRING */
+          region: string;
+          /** @sqlType STRING */
+          sku: string;
+          /** @sqlType STRING */
+          product_name: string;
+          /** @sqlType STRING */
+          category: string;
+          /** @sqlType INT */
+          predicted_demand: number;
+          /** @sqlType DOUBLE */
+          avg_demand_last_12w: number;
+          /** @sqlType STRING */
+          risk_type: string;
+          /** @sqlType DOUBLE */
+          demand_delta: number;
+        }>;
+      };
+    forecast_explorer: {
+        name: "forecast_explorer";
+        parameters: {
+          /** any - use sql.*() */
+          store_name: SQLTypeMarker;
+          /** any - use sql.*() */
+          sku: SQLTypeMarker;
+        };
+        result: Array<{
+          /** @sqlType TIMESTAMP */
+          week: string;
+          /** @sqlType STRING */
+          store_name: string;
+          /** @sqlType STRING */
+          region: string;
+          /** @sqlType STRING */
+          sku: string;
+          /** @sqlType STRING */
+          product_name: string;
+          /** @sqlType STRING */
+          category: string;
+          /** @sqlType DOUBLE */
+          actual_demand: number;
+          /** @sqlType DOUBLE */
+          predicted_demand: number;
+          /** @sqlType DOUBLE */
+          avg_demand_last_12w: number;
+          /** @sqlType BOOLEAN */
+          is_stockout_risk: boolean;
+          /** @sqlType BOOLEAN */
+          is_overstock_risk: boolean;
+        }>;
+      };
     forecast_explorer_options: {
         name: "forecast_explorer_options";
         parameters: Record<string, never>;
@@ -21,63 +78,11 @@ declare module "@databricks/appkit-ui/react" {
           category: string;
         }>;
       };
-    forecast_explorer: {
-        name: "forecast_explorer";
-        parameters: { store_name: SQLStringMarker; sku: SQLStringMarker };
-        result: Array<{
-          /** @sqlType DATE */
-          week: string;
-          /** @sqlType STRING */
-          store_name: string;
-          /** @sqlType STRING */
-          region: string;
-          /** @sqlType STRING */
-          sku: string;
-          /** @sqlType STRING */
-          product_name: string;
-          /** @sqlType STRING */
-          category: string;
-          /** @sqlType DOUBLE */
-          actual_demand: number | null;
-          /** @sqlType DOUBLE */
-          predicted_demand: number | null;
-          /** @sqlType DOUBLE */
-          avg_demand_last_12w: number | null;
-          /** @sqlType BOOLEAN */
-          is_stockout_risk: boolean | null;
-          /** @sqlType BOOLEAN */
-          is_overstock_risk: boolean | null;
-        }>;
-      };
-    action_list: {
-        name: "action_list";
-        parameters: Record<string, never>;
-        result: Array<{
-          /** @sqlType STRING */
-          store_name: string;
-          /** @sqlType STRING */
-          region: string;
-          /** @sqlType STRING */
-          sku: string;
-          /** @sqlType STRING */
-          product_name: string;
-          /** @sqlType STRING */
-          category: string;
-          /** @sqlType BIGINT */
-          predicted_demand: number;
-          /** @sqlType DOUBLE */
-          avg_demand_last_12w: number;
-          /** @sqlType STRING */
-          risk_type: string;
-          /** @sqlType DOUBLE */
-          demand_delta: number;
-        }>;
-      };
     risk_dashboard: {
         name: "risk_dashboard";
         parameters: Record<string, never>;
         result: Array<{
-          /** @sqlType DATE */
+          /** @sqlType TIMESTAMP */
           week: string;
           /** @sqlType STRING */
           store_name: string;
@@ -89,7 +94,7 @@ declare module "@databricks/appkit-ui/react" {
           product_name: string;
           /** @sqlType STRING */
           category: string;
-          /** @sqlType BIGINT */
+          /** @sqlType INT */
           predicted_demand: number;
           /** @sqlType DOUBLE */
           avg_demand_last_12w: number;
