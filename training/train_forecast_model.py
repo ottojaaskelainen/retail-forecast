@@ -21,7 +21,7 @@ FEATURE_SCHEMA    = "feature"
 MODEL_NAME        = f"{CATALOG}.{GOLD_SCHEMA}.retail_forecast_rf"
 FEATURE_TABLE     = f"{CATALOG}.{FEATURE_SCHEMA}.weekly_demand_features"
 MIN_HISTORY_WEEKS = 12
-FEATURES          = ["week_of_year", "is_promoted", "discount_pct_feat", "rolling_4wk_avg"]
+FEATURES          = ["week_of_year", "is_promoted", "discount_pct_feat", "rolling_4wk_avg", "avg_demand_last_12w"]
 TARGET            = "total_quantity"
 DATA_END          = date(2026, 6, 29)
 
