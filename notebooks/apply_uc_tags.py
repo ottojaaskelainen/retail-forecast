@@ -81,6 +81,8 @@ spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN predicted_de
 spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN is_stockout_risk SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_rf')")
 spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN is_overstock_risk SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_rf')")
 
+spark.sql(f"ALTER TABLE {catalog}.gold.forecast_action_list SET TAGS ('layer' = 'gold', 'domain' = 'retail', 'table_type' = 'ml_output', 'consumption' = 'dashboard,genie,app', 'data_product' = 'retail_forecast')")
+
 print("Gold tags applied.")
 
 # COMMAND ----------

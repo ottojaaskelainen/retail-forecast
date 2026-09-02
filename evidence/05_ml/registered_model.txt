@@ -11,71 +11,39 @@
   "updated_at": 1788346004070,
   "updated_by": "otto.jaaskelainen@databricks.com"
 }
-v8: status=READY run_id=b3af58888b8540e7b84ab2739c790041
-v7: status=READY run_id=525c5ff4b4aa4b71949f305f2f062485
-v6: status=READY run_id=4c14dbe0c9a7495da23d30ca174c1e66
-Traceback (most recent call last):
-  File "<string>", line 3, in <module>
-    d=json.load(sys.stdin)
-  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 298, in load
-    return loads(fp.read(),
-        cls=cls, object_hook=object_hook,
-        parse_float=parse_float, parse_int=parse_int,
-        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
-  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 352, in loads
-    return _default_decoder.decode(s)
-           ~~~~~~~~~~~~~~~~~~~~~~~^^^
-  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 345, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 363, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-Latest version: 8
-Status: READY
-Run ID: b3af58888b8540e7b84ab2739c790041
-Created: 1788345999174
-Aliases: []
-Traceback (most recent call last):
-  File "<string>", line 3, in <module>
-    d=json.load(sys.stdin)
-  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 298, in load
-    return loads(fp.read(),
-        cls=cls, object_hook=object_hook,
-        parse_float=parse_float, parse_int=parse_int,
-        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
-  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 352, in loads
-    return _default_decoder.decode(s)
-           ~~~~~~~~~~~~~~~~~~~~~~~^^^
-  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 345, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/decoder.py", line 363, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-{
-  "catalog_name": "retail_forecast",
-  "created_at": 1788345999174,
-  "created_by": "otto.jaaskelainen@databricks.com",
-  "id": "876b2aa4-b1d8-4025-85f1-432678a96e7e",
-  "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
-  "model_name": "retail_forecast_rf",
-  "model_version_dependencies": {
-    "dependencies": [
-      {
-        "table": {
-          "table_full_name": "retail_forecast.feature.weekly_demand_features"
-        }
-      }
-    ]
+[
+  {
+    "catalog_name": "retail_forecast",
+    "created_at": 1788345999174,
+    "created_by": "otto.jaaskelainen@databricks.com",
+    "id": "876b2aa4-b1d8-4025-85f1-432678a96e7e",
+    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
+    "model_name": "retail_forecast_rf",
+    "run_id": "b3af58888b8540e7b84ab2739c790041",
+    "run_workspace_id": 7405605253712899,
+    "schema_name": "gold",
+    "source": "models:/m-529e7727e2084220b9cb335894550bd2",
+    "status": "READY",
+    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/876b2aa4-b1d8-4025-85f1-432678a96e7e",
+    "updated_at": 1788346002838,
+    "updated_by": "otto.jaaskelainen@databricks.com",
+    "version": 8
   },
-  "run_id": "b3af58888b8540e7b84ab2739c790041",
-  "run_workspace_id": 7405605253712899,
-  "schema_name": "gold",
-  "source": "models:/m-529e7727e2084220b9cb335894550bd2",
-  "status": "READY",
-  "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/876b2aa4-b1d8-4025-85f1-432678a96e7e",
-  "updated_at": 1788346002838,
-  "updated_by": "otto.jaaskelainen@databricks.com",
-  "version": 8
-}
+  {
+    "catalog_name": "retail_forecast",
+    "created_at": 1788344723987,
+    "created_by": "otto.jaaskelainen@databricks.com",
+    "id": "4ec90caf-aa2d-43ec-a36f-e8f8e46f0ada",
+    "metastore_id": "d37d826a-cf38-471f-8a1a-94572dafd073",
+    "model_name": "retail_forecast_rf",
+    "run_id": "525c5ff4b4aa4b71949f305f2f062485",
+    "run_workspace_id": 7405605253712899,
+    "schema_name": "gold",
+    "source": "models:/m-790ce05f8cc24d8abd90e6c924b76ff9",
+    "status": "READY",
+    "storage_location": "abfss://otto-demo-ws-uc-container@ottodemoneuc.dfs.core.windows.net/retail_forecast/models/b4bbfd18-4fa3-4798-85a3-71935b662473/versions/4ec90caf-aa2d-43ec-a36f-e8f8e46f0ada",
+    "updated_at": 1788344733859,
+    "updated_by": "otto.jaaskelainen@databricks.com",
+    "version": 7
+  }
+]

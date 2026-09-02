@@ -40,6 +40,11 @@ gold	fact_transactions	data_product	retail_forecast
 gold	fact_transactions	domain	retail
 gold	fact_transactions	layer	gold
 gold	fact_transactions	table_type	fact
+gold	forecast_action_list	consumption	dashboard,genie,app
+gold	forecast_action_list	data_product	retail_forecast
+gold	forecast_action_list	domain	retail
+gold	forecast_action_list	layer	gold
+gold	forecast_action_list	table_type	ml_output
 gold	forecast_demand	consumption	dashboard,genie,app
 gold	forecast_demand	data_product	retail_forecast
 gold	forecast_demand	domain	retail
@@ -61,4 +66,4 @@ silver	silver_transactions	data_product	retail_forecast
 silver	silver_transactions	data_quality	validated
 silver	silver_transactions	domain	retail
 silver	silver_transactions	layer	silver
-(62 rows)
+(67 rows)

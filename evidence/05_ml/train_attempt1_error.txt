@@ -1,3 +1,0 @@
-ERROR: [AMBIGUOUS_REFERENCE] Reference `avg_demand_last_12w` is ambiguous, could be: [`avg_demand_last_12w`, `retail_forecast`.`feature`.`weekly_demand_features`.`avg_demand_last_12w`]. SQLSTATE: 42704
-== DataFrame ==
-"col" was called from , line 24 in cell [11]

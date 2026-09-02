@@ -1,4 +1,0 @@
-Feature table retail_forecast.feature.weekly_demand_features was NOT created.
-The train_model task failed before reaching the feature table write step.
-Root cause: AMBIGUOUS_REFERENCE for avg_demand_last_12w in train_forecast_model.py.
-See evidence/05_ml/train_attempt0_error.txt and train_attempt1_error.txt.

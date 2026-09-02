@@ -1,8 +1,68 @@
-JOB STATE: INTERNAL_ERROR FAILED Task apply_uc_tags failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.
-Run URL: https://adb-7405605253712899.19.azuredatabricks.net/?o=7405605253712899#job/1001256054106337/run/1088495823888028
-  TASK apply_uc_tags (attempt 0): TERMINATED FAILED  run_id=607393571915618
-  TASK run_pipeline (attempt 0): TERMINATED SUCCESS  run_id=1014751090634538
-  TASK generate_promo_data (attempt 0): TERMINATED SUCCESS  run_id=912893462705668
-  TASK generate_pos_data (attempt 0): TERMINATED SUCCESS  run_id=13108048982082
-  TASK train_model (attempt 0): TERMINATED FAILED  run_id=331855253699905
-  TASK train_model (attempt 1): TERMINATED FAILED  run_id=386160257680318
+{
+  "run_id": 141891810875743,
+  "state": {
+    "life_cycle_state": "INTERNAL_ERROR",
+    "result_state": "FAILED",
+    "state_message": "Task apply_uc_tags failed with message: Workload failed, see run output for details. This caused all downstream tasks to get skipped.",
+    "user_cancelled_or_timedout": false
+  },
+  "start_time": 1788345516365,
+  "end_time": 1788346083855,
+  "tasks": [
+    {
+      "task_key": "apply_uc_tags",
+      "attempt_number": 0,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "FAILED",
+        "state_message": "Workload failed, see run output for details",
+        "user_cancelled_or_timedout": false
+      },
+      "run_id": 126517028293010
+    },
+    {
+      "task_key": "run_pipeline",
+      "attempt_number": 0,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "run_id": 170685767841714
+    },
+    {
+      "task_key": "generate_promo_data",
+      "attempt_number": 0,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "run_id": 872410354017298
+    },
+    {
+      "task_key": "generate_pos_data",
+      "attempt_number": 0,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "run_id": 901576405410655
+    },
+    {
+      "task_key": "train_model",
+      "attempt_number": 0,
+      "state": {
+        "life_cycle_state": "TERMINATED",
+        "result_state": "SUCCESS",
+        "state_message": "",
+        "user_cancelled_or_timedout": false
+      },
+      "run_id": 902888921245142
+    }
+  ]
+}
