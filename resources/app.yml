@@ -8,6 +8,7 @@ resources:
         - genie
         - dashboards.genie
         - sql
+        - postgres
       resources:
         - name: sql-warehouse
           sql_warehouse:
@@ -18,3 +19,8 @@ resources:
             name: Retail Demand Forecast Assistant
             space_id: ${resources.genie_spaces.retail_forecast_genie.id}
             permission: CAN_RUN
+        - name: postgres
+          postgres:
+            branch: projects/retail-forecast-lb/branches/production
+            database: projects/retail-forecast-lb/branches/production/databases/databricks-postgres
+            permission: CAN_CONNECT_AND_CREATE
