@@ -1,60 +1,64 @@
-STATUS: SUCCEEDED
-catalog_name	schema_name	table_name	tag_name	tag_value
-retail_forecast	bronze	bronze_products	data_product	retail_forecast
-retail_forecast	bronze	bronze_products	domain	retail
-retail_forecast	bronze	bronze_products	ingest_source	product_catalog
-retail_forecast	bronze	bronze_products	layer	bronze
-retail_forecast	bronze	bronze_promotions	data_product	retail_forecast
-retail_forecast	bronze	bronze_promotions	domain	retail
-retail_forecast	bronze	bronze_promotions	ingest_source	promo_system
-retail_forecast	bronze	bronze_promotions	layer	bronze
-retail_forecast	bronze	bronze_stores	data_product	retail_forecast
-retail_forecast	bronze	bronze_stores	domain	retail
-retail_forecast	bronze	bronze_stores	ingest_source	store_master
-retail_forecast	bronze	bronze_stores	layer	bronze
-retail_forecast	bronze	bronze_transactions	data_product	retail_forecast
-retail_forecast	bronze	bronze_transactions	domain	retail
-retail_forecast	bronze	bronze_transactions	ingest_source	pos_system
-retail_forecast	bronze	bronze_transactions	layer	bronze
-retail_forecast	gold	dim_date	consumption	dashboard,genie
-retail_forecast	gold	dim_date	data_product	retail_forecast
-retail_forecast	gold	dim_date	domain	retail
-retail_forecast	gold	dim_date	layer	gold
-retail_forecast	gold	dim_date	table_type	dimension
-retail_forecast	gold	dim_product	consumption	dashboard,genie
-retail_forecast	gold	dim_product	data_product	retail_forecast
-retail_forecast	gold	dim_product	domain	retail
-retail_forecast	gold	dim_product	layer	gold
-retail_forecast	gold	dim_product	table_type	dimension
-retail_forecast	gold	dim_store	consumption	dashboard,genie
-retail_forecast	gold	dim_store	data_product	retail_forecast
-retail_forecast	gold	dim_store	domain	retail
-retail_forecast	gold	dim_store	layer	gold
-retail_forecast	gold	dim_store	table_type	dimension
-retail_forecast	gold	fact_promotions	consumption	dashboard,genie
-retail_forecast	gold	fact_promotions	data_product	retail_forecast
-retail_forecast	gold	fact_promotions	domain	retail
-retail_forecast	gold	fact_promotions	layer	gold
-retail_forecast	gold	fact_promotions	table_type	fact
-retail_forecast	gold	fact_transactions	consumption	dashboard,genie
-retail_forecast	gold	fact_transactions	data_product	retail_forecast
-retail_forecast	gold	fact_transactions	domain	retail
-retail_forecast	gold	fact_transactions	layer	gold
-retail_forecast	gold	fact_transactions	table_type	fact
-retail_forecast	silver	silver_products	data_product	retail_forecast
-retail_forecast	silver	silver_products	data_quality	validated
-retail_forecast	silver	silver_products	domain	retail
-retail_forecast	silver	silver_products	layer	silver
-retail_forecast	silver	silver_promotions	data_product	retail_forecast
-retail_forecast	silver	silver_promotions	data_quality	validated
-retail_forecast	silver	silver_promotions	domain	retail
-retail_forecast	silver	silver_promotions	layer	silver
-retail_forecast	silver	silver_stores	data_product	retail_forecast
-retail_forecast	silver	silver_stores	data_quality	validated
-retail_forecast	silver	silver_stores	domain	retail
-retail_forecast	silver	silver_stores	layer	silver
-retail_forecast	silver	silver_transactions	data_product	retail_forecast
-retail_forecast	silver	silver_transactions	data_quality	validated
-retail_forecast	silver	silver_transactions	domain	retail
-retail_forecast	silver	silver_transactions	layer	silver
-(57 rows)
+schema_name	table_name	tag_name	tag_value
+bronze	bronze_products	data_product	retail_forecast
+bronze	bronze_products	domain	retail
+bronze	bronze_products	ingest_source	product_catalog
+bronze	bronze_products	layer	bronze
+bronze	bronze_promotions	data_product	retail_forecast
+bronze	bronze_promotions	domain	retail
+bronze	bronze_promotions	ingest_source	promo_system
+bronze	bronze_promotions	layer	bronze
+bronze	bronze_stores	data_product	retail_forecast
+bronze	bronze_stores	domain	retail
+bronze	bronze_stores	ingest_source	store_master
+bronze	bronze_stores	layer	bronze
+bronze	bronze_transactions	data_product	retail_forecast
+bronze	bronze_transactions	domain	retail
+bronze	bronze_transactions	ingest_source	pos_system
+bronze	bronze_transactions	layer	bronze
+gold	dim_date	consumption	dashboard,genie
+gold	dim_date	data_product	retail_forecast
+gold	dim_date	domain	retail
+gold	dim_date	layer	gold
+gold	dim_date	table_type	dimension
+gold	dim_product	consumption	dashboard,genie
+gold	dim_product	data_product	retail_forecast
+gold	dim_product	domain	retail
+gold	dim_product	layer	gold
+gold	dim_product	table_type	dimension
+gold	dim_store	consumption	dashboard,genie
+gold	dim_store	data_product	retail_forecast
+gold	dim_store	domain	retail
+gold	dim_store	layer	gold
+gold	dim_store	table_type	dimension
+gold	fact_promotions	consumption	dashboard,genie
+gold	fact_promotions	data_product	retail_forecast
+gold	fact_promotions	domain	retail
+gold	fact_promotions	layer	gold
+gold	fact_promotions	table_type	fact
+gold	fact_transactions	consumption	dashboard,genie
+gold	fact_transactions	data_product	retail_forecast
+gold	fact_transactions	domain	retail
+gold	fact_transactions	layer	gold
+gold	fact_transactions	table_type	fact
+gold	forecast_demand	consumption	dashboard,genie,app
+gold	forecast_demand	data_product	retail_forecast
+gold	forecast_demand	domain	retail
+gold	forecast_demand	layer	gold
+gold	forecast_demand	table_type	ml_output
+silver	silver_products	data_product	retail_forecast
+silver	silver_products	data_quality	validated
+silver	silver_products	domain	retail
+silver	silver_products	layer	silver
+silver	silver_promotions	data_product	retail_forecast
+silver	silver_promotions	data_quality	validated
+silver	silver_promotions	domain	retail
+silver	silver_promotions	layer	silver
+silver	silver_stores	data_product	retail_forecast
+silver	silver_stores	data_quality	validated
+silver	silver_stores	domain	retail
+silver	silver_stores	layer	silver
+silver	silver_transactions	data_product	retail_forecast
+silver	silver_transactions	data_quality	validated
+silver	silver_transactions	domain	retail
+silver	silver_transactions	layer	silver
+(62 rows)

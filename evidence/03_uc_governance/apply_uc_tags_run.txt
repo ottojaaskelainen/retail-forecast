@@ -1,0 +1,6 @@
+Run: 741141329220447 state: TERMINATED SUCCESS
+  apply_uc_tags: TERMINATED SUCCESS
+  run_pipeline: SKIPPED DISABLED
+  generate_promo_data: SKIPPED DISABLED
+  generate_pos_data: SKIPPED DISABLED
+  train_model: SKIPPED DISABLED

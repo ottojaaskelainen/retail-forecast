@@ -38,7 +38,7 @@ resources:
               catalog: ${var.catalog}
           environment_key: default
           depends_on:
-            - task_key: run_pipeline
+            - task_key: train_model
 
         - task_key: train_model
           notebook_task:
