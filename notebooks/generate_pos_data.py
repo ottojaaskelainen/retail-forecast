@@ -74,16 +74,26 @@ def build_promotion_schedule(seed=42):
         return s, e
 
     def random_target():
-        if rng.random() < 0.5:
+        # Bias toward category-wide promos (broader coverage so the promo signal is learnable)
+        if rng.random() < 0.4:
             return rng.choice(ALL_SKUS)
         return rng.choice(CATEGORIES)
 
     def random_scope():
-        if rng.random() < 0.5:
+        # Bias toward region-wide scope (broader coverage)
+        if rng.random() < 0.4:
             return f"store_{rng.choice(STORES)}"
         return rng.choice(REGIONS)
 
+    def snap_to_weeks(start, end):
+        # Align every promo to whole Mon-Sun weeks so a "promoted week" is fully promoted and
+        # the weekly is_promoted/discount features exactly describe the week's demand lift.
+        start = start - timedelta(days=start.weekday())        # back to Monday
+        end = end + timedelta(days=(6 - end.weekday()))        # forward to Sunday
+        return start, end
+
     def make_promo(idx, start, end):
+        start, end = snap_to_weeks(start, end)
         return {
             "promo_id": f"PROMO-{idx:08X}",
             "sku_or_category": random_target(),
@@ -95,11 +105,11 @@ def build_promotion_schedule(seed=42):
         }
 
     hist_end = TODAY - timedelta(days=1)
-    for i in range(150):
+    for i in range(250):
         s, e = random_date_range(DATA_START, hist_end)
         promos.append(make_promo(i, s, e))
 
-    for i in range(150, 170):
+    for i in range(250, 270):
         duration = rng.randint(7, 30)
         s = TODAY - timedelta(days=rng.randint(1, duration - 1))
         e = TODAY + timedelta(days=rng.randint(1, 30))
@@ -107,7 +117,7 @@ def build_promotion_schedule(seed=42):
 
     future_start = TODAY + timedelta(days=1)
     future_end = TODAY + timedelta(days=180)
-    for i in range(170, 220):
+    for i in range(270, 340):
         s, e = random_date_range(future_start, future_end, min_days=7, max_days=45)
         promos.append(make_promo(i, s, e))
 
@@ -238,7 +248,7 @@ dates_spark = spark.sql(
 )
 store_dates = (
     stores_spark.crossJoin(dates_spark)
-    .withColumn("txn_count", (F.rand(seed=42) * 100 + 100).cast("int"))
+    .withColumn("txn_count", (F.rand(seed=42) * 100 + 150).cast("int"))
 )
 
 # Step 4: posexplode → one row per transaction (~2.2M rows, distributed)
