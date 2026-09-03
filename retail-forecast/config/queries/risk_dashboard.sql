@@ -1,3 +1,4 @@
+-- @param week string
 SELECT
     fd.week,
     ds.store_name,
@@ -14,5 +15,6 @@ JOIN retail_forecast.gold.dim_store ds
     ON fd.store_id = ds.store_id
 JOIN retail_forecast.gold.dim_product dp
     ON fd.sku = dp.sku
-WHERE fd.is_stockout_risk OR fd.is_overstock_risk
-ORDER BY fd.week ASC, fd.is_stockout_risk DESC, fd.is_overstock_risk DESC, ds.store_name
+WHERE (fd.is_stockout_risk OR fd.is_overstock_risk)
+  AND fd.week = CAST(:week AS DATE)
+ORDER BY fd.is_stockout_risk DESC, fd.is_overstock_risk DESC, ds.store_name

@@ -56,7 +56,10 @@ declare module "@databricks/appkit-ui/react" {
       };
     risk_dashboard: {
         name: "risk_dashboard";
-        parameters: Record<string, never>;
+        parameters: {
+          /** STRING - use sql.string() */
+          week: SQLStringMarker;
+        };
         result: Array<{
           /** @sqlType TIMESTAMP */
           week: string;
@@ -78,6 +81,14 @@ declare module "@databricks/appkit-ui/react" {
           is_stockout_risk: boolean;
           /** @sqlType BOOLEAN */
           is_overstock_risk: boolean;
+        }>;
+      };
+    risk_dashboard_options: {
+        name: "risk_dashboard_options";
+        parameters: Record<string, never>;
+        result: Array<{
+          /** @sqlType TIMESTAMP */
+          week: string;
         }>;
       };
   }

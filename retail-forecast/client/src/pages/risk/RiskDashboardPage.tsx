@@ -11,65 +11,65 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@databricks/appkit-ui/react';
+import { sql } from '@databricks/appkit-ui/js';
 import { useState, useMemo } from 'react';
 
 const toBool = (v: unknown) => v === true || v === 'true';
 
 export function RiskDashboardPage() {
-  const { data, loading, error } = useAnalyticsQuery('risk_dashboard', {});
-  const [weekFilter, setWeekFilter] = useState('all');
+  // Tiny query: the list of forecast weeks that have at-risk pairs (for the selector).
+  const { data: weekOptions, loading: weeksLoading } = useAnalyticsQuery(
+    'risk_dashboard_options',
+    {},
+  );
+  const weeks = useMemo(
+    () => Array.from(new Set((weekOptions ?? []).map((r) => String(r.week).slice(0, 10)))).sort(),
+    [weekOptions],
+  );
+
+  const [weekFilter, setWeekFilter] = useState('');
   const [regionFilter, setRegionFilter] = useState('all');
   const [storeFilter, setStoreFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
 
-  const rows = data ?? [];
+  // Default to the earliest (next) forecast week once the options load.
+  const week = weekFilter || weeks[0] || '';
 
-  const weeks = useMemo(
-    () => ['all', ...Array.from(new Set(rows.map((r) => String(r.week).slice(0, 10)))).sort()],
-    [rows],
-  );
+  // Load ONE week at a time — keeps the streamed payload well under the 1 MiB SSE cap.
+  const riskParams = useMemo(() => ({ week: sql.string(week || '__none__') }), [week]);
+  const { data, loading: dataLoading, error } = useAnalyticsQuery('risk_dashboard', riskParams);
+
+  const rows = data ?? [];
+  const loading = weeksLoading || (!!week && dataLoading);
+
   const regions = useMemo(
     () => ['all', ...Array.from(new Set(rows.map((r) => r.region))).sort()],
     [rows],
   );
   const stores = useMemo(() => {
-    const filtered = regionFilter === 'all' ? rows : rows.filter((r) => r.region === regionFilter);
-    return ['all', ...Array.from(new Set(filtered.map((r) => r.store_name))).sort()];
+    const f = regionFilter === 'all' ? rows : rows.filter((r) => r.region === regionFilter);
+    return ['all', ...Array.from(new Set(f.map((r) => r.store_name))).sort()];
   }, [rows, regionFilter]);
   const categories = useMemo(
     () => ['all', ...Array.from(new Set(rows.map((r) => r.category))).sort()],
     [rows],
   );
 
+  // The query is already scoped to `week`; only region/store/category filter client-side.
   const filtered = useMemo(
     () =>
       rows.filter(
         (r) =>
-          (weekFilter === 'all' || String(r.week).slice(0, 10) === weekFilter) &&
           (regionFilter === 'all' || r.region === regionFilter) &&
           (storeFilter === 'all' || r.store_name === storeFilter) &&
           (categoryFilter === 'all' || r.category === categoryFilter),
       ),
-    [rows, weekFilter, regionFilter, storeFilter, categoryFilter],
+    [rows, regionFilter, storeFilter, categoryFilter],
   );
 
-  // KPIs based on the next (earliest) forecast week in the filtered set
-  const nextWeek = useMemo(
-    () => filtered.map((r) => r.week).sort()[0] ?? null,
-    [filtered],
-  );
-  const nextWeekRows = useMemo(
-    () => (nextWeek ? filtered.filter((r) => r.week === nextWeek) : []),
-    [filtered, nextWeek],
-  );
-  const stockoutCount = nextWeekRows.filter((r) => toBool(r.is_stockout_risk)).length;
-  const overstockCount = nextWeekRows.filter((r) => toBool(r.is_overstock_risk)).length;
-
-  // Only show at-risk rows in the table
-  const atRiskRows = useMemo(
-    () => filtered.filter((r) => toBool(r.is_stockout_risk) || toBool(r.is_overstock_risk)),
-    [filtered],
-  );
+  const stockoutCount = filtered.filter((r) => toBool(r.is_stockout_risk)).length;
+  const overstockCount = filtered.filter((r) => toBool(r.is_overstock_risk)).length;
+  const atRiskRows = filtered;
 
   if (loading)
     return (
@@ -86,7 +86,7 @@ export function RiskDashboardPage() {
       <div>
         <h1 className="text-2xl font-bold text-foreground">Demand Risk Dashboard</h1>
         <p className="text-sm text-muted-foreground mt-1">
-          Upcoming forecast weeks — all at-risk SKU–store pairs
+          At-risk SKU–store pairs for the selected forecast week
         </p>
       </div>
 
@@ -98,7 +98,7 @@ export function RiskDashboardPage() {
           <CardContent>
             <p className="text-4xl font-bold text-red-700 dark:text-red-400">{stockoutCount}</p>
             <p className="text-sm text-red-600 dark:text-red-500">
-              SKU–store pairs · {nextWeek ?? '—'}
+              SKU–store pairs · {week || '—'}
             </p>
           </CardContent>
         </Card>
@@ -111,21 +111,21 @@ export function RiskDashboardPage() {
               {overstockCount}
             </p>
             <p className="text-sm text-amber-600 dark:text-amber-500">
-              SKU–store pairs · {nextWeek ?? '—'}
+              SKU–store pairs · {week || '—'}
             </p>
           </CardContent>
         </Card>
       </div>
 
       <div className="flex gap-3 flex-wrap">
-        <Select value={weekFilter} onValueChange={setWeekFilter}>
+        <Select value={week} onValueChange={setWeekFilter}>
           <SelectTrigger className="w-44">
-            <SelectValue placeholder="All weeks" />
+            <SelectValue placeholder="Select week" />
           </SelectTrigger>
           <SelectContent>
             {weeks.map((w) => (
               <SelectItem key={w} value={w}>
-                {w === 'all' ? 'All weeks' : w}
+                {w}
               </SelectItem>
             ))}
           </SelectContent>
