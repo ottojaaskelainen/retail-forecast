@@ -1,6 +1,7 @@
 # Databricks notebook source
 # Standalone training step — reads labels from gold.fact_transactions, looks up features
-# from the feature table via point-in-time FeatureLookup, trains bounded RF, registers @prod.
+# from the feature table via point-in-time FeatureLookup, trains a LightGBM (Poisson) demand
+# model, logs it alongside the naive trailing-average baselines, and registers @prod.
 
 # COMMAND ----------
 
@@ -8,12 +9,10 @@ import json
 import mlflow
 import mlflow.sklearn
 import pandas as pd
-from datetime import date
 from mlflow.tracking import MlflowClient
-from sklearn.ensemble import RandomForestRegressor
+from lightgbm import LGBMRegressor
 from sklearn.metrics import mean_absolute_error
 from pyspark.sql import functions as F
-from pyspark.sql.window import Window
 from databricks.feature_engineering import FeatureEngineeringClient, FeatureLookup
 
 dbutils.widgets.text("catalog", "retail_forecast")
@@ -92,11 +91,16 @@ X_train, y_train = train_pd[FEATURES], train_pd[TARGET]
 # COMMAND ----------
 
 # --- Train, compute holdout MAE, and register with fe.log_model ---
-# IMPORTANT: n_estimators=50, max_depth=12 are mandatory bounds (prior OOM ruling:
-# unbounded depth blows up the score_batch UDF).
+# LightGBM with a Poisson objective fits non-negative count demand better than squared-error
+# RF, and is a much lighter artifact than a deep RF forest (so the score_batch UDF stays well
+# within memory — the earlier RF depth bound is no longer needed).
 mlflow.set_experiment(f"/Users/{_current_user}/retail_forecast_demand")
 with mlflow.start_run() as run:
-    model = RandomForestRegressor(n_estimators=50, max_depth=12, random_state=42)
+    model = LGBMRegressor(
+        objective="poisson", n_estimators=400, learning_rate=0.05, num_leaves=31,
+        min_child_samples=50, subsample=0.8, colsample_bytree=0.8,
+        random_state=42, n_jobs=-1, verbose=-1,
+    )
     model.fit(X_train, y_train)
 
     test_set = fe.create_training_set(
@@ -106,9 +110,17 @@ with mlflow.start_run() as run:
         exclude_columns=["week", "sku", "store_id"],
     )
     test_pd = test_set.load_df().toPandas()
-    mae = mean_absolute_error(test_pd[TARGET], model.predict(test_pd[FEATURES]))
+    preds = model.predict(test_pd[FEATURES]).clip(min=0)
+    mae = mean_absolute_error(test_pd[TARGET], preds)
+
+    # Naive trailing-average baselines on the identical holdout — the bar the model must beat.
+    mae_naive_avg12w   = mean_absolute_error(test_pd[TARGET], test_pd["avg_demand_last_12w"])
+    mae_naive_rolling4w = mean_absolute_error(test_pd[TARGET], test_pd["rolling_4wk_avg"])
     mlflow.log_metric("mae_holdout", mae)
-    print(f"MAE holdout: {mae:.2f}")
+    mlflow.log_metric("mae_naive_avg12w", mae_naive_avg12w)
+    mlflow.log_metric("mae_naive_rolling4w", mae_naive_rolling4w)
+    print(f"MAE holdout: {mae:.2f}  |  naive avg12w: {mae_naive_avg12w:.2f}  |  "
+          f"naive rolling4w: {mae_naive_rolling4w:.2f}")
 
     fe.log_model(
         model=model,
@@ -131,4 +143,9 @@ print(f"Registered {MODEL_NAME} v{latest} @prod")
 
 # COMMAND ----------
 
-dbutils.notebook.exit(json.dumps({"mae_holdout": float(mae), "model_version": int(latest)}))
+dbutils.notebook.exit(json.dumps({
+    "mae_holdout": float(mae),
+    "mae_naive_avg12w": float(mae_naive_avg12w),
+    "mae_naive_rolling4w": float(mae_naive_rolling4w),
+    "model_version": int(latest),
+}))

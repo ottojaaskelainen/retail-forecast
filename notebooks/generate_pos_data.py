@@ -4,6 +4,7 @@
 
 # COMMAND ----------
 
+import math
 import random
 import pandas as pd
 from datetime import date, timedelta
@@ -35,6 +36,24 @@ UNIT_PRICES = {
     "Electronics": (80, 500), "Grocery": (2, 30),
     "Apparel": (20, 120), "Home": (15, 200), "Outdoor": (25, 300),
 }
+
+# --- Demand-model structure (calibrated so promotion + seasonal signal is learnable
+#     and clearly beats a naive trailing-average baseline). Weekly demand per SKU/store is
+#     driven by:  base x SKU_popularity x store_factor x seasonal(week_of_year, category)
+#                 x promo_lift(discount, category)  + Poisson-style count noise.
+#     - CAT_ELASTICITY: how strongly a category responds to a promotion (0..1 scale).
+#     - CAT_SEAS_AMP/PEAK: annual seasonal amplitude and peak ISO week per category.
+#     - PROMO_LIFT_MAX: extra demand multiplier at a 30% discount for a fully-elastic
+#       category, so a promo week is a genuine spike the trailing average cannot anticipate.
+CAT_ELASTICITY = {"Electronics": 1.0, "Grocery": 0.25, "Apparel": 0.9, "Home": 0.6, "Outdoor": 0.7}
+CAT_SEAS_AMP   = {"Electronics": 0.35, "Grocery": 0.10, "Apparel": 0.30, "Home": 0.20, "Outdoor": 0.40}
+CAT_SEAS_PEAK  = {"Electronics": 49, "Grocery": 26, "Apparel": 48, "Home": 10, "Outdoor": 27}
+PROMO_LIFT_MAX = 2.2
+
+# Stable per-SKU popularity and per-store demand factors (seeded, reproducible).
+SKU_POPULARITY = {sku: round(math.exp(random.Random(123 + i).gauss(0, 0.35)), 4)
+                  for i, sku in enumerate(ALL_SKUS)}
+STORE_FACTOR   = {sid: round(random.Random(321 + int(sid)).uniform(0.8, 1.2), 4) for sid in STORES}
 
 DATA_START = date(2024, 7, 1)
 today      = date.today()
@@ -69,18 +88,18 @@ def build_promotion_schedule(seed=42):
             "promo_id": f"PROMO-{idx:08X}",
             "sku_or_category": random_target(),
             "store_id_or_region": random_scope(),
-            "discount_pct": f"{rng.choice([5, 10, 15, 20, 25, 30])}%",
+            "discount_pct": f"{rng.choice([10, 15, 20, 25, 30, 40])}%",
             "channel": rng.choice(CHANNELS),
             "promo_start_date": start,
             "promo_end_date": end,
         }
 
     hist_end = TODAY - timedelta(days=1)
-    for i in range(80):
+    for i in range(150):
         s, e = random_date_range(DATA_START, hist_end)
         promos.append(make_promo(i, s, e))
 
-    for i in range(80, 100):
+    for i in range(150, 170):
         duration = rng.randint(7, 30)
         s = TODAY - timedelta(days=rng.randint(1, duration - 1))
         e = TODAY + timedelta(days=rng.randint(1, 30))
@@ -88,7 +107,7 @@ def build_promotion_schedule(seed=42):
 
     future_start = TODAY + timedelta(days=1)
     future_end = TODAY + timedelta(days=180)
-    for i in range(100, 150):
+    for i in range(170, 220):
         s, e = random_date_range(future_start, future_end, min_days=7, max_days=45)
         promos.append(make_promo(i, s, e))
 
@@ -198,11 +217,18 @@ print(f"Promotion daily rows (for demand generation): {promo_daily.count()}")
 
 # Step 2: Store and SKU reference DataFrames for joins (both tiny — broadcast)
 stores_spark = spark.createDataFrame(
-    [(sid, STORE_REGIONS[sid]) for sid in STORES], ["store_id", "region"]
+    [(sid, STORE_REGIONS[sid], float(STORE_FACTOR[sid])) for sid in STORES],
+    ["store_id", "region", "store_factor"],
 )
 sku_spark = spark.createDataFrame(
-    [(r["sku"], r["category"], float(r["unit_price"])) for _, r in products_df.iterrows()],
-    ["sku", "category", "unit_price"],
+    [(r["sku"], r["category"], float(r["unit_price"]), float(SKU_POPULARITY[r["sku"]]))
+     for _, r in products_df.iterrows()],
+    ["sku", "category", "unit_price", "popularity"],
+)
+# Category demand parameters (elasticity + seasonality) for the demand model
+cat_params_spark = spark.createDataFrame(
+    [(c, float(CAT_ELASTICITY[c]), float(CAT_SEAS_AMP[c]), int(CAT_SEAS_PEAK[c])) for c in CATEGORIES],
+    ["category", "elasticity", "seas_amp", "seas_peak"],
 )
 
 # Step 3: Store × date cross join → 20 × 729 = 14,580 rows
@@ -221,7 +247,7 @@ ALL_SKUS_ARRAY = F.array(*[F.lit(s) for s in ALL_SKUS])  # 100-element literal a
 txns = (
     store_dates
     .select(
-        "store_id", "region", "txn_date",
+        "store_id", "region", "store_factor", "txn_date",
         F.posexplode(F.sequence(F.lit(1), F.col("txn_count"))).alias("txn_idx", "_"),
     )
     .drop("_")
@@ -229,8 +255,9 @@ txns = (
     .withColumn("sku", F.element_at(ALL_SKUS_ARRAY, (F.rand() * 100).cast("int") + 1))
 )
 
-# Step 5: Join with SKU reference for category and unit_price (broadcast — 100 rows)
+# Step 5: Join with SKU reference (category, unit_price, popularity) and category demand params
 txns = txns.join(F.broadcast(sku_spark), on="sku", how="left")
+txns = txns.join(F.broadcast(cat_params_spark), on="category", how="left")
 
 # Step 6: Left join with daily promotions (broadcast — ~4,500 rows)
 txns_with_promo = txns.join(
@@ -252,7 +279,8 @@ txns_with_promo = txns.join(
 # Step 7: Deduplicate — a transaction may match multiple promotions; keep max discount
 txns_deduped = (
     txns_with_promo
-    .groupBy("store_id", "region", "txn_date", "txn_idx", "sku", "category", "unit_price")
+    .groupBy("store_id", "region", "store_factor", "txn_date", "txn_idx", "sku",
+             "category", "unit_price", "popularity", "elasticity", "seas_amp", "seas_peak")
     .agg(F.max("discount_float").alias("discount_float"))
 )
 
@@ -261,14 +289,30 @@ txns_final = (
     txns_deduped
     .withColumn("discount_float", F.coalesce("discount_float", F.lit(0.0)))
     .withColumn("is_promoted", (F.col("discount_float") > 0).cast("int"))
+    # Seasonal multiplier: category-specific annual curve at this txn's ISO week-of-year
     .withColumn(
-        "quantity_sold",
+        "season_mult",
+        F.lit(1.0) + F.col("seas_amp")
+        * F.sin(F.lit(2.0 * math.pi) * (F.weekofyear("txn_date") - F.col("seas_peak")) / F.lit(52.0)),
+    )
+    # Promo lift scaled by discount depth and category elasticity (1.0 when not promoted)
+    .withColumn(
+        "promo_mult",
         F.when(
             F.col("is_promoted") == 1,
-            F.ceil((F.rand() * 6 + 2) * (1 + F.col("discount_float") * 3)).cast("int"),
-        ).otherwise(
-            (F.rand() * 5 + 1).cast("int"),
-        ),
+            F.lit(1.0) + F.col("elasticity") * (F.col("discount_float") / F.lit(0.30)) * F.lit(PROMO_LIFT_MAX),
+        ).otherwise(F.lit(1.0)),
+    )
+    # Structured per-transaction quantity: base 2-4 units x popularity x store x season x promo
+    .withColumn(
+        "quantity_sold",
+        F.greatest(
+            F.lit(1),
+            F.round(
+                (F.rand() * 2 + 2) * F.col("popularity") * F.col("store_factor")
+                * F.col("season_mult") * F.col("promo_mult")
+            ),
+        ).cast("int"),
     )
     .withColumn(
         "unit_price_at_sale",

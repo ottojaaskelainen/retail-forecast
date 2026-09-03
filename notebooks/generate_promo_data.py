@@ -70,20 +70,20 @@ def build_promotion_schedule(seed=42):
             "promo_id": f"PROMO-{idx:08X}",
             "sku_or_category": random_target(),
             "store_id_or_region": random_scope(),
-            "discount_pct": f"{rng.choice([5, 10, 15, 20, 25, 30])}%",
+            "discount_pct": f"{rng.choice([10, 15, 20, 25, 30, 40])}%",
             "channel": rng.choice(CHANNELS),
             "promo_start_date": fmt(start),
             "promo_end_date": fmt(end),
         }
 
-    # 80 historical (fully before TODAY)
+    # 150 historical (fully before TODAY)
     hist_end = TODAY - timedelta(days=1)
-    for i in range(80):
+    for i in range(150):
         s, e = random_date_range(DATA_START, hist_end)
         promos.append(make_promo(i, s, e))
 
     # 20 active (spanning TODAY)
-    for i in range(80, 100):
+    for i in range(150, 170):
         duration = rng.randint(7, 30)
         s = TODAY - timedelta(days=rng.randint(1, duration - 1))
         e = TODAY + timedelta(days=rng.randint(1, 30))
@@ -92,7 +92,7 @@ def build_promotion_schedule(seed=42):
     # 50 future (start after TODAY)
     future_start = TODAY + timedelta(days=1)
     future_end = TODAY + timedelta(days=180)
-    for i in range(100, 150):
+    for i in range(170, 220):
         s, e = random_date_range(future_start, future_end, min_days=7, max_days=45)
         promos.append(make_promo(i, s, e))
 

@@ -9,6 +9,7 @@ resources:
             dependencies:
               - "databricks-feature-engineering>=0.16.0"
               - "scikit-learn"
+              - "lightgbm"
       tasks:
         - task_key: generate_pos_data
           notebook_task:
