@@ -1,6 +1,11 @@
-Columns: ['sku', 'store_id', 'week', 'predicted_demand', 'avg_demand_last_12w', 'is_stockout_risk', 'is_overstock_risk', 'model_version']
-{'sku': 'AP-001', 'store_id': '1001', 'week': '2026-09-07', 'predicted_demand': '32', 'avg_demand_last_12w': '31.83', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v9'}
-{'sku': 'AP-001', 'store_id': '1002', 'week': '2026-09-07', 'predicted_demand': '32', 'avg_demand_last_12w': '35.67', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v9'}
-{'sku': 'AP-001', 'store_id': '1003', 'week': '2026-09-07', 'predicted_demand': '28', 'avg_demand_last_12w': '32.25', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v9'}
-{'sku': 'AP-001', 'store_id': '1004', 'week': '2026-09-07', 'predicted_demand': '32', 'avg_demand_last_12w': '31.25', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v9'}
-{'sku': 'AP-001', 'store_id': '1005', 'week': '2026-09-07', 'predicted_demand': '31', 'avg_demand_last_12w': '44.17', 'is_stockout_risk': 'false', 'is_overstock_risk': 'false', 'model_version': 'rf_v9'}
+sku	store_id	week	predicted_demand	avg_demand_last_12w	is_stockout_risk	is_overstock_risk	model_version
+AP-001	1001	2026-10-05T00:00:00.000Z	28	22.5	false	false	lgbm_poisson_v1
+AP-001	1001	2026-10-12T00:00:00.000Z	28	22.5	false	false	lgbm_poisson_v1
+AP-001	1001	2026-10-19T00:00:00.000Z	28	22.5	false	false	lgbm_poisson_v1
+AP-001	1001	2026-10-26T00:00:00.000Z	28	22.5	false	false	lgbm_poisson_v1
+AP-001	1001	2026-11-02T00:00:00.000Z	28	22.5	false	false	lgbm_poisson_v1
+AP-001	1001	2026-11-09T00:00:00.000Z	28	22.5	false	false	lgbm_poisson_v1
+AP-001	1001	2026-11-16T00:00:00.000Z	28	22.5	false	false	lgbm_poisson_v1
+AP-001	1001	2026-11-23T00:00:00.000Z	28	22.5	false	false	lgbm_poisson_v1
+AP-001	1002	2026-10-05T00:00:00.000Z	35	28.666666666666668	false	false	lgbm_poisson_v1
+AP-001	1002	2026-10-12T00:00:00.000Z	35	28.666666666666668	false	false	lgbm_poisson_v1

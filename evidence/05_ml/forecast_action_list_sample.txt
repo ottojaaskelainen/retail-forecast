@@ -1,6 +1,13 @@
-Columns: ['sku', 'store_id', 'week', 'store_name', 'region', 'category', 'product_name', 'risk_type', 'predicted_demand', 'avg_demand_last_12w', 'demand_delta', 'model_version']
-{'sku': 'AP-001', 'store_id': '1010', 'week': '2026-09-07', 'store_name': 'Harris, Collins and Carney', 'region': 'East', 'category': 'Apparel', 'product_name': 'Apparel Product 1', 'risk_type': 'Stockout', 'predicted_demand': '69', 'avg_demand_last_12w': '25.8', 'demand_delta': '43', 'model_version': 'rf_v9'}
-{'sku': 'AP-001', 'store_id': '1009', 'week': '2026-09-07', 'store_name': 'Humphrey Inc', 'region': 'East', 'category': 'Apparel', 'product_name': 'Apparel Product 1', 'risk_type': 'Stockout', 'predicted_demand': '68', 'avg_demand_last_12w': '32.8', 'demand_delta': '35', 'model_version': 'rf_v9'}
-{'sku': 'AP-001', 'store_id': '1008', 'week': '2026-09-07', 'store_name': 'Harrell LLC', 'region': 'South', 'category': 'Apparel', 'product_name': 'Apparel Product 1', 'risk_type': 'Overstock', 'predicted_demand': '29', 'avg_demand_last_12w': '48.6', 'demand_delta': '-20', 'model_version': 'rf_v9'}
-{'sku': 'AP-001', 'store_id': '1011', 'week': '2026-09-07', 'store_name': 'Perez Inc', 'region': 'East', 'category': 'Apparel', 'product_name': 'Apparel Product 1', 'risk_type': 'Stockout', 'predicted_demand': '68', 'avg_demand_last_12w': '35.6', 'demand_delta': '32', 'model_version': 'rf_v9'}
-{'sku': 'AP-001', 'store_id': '1012', 'week': '2026-09-07', 'store_name': 'Jordan, Henderson and Owens', 'region': 'East', 'category': 'Apparel', 'product_name': 'Apparel Product 1', 'risk_type': 'Stockout', 'predicted_demand': '74', 'avg_demand_last_12w': '33.4', 'demand_delta': '41', 'model_version': 'rf_v9'}
+action_rows
+4988
+sku	store_name	region	product_name	category	predicted_demand	avg_demand_last_12w	risk_type	demand_delta	model_version	week
+AP-001	Humphrey Inc	East	Apparel Product 1	Apparel	49	19.1	Stockout	30	lgbm_poisson_v1	2026-11-02T00:00:00.000Z
+AP-001	Humphrey Inc	East	Apparel Product 1	Apparel	49	19.1	Stockout	30	lgbm_poisson_v1	2026-11-09T00:00:00.000Z
+AP-001	Humphrey Inc	East	Apparel Product 1	Apparel	49	19.1	Stockout	30	lgbm_poisson_v1	2026-11-16T00:00:00.000Z
+AP-001	Humphrey Inc	East	Apparel Product 1	Apparel	49	19.1	Stockout	30	lgbm_poisson_v1	2026-11-23T00:00:00.000Z
+AP-001	Harris, Collins and Carney	East	Apparel Product 1	Apparel	52	23.4	Stockout	29	lgbm_poisson_v1	2026-11-02T00:00:00.000Z
+AP-001	Harris, Collins and Carney	East	Apparel Product 1	Apparel	52	23.4	Stockout	29	lgbm_poisson_v1	2026-11-09T00:00:00.000Z
+AP-001	Harris, Collins and Carney	East	Apparel Product 1	Apparel	52	23.4	Stockout	29	lgbm_poisson_v1	2026-11-16T00:00:00.000Z
+AP-001	Harris, Collins and Carney	East	Apparel Product 1	Apparel	52	23.4	Stockout	29	lgbm_poisson_v1	2026-11-23T00:00:00.000Z
+AP-001	Perez Inc	East	Apparel Product 1	Apparel	45	16.1	Stockout	29	lgbm_poisson_v1	2026-11-02T00:00:00.000Z
+AP-001	Perez Inc	East	Apparel Product 1	Apparel	45	16.1	Stockout	29	lgbm_poisson_v1	2026-11-09T00:00:00.000Z

@@ -23,7 +23,7 @@ dbutils.widgets.text("catalog", "retail_forecast")
 CATALOG           = dbutils.widgets.get("catalog")
 GOLD_SCHEMA       = "gold"
 FEATURE_SCHEMA    = "feature"
-MODEL_NAME        = f"{CATALOG}.{GOLD_SCHEMA}.retail_forecast_rf"
+MODEL_NAME        = f"{CATALOG}.{GOLD_SCHEMA}.retail_forecast_demand"
 MIN_HISTORY_WEEKS = 12
 
 mlflow.set_registry_uri("databricks-uc")
@@ -115,7 +115,7 @@ out = (
     .withColumn("is_overstock_risk",
                 (F.col("predicted_demand") < F.col("avg_demand_last_12w") * 0.7) &
                 (F.col("avg_demand_last_12w") > 0))
-    .withColumn("model_version", F.lit(f"rf_v{latest}"))
+    .withColumn("model_version", F.lit(f"lgbm_poisson_v{latest}"))
     .select("sku", "store_id", "week", "predicted_demand", "avg_demand_last_12w",
             "is_stockout_risk", "is_overstock_risk", "model_version")
 )

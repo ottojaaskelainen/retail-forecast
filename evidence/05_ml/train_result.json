@@ -1,6 +1,8 @@
 {
-    "mae_holdout": 15.804348604795045,
-    "model_version": 9,
+    "mae_holdout": 17.441163522779608,
+    "mae_naive_avg12w": 20.332946721745575,
+    "mae_naive_rolling4w": 17.9208770257388,
+    "model_version": 1,
     "forecast_rows": 16000,
-    "action_rows": 2752
+    "action_rows": 4988
 }

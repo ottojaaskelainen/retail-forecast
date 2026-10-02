@@ -1,2 +1,2 @@
-STATUS: SUCCEEDED
-{'total': '16000', 'stockout_risk': '1707', 'overstock_risk': '1045'}
+model_version	rows	stockout_risk	overstock_risk
+lgbm_poisson_v1	16000	4670	318

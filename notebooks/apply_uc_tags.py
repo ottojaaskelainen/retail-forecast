@@ -77,9 +77,9 @@ spark.sql(f"ALTER TABLE {catalog}.gold.fact_promotions SET TAGS ('layer' = 'gold
 spark.sql(f"ALTER TABLE {catalog}.gold.fact_promotions ALTER COLUMN discount_pct SET TAGS ('semantic_type' = 'measure', 'data_category' = 'financial')")
 
 spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand SET TAGS ('layer' = 'gold', 'domain' = 'retail', 'table_type' = 'ml_output', 'consumption' = 'dashboard,genie,app', 'data_product' = 'retail_forecast')")
-spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN predicted_demand SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_rf')")
-spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN is_stockout_risk SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_rf')")
-spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN is_overstock_risk SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_rf')")
+spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN predicted_demand SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_demand', 'algorithm' = 'lightgbm_poisson')")
+spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN is_stockout_risk SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_demand', 'algorithm' = 'lightgbm_poisson')")
+spark.sql(f"ALTER TABLE {catalog}.gold.forecast_demand ALTER COLUMN is_overstock_risk SET TAGS ('semantic_type' = 'ml_prediction', 'model' = 'retail_forecast_demand', 'algorithm' = 'lightgbm_poisson')")
 
 spark.sql(f"ALTER TABLE {catalog}.gold.forecast_action_list SET TAGS ('layer' = 'gold', 'domain' = 'retail', 'table_type' = 'ml_output', 'consumption' = 'dashboard,genie,app', 'data_product' = 'retail_forecast')")
 

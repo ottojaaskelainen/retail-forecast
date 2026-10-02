@@ -1,19 +1,22 @@
-  sku   |         store_name          | region | predicted_demand | risk_type
---------+-----------------------------+--------+------------------+-----------
- AP-002 | Rice-Maddox                 | South  |               31 | Overstock
- AP-002 | Humphrey Inc                | East   |               68 | Stockout
- AP-001 | Jordan, Henderson and Owens | East   |               74 | Stockout
- AP-002 | Hoffman, Baker and Richards | South  |               31 | Overstock
- AP-001 | Perez Inc                   | East   |               68 | Stockout
- AP-002 | Harrell LLC                 | South  |               31 | Overstock
- AP-001 | Harrell LLC                 | South  |               29 | Overstock
- AP-001 | Harris, Collins and Carney  | East   |               69 | Stockout
- AP-001 | Humphrey Inc                | East   |               68 | Stockout
- AP-002 | Harris, Collins and Carney  | East   |               68 | Stockout
-(10 rows)
-
- count
--------
-  2752
+=== databricks_postgres.public.forecast_action_list (synced from gold, SNAPSHOT) ===
+  model_version  | rows 
+-----------------+------
+ lgbm_poisson_v1 | 4988
 (1 row)
+
+
+-- sample rows --
+  sku   |         store_name         | region  | predicted_demand | risk_type |  model_version  |          week          
+--------+----------------------------+---------+------------------+-----------+-----------------+------------------------
+ OD-013 | Parker Inc                 | Central |              303 | Stockout  | lgbm_poisson_v1 | 2026-10-12 00:00:00+00
+ OD-001 | Jones and Sons             | Central |              289 | Stockout  | lgbm_poisson_v1 | 2026-10-12 00:00:00+00
+ OD-001 | Martin Inc                 | West    |               81 | Overstock | lgbm_poisson_v1 | 2026-10-05 00:00:00+00
+ OD-001 | Martin Inc                 | West    |               82 | Overstock | lgbm_poisson_v1 | 2026-10-19 00:00:00+00
+ OD-001 | Martin Inc                 | West    |               82 | Overstock | lgbm_poisson_v1 | 2026-10-12 00:00:00+00
+ OD-013 | Parker Inc                 | Central |              288 | Stockout  | lgbm_poisson_v1 | 2026-10-05 00:00:00+00
+ OD-001 | Jones and Sons             | Central |              275 | Stockout  | lgbm_poisson_v1 | 2026-10-05 00:00:00+00
+ OD-013 | Garcia, Humphrey and Baker | Central |              273 | Stockout  | lgbm_poisson_v1 | 2026-10-12 00:00:00+00
+ OD-013 | Jones and Sons             | Central |              273 | Stockout  | lgbm_poisson_v1 | 2026-10-12 00:00:00+00
+ OD-011 | Jones and Sons             | Central |              224 | Stockout  | lgbm_poisson_v1 | 2026-10-12 00:00:00+00
+(10 rows)
 
