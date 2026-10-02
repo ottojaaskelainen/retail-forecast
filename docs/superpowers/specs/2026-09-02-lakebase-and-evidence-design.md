@@ -4,6 +4,13 @@
 **Status:** Approved for planning
 **Repo:** retail-forecast-poc
 
+> **Current state (updated 2026-10-02).** This is the original point-in-time design; the live build has since moved on. Deltas vs. the text below:
+> - **Workspace / profile:** now `adb-7405610530405651.11` via profile `otto-stable` — not `adb-7405605253712899.19` / `otto-sandbox` (that profile's token is retired). Applies to every `otto-sandbox` reference below.
+> - **Model:** LightGBM with a Poisson objective, not RandomForest — the lighter artifact removed the earlier `score_batch` OOM concern (§6.1 / step 5 below).
+> - **Training layout:** split into `training/build_features.py` → `train_model.py` → `score_forecast.py` (see the MLOps-split plan). The monolithic `train_forecast_model.py` referenced below no longer exists.
+> - **Catalog storage:** `storage_root` points at this workspace's external location (`abfss://fevm-default-container@stojsvt6mzuc…/retail_forecast`); Default Storage can't be set from a bundle.
+> - **App UC grants:** granted via `uc_securable` app resources in `resources/app.yml` (auto-grants the app's SP + ancestor USE). The Lakebase Postgres `GRANT SELECT` on the synced table stays a manual step.
+
 ## 1. Purpose & context
 
 This is an assignment build: a working prototype that solves a specific

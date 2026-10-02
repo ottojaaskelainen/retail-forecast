@@ -24,3 +24,28 @@ resources:
             branch: projects/retail-forecast-lb/branches/production
             database: projects/retail-forecast-lb/branches/production/databases/databricks-postgres
             permission: CAN_CONNECT_AND_CREATE
+        # Gold tables the app queries via the SQL warehouse. Declaring each as a uc_securable
+        # resource makes Databricks auto-grant the app's own service principal SELECT on the
+        # table PLUS the prerequisite USE CATALOG / USE SCHEMA on its parents — no SP id needed,
+        # so it works before the app (and its SP) exist. Requires the deployer to hold MANAGE on
+        # these securables (satisfied: the bundle owns the catalog).
+        - name: gold-forecast-demand
+          uc_securable:
+            securable_type: TABLE
+            securable_full_name: ${var.catalog}.gold.forecast_demand
+            permission: SELECT
+        - name: gold-dim-store
+          uc_securable:
+            securable_type: TABLE
+            securable_full_name: ${var.catalog}.gold.dim_store
+            permission: SELECT
+        - name: gold-dim-product
+          uc_securable:
+            securable_type: TABLE
+            securable_full_name: ${var.catalog}.gold.dim_product
+            permission: SELECT
+        - name: gold-fact-transactions
+          uc_securable:
+            securable_type: TABLE
+            securable_full_name: ${var.catalog}.gold.fact_transactions
+            permission: SELECT

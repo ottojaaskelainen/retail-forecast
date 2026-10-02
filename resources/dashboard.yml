@@ -5,4 +5,5 @@ resources:
       warehouse_id: ${resources.sql_warehouses.retail_forecast_wh.id}
       embed_credentials: true
       file_path: ../dashboard/retail_forecast_dashboard.lvdash.json
-      parent_path: /Workspace/Users/${workspace.current_user.userName}/retail-forecast
+      # No parent_path → deploys under the bundle's resource_path
+      # (/Workspace/Users/<you>/.bundle/retail-forecast-poc/dev/resources), alongside the other resources.

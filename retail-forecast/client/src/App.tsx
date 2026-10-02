@@ -61,7 +61,10 @@ function Layout() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="border-b px-4 md:px-6 py-3 flex items-center gap-4">
-        <h1 className="text-lg font-semibold text-foreground">Retail Forecast</h1>
+        <div className="flex flex-col leading-tight">
+          <span className="text-base font-semibold text-foreground">Meridian Retail Group</span>
+          <span className="text-xs text-muted-foreground">Demand Forecast</span>
+        </div>
         {/* Desktop nav — hidden below md breakpoint */}
         <NavLinks className="hidden md:flex gap-1" linkClass={navLinkClass} />
         {/* Mobile nav — visible below md breakpoint */}

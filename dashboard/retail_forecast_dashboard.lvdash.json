@@ -127,7 +127,7 @@
             "name": "title_risk",
             "multilineTextboxSpec": {
               "lines": [
-                "## Demand Risk Overview"
+                "## Meridian Retail Group — Demand Risk Overview"
               ]
             }
           },
@@ -559,7 +559,7 @@
             "name": "title_sales",
             "multilineTextboxSpec": {
               "lines": [
-                "## Historical Sales"
+                "## Meridian Retail Group — Historical Sales"
               ]
             }
           },
@@ -722,7 +722,7 @@
             "name": "title_promos",
             "multilineTextboxSpec": {
               "lines": [
-                "## Promotions"
+                "## Meridian Retail Group — Promotions"
               ]
             }
           },

@@ -2,6 +2,13 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **Current state (updated 2026-10-02).** This plan is a point-in-time record; the live build has moved on. Before re-running any command below:
+> - **Workspace / profile:** now `adb-7405610530405651.11` via profile `otto-stable` — not `adb-7405605253712899.19` / `otto-sandbox` (retired token). Substitute for every `--profile otto-sandbox` below.
+> - **Model:** LightGBM (Poisson), not the `RandomForestRegressor` in Task 1 Step 5.
+> - **Training layout:** the Task-1 monolith `training/train_forecast_model.py` was later split into `build_features.py` / `train_model.py` / `score_forecast.py` (see the MLOps-split plan, which supersedes Task 1 here).
+> - **Catalog storage:** catalog `storage_root` is an external location in this workspace (`abfss://fevm-default-container@stojsvt6mzuc…`).
+> - **App UC grants:** done via `uc_securable` app resources in `resources/app.yml`; the Lakebase Postgres `GRANT SELECT` remains manual.
+
 **Goal:** Deploy the retail-forecast journey end-to-end to a fresh workspace, add Lakebase operational serving (synced action list + write-back) and a Unity Catalog Feature Store, and commit text execution evidence for every stage.
 
 **Architecture:** One Databricks Asset Bundle deploys the whole journey — Unity Catalog (catalog/schemas/volumes), a serverless SQL warehouse, the Lakeflow SDP pipeline + orchestration job, the Lakebase Autoscaling project/catalog/synced-table, Genie, dashboard, and the AppKit app. ML training is refactored to UC Feature Engineering (point-in-time FeatureLookup → `fe.log_model` → `fe.score_batch`). The app reads the synced action list and writes back action status through the AppKit `lakebase` plugin. Every deploy/run/query output is captured as text under `/evidence/`.

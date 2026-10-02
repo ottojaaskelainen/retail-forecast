@@ -2,6 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (or executing-plans) to implement this task-by-task. Steps use `- [ ]` checkboxes.
 
+> **Current state (updated 2026-10-02).** This plan is a point-in-time record; deltas vs. the live build:
+> - **Workspace / profile:** now `adb-7405610530405651.11` via profile `otto-stable` — not `adb-7405605253712899.19` / `otto-sandbox` (retired token). Applies to every `--profile otto-sandbox` below.
+> - **Model:** training later switched to **LightGBM (Poisson objective)**. The RandomForest with the bounded `n_estimators=50, max_depth=12` "OOM ruling" (Global Constraints, Tasks 3/6, Self-Review) is superseded — LightGBM is a lighter artifact, so the `score_batch` UDF OOM bound is no longer needed.
+> - **App UC grants:** the app's SP gets gold access via `uc_securable` app resources in `resources/app.yml`; the Lakebase Postgres `GRANT SELECT` on the synced table remains a manual step.
+
 **Goal:** Refactor the single training notebook into three independent processes (feature build → train → score), make the forecast horizon dynamic and future-dated, and refresh the synthetic data to ~now so predictions land in the actual future (Sept–Oct 2026).
 
 **Architecture:** Split `training/train_forecast_model.py` into three notebooks wired as separate tasks of `retail-forecast-job`, so the frequent light path (scoring) runs without retraining or rebuilding features, and any task is independently re-runnable via `databricks jobs run-now --only <task>`. The forecast anchor becomes dynamic (`DATA_END = max(week) in fact_transactions`) instead of a hardcoded date.
